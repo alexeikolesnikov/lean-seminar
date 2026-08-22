@@ -1,7 +1,18 @@
 # Lean seminar CI
 #
-# Builds every file under Seminar/ and fails if a `sorry` survives anywhere
-# except an *Exercises* file, where it is the whole point.
+# Builds every file under Seminar/ and fails on a `sorry` the file has not
+# declared. A hole is allowed only where it is the point:
+#
+#   * files with "Exercises" in the name -- a stub set is nothing but holes;
+#   * any file whose header declares  CI: allow-sorry
+#     with an optional count,         CI: allow-sorry (2)
+#     which pins how many holes the file may contain. A third one fails, so an
+#     accident cannot hide among the deliberate ones.
+#
+# Session01_Demo/Demo.lean is the motivating case: it demonstrates `sorry`,
+# `native_decide` and a passing `plausible` precisely to show three ways a
+# proof can look green without being one. Those holes must survive CI, and a
+# fourth one appearing by accident must not.
 #
 # Checked against Lean 4.33.0 / Mathlib v4.33.0.
 #
@@ -34,29 +45,52 @@ jobs:
       # Mathlib dependency), and runs `lake build`.
       - uses: leanprover/lean-action@v1
 
-      - name: Fail on a `sorry` outside an exercise file
+      - name: Fail on an undeclared `sorry`
         shell: bash
         run: |
           set -euo pipefail
           export PATH="$HOME/.elan/bin:$PATH"
 
-          # Warm rebuild: everything is already built by the step above, so this
-          # costs seconds. Its only job is to put the warnings in a file.
+          # Warm rebuild: everything is built by the step above, so this costs
+          # seconds. Its only job is to put the warnings in a file.
           lake build 2>&1 | tee build.log
 
           # `lake build` exits 0 on a file full of `sorry` -- it only warns, and
           # that is exactly how an unfinished proof reaches a worksheet. Lake
-          # replays cached warnings on a warm build, so grepping the log is a
+          # replays cached warnings on a warm build, so grepping the log stays a
           # real check rather than a no-op whenever CI hits the cache.
-          offenders=$(grep -F 'declaration uses `sorry`' build.log \
+          counts=$(grep -F 'declaration uses `sorry`' build.log \
             | sed -E 's/^warning: ([^:]+):[0-9]+:[0-9]+:.*/\1/' \
-            | grep -v 'Exercises' \
-            | sort -u || true)
+            | sort | uniq -c || true)
 
-          if [ -n "$offenders" ]; then
-            echo "::error::A 'sorry' survives outside an *Exercises* file:"
-            printf '  %s\n' $offenders
-            exit 1
+          status=0
+          while read -r n file; do
+            [ -z "${file:-}" ] && continue
+
+            case "$file" in *Exercises*) continue ;; esac
+
+            marker=$(head -25 "$file" \
+              | grep -o 'CI: allow-sorry[[:space:]]*(\?[0-9]*)\?' | head -1 || true)
+
+            if [ -z "$marker" ]; then
+              echo "::error file=${file}::${n} sorry(s) here, and this file does not allow them."
+              echo "   If they are deliberate, add to the header:  CI: allow-sorry (${n})"
+              status=1
+              continue
+            fi
+
+            allowed=$(printf '%s' "$marker" | grep -o '[0-9]\+' || true)
+            if [ -n "$allowed" ] && [ "$n" -ne "$allowed" ]; then
+              echo "::error file=${file}::header allows ${allowed} sorry(s); found ${n}."
+              echo "   Either a hole was left by accident, or the header needs updating."
+              status=1
+              continue
+            fi
+
+            echo "ok  ${file}: ${n} deliberate sorry(s)"
+          done <<< "$counts"
+
+          if [ "$status" -eq 0 ]; then
+            echo "No unexpected sorries."
           fi
-
-          echo "No unexpected sorries."
+          exit "$status"

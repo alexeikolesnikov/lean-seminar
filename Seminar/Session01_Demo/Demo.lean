@@ -12,6 +12,8 @@
                       ring
   Assumed from earlier: nothing — this is the first session.
 
+CI: allow-sorry (2)
+
   Two declarations in §6 are deliberately unproved: `unfinished` (an explicit
   `sorry`) and `passes_plausible` (a `plausible` that finds no counterexample).
   Check this file with --allow-sorry.
@@ -74,7 +76,10 @@ example (a b : ℝ) (h : a ≤ b) : a + 1 ≤ b + 2 := by linarith
 
 /-- `exact?` searches Mathlib and reports the name of a lemma that closes the
 goal. Use it to *learn the name*, then write the name — the search is slow and
-the name is the transferable knowledge. Here it finds `Nat.add_comm`. -/
+the name is the transferable knowledge. Here it finds `Nat.add_comm`.
+
+example (a b : ℕ) : a + b = b + a := by exact?
+-/
 example (a b : ℕ) : a + b = b + a := Nat.add_comm a b
 
 /-! ## 3. Every function is total, so some values are junk
@@ -96,7 +101,7 @@ example (a b : ℕ) (hba : b ≤ a) : a - b + b = a := Nat.sub_add_cancel hba
 /-! ## 4. The failure that matters: statements that are *vacuously* true
 
 A false statement is harmless — it will not compile and you learn at once. The
-dangerous one compiles, goes green, and is not the theorem you meant. -/
+dangerous one compiles but is not the theorem you meant. -/
 
 /-- Vacuous truth in its purest form. There are no reals in the empty set, so
 anything at all is true of all of them. -/
@@ -104,7 +109,7 @@ example : ∀ x ∈ (∅ : Set ℝ), x = 37 := by simp
 
 /-- The Archimedean property, written the way one would write it on a board.
 It is **provable**, and the proof is worthless: take `N = 0`, so that
-`1/N = 0 < ε` by the junk value. Nothing about Archimedes is involved. -/
+`1/N = 0 < ε` by the junk value. Nothing about non-standard reals is involved. -/
 example : ∀ ε : ℝ, 0 < ε → ∃ N : ℕ, 1 / (N : ℝ) < ε := by
   intro ε hε
   refine ⟨0, ?_⟩
