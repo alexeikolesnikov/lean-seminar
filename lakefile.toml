@@ -1,7 +1,7 @@
 name = "lean-seminar"
 version = "0.1.0"
 keywords = ["math"]
-defaultTargets = ["LeanSeminar"]
+defaultTargets = ["Seminar"]
 
 [leanOptions]
 pp.unicode.fun = true # pretty-prints `fun a ↦ b`
@@ -14,5 +14,7 @@ name = "mathlib"
 scope = "leanprover-community"
 rev = "v4.33.0"
 
+# Every file under Seminar/ is a module, so CI compiles all session material.
 [[lean_lib]]
-name = "LeanSeminar"
+name = "Seminar"
+globs = ["Seminar.+"]

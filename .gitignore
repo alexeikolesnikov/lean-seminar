@@ -1,1 +1,7 @@
+# Lean build output — reproducible from lean-toolchain + lake-manifest.json
 /.lake
+
+# Participants' own work: ignored so that `git pull` can never conflict.
+# The README is kept so the folder exists in a fresh clone.
+/MyWork/*
+!/MyWork/README.md

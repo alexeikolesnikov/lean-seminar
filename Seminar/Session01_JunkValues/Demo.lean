@@ -1,13 +1,15 @@
 /-
   Session 01 — What a formal statement does and does not say
-  Math Dept Lean seminar
+  Math Dept Lean seminar · https://github.com/alexeikolesnikov/lean-seminar
 
   Checked against: Lean 4.33.0 / Mathlib v4.33.0
-  Run:  lake env lean Session01_JunkValues_Demo.lean   (from the project root)
+  Build:  lake build Seminar        (from the repository root)
+  Drafted with AI assistance, then compiled against the pinned toolchain
+  before release. See "How these files were made" in the README.
 
   Tactics introduced: #eval, #check, simp, positivity, exact_mod_cast,
                       plausible, #print axioms
-  Assumed from earlier: nothing — this is the first file.
+  Assumed from earlier: nothing — this is the first session.
 
   The point of the hour: a proof assistant checks that a proof establishes a
   statement. Nobody checks that the statement says what you meant. That second

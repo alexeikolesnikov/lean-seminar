@@ -1,12 +1,17 @@
 /-
-Session 00 — Smoke test
-Lean 4.33.0 · Mathlib v4.33.0 · checked 2026-08-16
+  Session 00 — Smoke test
+  Math Dept Lean seminar · https://github.com/alexeikolesnikov/lean-seminar
 
-Purpose: confirm that Lean, Mathlib, and the VS Code Infoview are all working.
-If every line below is free of red squiggles and the Infoview shows a goal
-state, the installation is complete.
+  Checked against: Lean 4.33.0 / Mathlib v4.33.0
+  Build:  lake build Seminar        (from the repository root)
+  Drafted with AI assistance, then compiled against the pinned toolchain
+  before release. See "How these files were made" in the README.
 
-Tactics introduced: `linarith`, `exact?`, `grind`, `plausible`.
+  Purpose: confirm that Lean, Mathlib, and the VS Code Infoview are all
+  working. If every line below is free of red squiggles and the Infoview shows
+  a goal state, the installation is complete.
+
+  Tactics introduced: linarith, exact?, grind, plausible.
 -/
 import Mathlib
 
