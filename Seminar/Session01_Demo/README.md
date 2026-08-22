@@ -1,12 +1,12 @@
 # Session 01 — what does a machine-checked proof actually certify?
 
-The first meeting, and a tour of the whole instrument. The organising sentence:
+The first meeting, and a tour of the whole instrument, organised around this:
 
 > Lean's kernel certifies that a **proof** establishes a **statement**.
 > Nothing checks that the statement is the theorem you meant.
 
-Both halves get airtime. The machine is extraordinary at the first half and
-silent about the second, and the second is what the semester is about.
+The session shows both: several things Lean does well, and several places
+where a statement compiles and does not mean what it appears to.
 
 ## The arc
 
@@ -30,10 +30,9 @@ silent about the second, and the second is what the semester is about.
 6. **What the kernel promises.** `#print axioms`: the ordinary three, then
    `sorryAx` from an unfinished proof, then `native_decide` — which makes Lean
    mint a brand-new axiom named after your own theorem. Mathlib's linter
-   discourages it, and the source says why. Then the sting: a `plausible` that
-   *passes* also reports `sorryAx`, because on 100 successful tests it "acts
-   like `admit`". The tactic that opened the hour closes it, demonstrating
-   both halves of the sentence the semester hangs on.
+   discourages it, and the source says why. Then: a `plausible` that *passes*
+   also reports `sorryAx`, because on 100 successful tests it "acts like
+   `admit`".
 7. **And it proves real theorems.** √2 irrational in one line, because someone
    formalised it already; Gauss's sum by induction, proved rather than looked
    up. Nobody should leave thinking the tool is only a critic.

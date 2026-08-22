@@ -20,7 +20,7 @@ what keeps `git pull` from ever conflicting with what you have written.
 | | Session | What it is about |
 |---|---|---|
 | 00 | [Install check](Session00_Install/) | One file that proves your installation works. Not a session. |
-| 01 | [What a formal statement does and does not say](Session01_JunkValues/) | Total functions, junk values, and statements that compile while meaning something else. |
+| 01 | [What does a machine-checked proof certify?](Session01_Demo/) | A tour: counterexamples, the interface, junk values, vacuous truth, quantifier order, `#print axioms`, and two real theorems. |
 
 *Sessions are added as they are written; this index is the place to look for
 what exists.*

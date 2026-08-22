@@ -1,9 +1,8 @@
 # Ground rules
 
 Two sets of rules apply here: the Lean community's, and ours. The community's
-came first and matter more: when you post to the Lean Zulip you are a guest in
-a room built by people who have maintained it for years, and the seminar's
-reputation travels with you.
+came first. When you post to the Lean Zulip you are a guest in a room other
+people have maintained for years.
 
 Everything in the first section is quoted from the community's own documents,
 linked at the bottom.
@@ -22,9 +21,9 @@ Four of the listed grounds for suspension or banning are worth spelling out,
 because three of them are not what a newcomer expects.
 
 **Do not use the community to complete coursework or work tasks.**
-This means, in particular, that posting a seminar exercise
-to Zulip and asking how to finish it is a breach. Ask
-in the seminar, ask AI, or ask about the *concept*
+This is the one that catches seminar participants. Posting a seminar exercise
+to Zulip and asking how to finish it is a breach — not rudeness, a breach. Ask
+in the seminar, ask a colleague, ask the instructor, or ask about the *concept*
 in general terms without the exercise attached.
 
 **Do not use an LLM to write your Zulip or GitHub comments.**
@@ -68,7 +67,7 @@ the README.
 finished. A tactic block you cannot read is a black box you will not be able to
 modify next week.
 
-**Disclose it.** In the seminar this is informal: "I got this from Claude and
+**Disclose it.** In the seminar this is informal — "I got this from Claude and
 then fixed the third line" is a perfectly good thing to say, and usually an
 interesting one. Outside the seminar, on Zulip or in a PR, disclosure is
 mandatory and enforced.
@@ -91,7 +90,8 @@ mechanical, and mechanical problems are contagious in a good way: everyone who
 watches you fix one has learned it too.
 
 **Say when you are stuck and how long you have been stuck.** Twenty minutes of
-silent frustration is how seminars lose people. It is not a sign of weakness or anything else, except that Lean is unfamiliar.
+silent frustration is the mechanism by which voluntary seminars lose people. It
+is not a sign of anything except that Lean is unfamiliar.
 
 ---
 
@@ -102,9 +102,8 @@ move freely in both directions. That is a legal permission, not a substitute
 for saying where something came from.
 
 **Name the lemma.** When an automated tactic closes a goal, find out what it
-used — `exact?` reports the name — and write it down. This is a study habit
-before it is an ethical one: the lemma name is the transferable knowledge, and
-`simp` closing a goal teaches you nothing you can reuse.
+used — `exact?` reports the name — and write it down. The lemma name is the
+part you can reuse later; `simp` closing a goal is not.
 
 **Say when you adapted a Mathlib proof.** A comment naming the file is enough.
 

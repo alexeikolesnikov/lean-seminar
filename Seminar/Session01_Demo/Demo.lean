@@ -7,33 +7,23 @@
   Drafted with AI assistance, then compiled against the pinned toolchain
   before release. See "How these files were made" in the README.
 
-  NOTE: this file contains two deliberate holes, both in §6 — an explicit
-  `sorry`, and a `plausible` that passes without proving. The point of §6 is
-  what `#print axioms` reports about each.
-
   Tactics introduced: #eval, #check, #print axioms, intro, have, simp,
                       linarith, exact?, plausible, native_decide, induction,
                       ring
   Assumed from earlier: nothing — this is the first session.
 
-  The sentence the semester hangs on:
+  Two declarations in §6 are deliberately unproved: `unfinished` (an explicit
+  `sorry`) and `passes_plausible` (a `plausible` that finds no counterexample).
+  Check this file with --allow-sorry.
 
-      Lean's kernel certifies that a PROOF establishes a STATEMENT.
-      Nothing checks that the statement is the theorem you meant.
-
-  Today is a tour of the whole instrument, arranged so that both halves of
-  that sentence show up: what the machine is very good at, and where the
-  responsibility stays with you.
 -/
 import Mathlib
 
 open Real Finset
 
-/-! ## 1. It will tell you that you are wrong
+/-! ## 1. It will tell you if you are wrong
 
-We start here rather than with a triumphant proof. A tool that only ever
-agrees with you is not worth trusting.
-
+We start with counterexamples. The tactic
 `plausible` looks for **counterexamples** rather than proofs. Live, type the
 line below without the comment marks. The statement is false at `n = 0`, and
 `plausible` reports:
@@ -170,18 +160,14 @@ theorem big_sum : (List.range 1000).sum = 499500 := by native_decide
 #print axioms big_sum
 --  'big_sum' depends on axioms: [propext, big_sum._native.native_decide.ax_1_1]
 
-/-- And the sting in the tail of §1. When `plausible` *fails* to find a
-counterexample it has not proved anything — its own documentation says that
-after 100 successful tests it "acts like `admit`", and `admit` is `sorry`.
-So a passing `plausible` looks green and leaves a hole. -/
+/-- When `plausible` *fails* to find a counterexample it has not proved
+anything. Its documentation says that after 100 successful tests it "acts like
+`admit`", and `admit` is `sorry`. So a passing `plausible` looks green and
+leaves a hole — check it the same way. -/
 theorem passes_plausible : ∀ n : ℕ, n + 0 = n := by plausible
 
 #print axioms passes_plausible
 --  'passes_plausible' depends on axioms: [sorryAx]
-
-/-! That is the whole seminar in one tactic: the tool that tells you you are
-wrong is also a tool that will tell you nothing at all while looking like it
-agreed with you. One line of `#print axioms` distinguishes the two cases. -/
 
 /-! Read that second name again. Lean has **minted a new axiom, named after
 this theorem**, whose content is "the compiler said so". That is the extra
