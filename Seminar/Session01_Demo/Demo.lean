@@ -49,6 +49,10 @@ example : ¬ ∀ n : ℕ, n < 2 * n := by
   have h0 := h 0     -- h0 : 0 < 2 * 0         — then in particular at n = 0
   simp at h0         -- 2 * 0 = 0, so h0 says 0 < 0, which is false
 
+
+/-- This can be accomplished with a one-liner: -/
+example : ¬ ∀ n : ℕ, n < 2 * n := fun h => by simpa using h 0
+
 /-! ## 2. The interface
 
 Three commands, and one panel. `#eval` computes, `#check` reports a type, and

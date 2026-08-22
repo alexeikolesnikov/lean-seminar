@@ -1,0 +1,62 @@
+# Lean seminar CI
+#
+# Builds every file under Seminar/ and fails if a `sorry` survives anywhere
+# except an *Exercises* file, where it is the whole point.
+#
+# Checked against Lean 4.33.0 / Mathlib v4.33.0.
+#
+# Replaces the three `lake new` scaffold workflows:
+#   lean_action_ci.yml  - its docgen-action step published a doc-gen4 site to
+#                         GitHub Pages, which this repository does not want
+#   create-release.yml  - cut a GitHub release on every lean-toolchain change
+#   update.yml          - opened PRs bumping Mathlib, against a semester pin
+
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build and check for stray sorries
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      # Installs the toolchain named in `lean-toolchain`, fetches the Mathlib
+      # olean cache (`use-mathlib-cache` defaults to "auto", which detects the
+      # Mathlib dependency), and runs `lake build`.
+      - uses: leanprover/lean-action@v1
+
+      - name: Fail on a `sorry` outside an exercise file
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PATH="$HOME/.elan/bin:$PATH"
+
+          # Warm rebuild: everything is already built by the step above, so this
+          # costs seconds. Its only job is to put the warnings in a file.
+          lake build 2>&1 | tee build.log
+
+          # `lake build` exits 0 on a file full of `sorry` -- it only warns, and
+          # that is exactly how an unfinished proof reaches a worksheet. Lake
+          # replays cached warnings on a warm build, so grepping the log is a
+          # real check rather than a no-op whenever CI hits the cache.
+          offenders=$(grep -F 'declaration uses `sorry`' build.log \
+            | sed -E 's/^warning: ([^:]+):[0-9]+:[0-9]+:.*/\1/' \
+            | grep -v 'Exercises' \
+            | sort -u || true)
+
+          if [ -n "$offenders" ]; then
+            echo "::error::A 'sorry' survives outside an *Exercises* file:"
+            printf '  %s\n' $offenders
+            exit 1
+          fi
+
+          echo "No unexpected sorries."

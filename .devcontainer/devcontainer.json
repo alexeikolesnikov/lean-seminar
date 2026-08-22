@@ -1,0 +1,22 @@
+{
+  "name": "Lean seminar (Lean 4.33.0 / Mathlib v4.33.0)",
+
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+
+  "onCreateCommand": "echo 'Downloading Mathlib (about 7 GB, a few minutes -- this happens once).' && lake exe cache get! && lake build && echo 'Setup finished. Open Seminar/ in the Explorer on the left.'",
+
+  "hostRequirements": {
+    "cpus": 4,
+    "memory": "16gb"
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "leanprover.lean4"
+      ]
+    }
+  }
+}
