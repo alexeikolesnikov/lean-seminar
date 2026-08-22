@@ -42,12 +42,12 @@ of actual use, which is comfortable for a seminar plus homework.
 ## Route B — Local install
 
 Better once it works: faster, offline, no quota, and your files are on your own
-disk. It is not the documented default only because supporting five operating
-systems in a room of twenty is not something we can promise.
+disk. It is not the default only because supporting five operating
+systems is not something I can promise.
 
 ### Before you start: check disk space
 
-**This is the step people skip and regret.** A Lean install with Mathlib needs
+**You may regret skipping this step.** A Lean install with Mathlib needs
 about **10.5 GB**, measured:
 
 | | |
@@ -68,8 +68,8 @@ df -h ~                          # macOS / Linux
 
 **Under 15 GB free, stop and free some up first.** The failure mode when you
 run out mid-download is not a clean error: the Mathlib cache arrives
-incomplete, Lake decides to build Mathlib from source instead, and your laptop
-pins its CPU for several hours producing nothing useful.
+incomplete, Lake decides to build Mathlib from source instead, and your computer
+uses its CPU for several hours producing nothing useful.
 
 ### 1. Git
 
@@ -140,7 +140,7 @@ versions and undoes the pin.
 
 ### 6. Windows only: exclude the Lean folders from Defender
 
-Optional but dramatic. Defender's real-time scanner inspects each of the
+Optional but potentially a big improvement in speed. Defender's real-time scanner inspects each of the
 thousands of `.olean` files Lean reads on every build. In an administrator
 PowerShell:
 
@@ -150,7 +150,7 @@ Add-MpPreference -ExclusionPath "<your clone>\.lake"
 ```
 
 If your machine's policy blocks this, skip it — Lean still works, just slower.
-It is not worth an IT ticket.
+It is not worth an OTS ticket.
 
 ### 7. Check it worked
 

@@ -1,11 +1,10 @@
 # Session 01 — what a formal statement does and does not say
 
-**The claim of the hour:** a proof assistant checks that a proof establishes a
+**A bold claim:** a proof assistant checks that a proof establishes a
 statement. Nothing checks that the statement says what you meant. That second
-job is mathematical work, it does not go away, and it is the part you cannot
+part is mathematical work, it does not go away, and it is the part we cannot
 delegate to a machine.
 
-The demonstration runs on arithmetic everyone in the room already knows.
 
 1. **Every function in Lean is total.** `1/0` and `3 - 5` must return
    *something* in `ℕ`, and Mathlib picks `0` for both. These are called junk
@@ -18,7 +17,7 @@ The demonstration runs on arithmetic everyone in the room already knows.
    because `1/0 = 0 < ε`. It compiles. It goes green. It has nothing to do with
    Archimedes. Note how Mathlib states its own version, with `n + 1`, to dodge
    exactly this.
-4. **The same thing at the top of the subject.** `ζ` has a pole at `s = 1`, so
+4. **The same thing can happen with fancy mathematics.** `ζ` has a pole at `s = 1`, so
    Lean's `ζ` returns a junk value there. Had that value been `0`, `s = 1`
    would be a zero of the formal `ζ` off the critical line and the formal
    Riemann Hypothesis would be trivially *false* while looking exactly like RH.
