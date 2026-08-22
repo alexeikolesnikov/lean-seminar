@@ -1,31 +1,62 @@
-# Session 01 — what a formal statement does and does not say
+# Session 01 — what does a machine-checked proof actually certify?
 
-**A bold claim:** a proof assistant checks that a proof establishes a
-statement. Nothing checks that the statement says what you meant. That second
-part is mathematical work, it does not go away, and it is the part we cannot
-delegate to a machine.
+The first meeting, and a tour of the whole instrument. The organising sentence:
 
+> Lean's kernel certifies that a **proof** establishes a **statement**.
+> Nothing checks that the statement is the theorem you meant.
 
-1. **Every function in Lean is total.** `1/0` and `3 - 5` must return
-   *something* in `ℕ`, and Mathlib picks `0` for both. These are called junk
-   values. They are not a bug; they are the price of a simple logic.
-2. **A statement that is false.** `a - b + b = a` over `ℕ` fails at
-   `a = 0, b = 1`, and `plausible` finds the counterexample in seconds.
-3. **A statement that is trivially true, which is worse.** The Archimedean
-   property, written the way anyone would write it on a board — *for every
-   ε > 0 there is N with 1/N < ε* — is provable in Lean by taking `N = 0`,
-   because `1/0 = 0 < ε`. It compiles. It goes green. It has nothing to do with
-   Archimedes. Note how Mathlib states its own version, with `n + 1`, to dodge
-   exactly this.
-4. **The same thing can happen with fancy mathematics.** `ζ` has a pole at `s = 1`, so
-   Lean's `ζ` returns a junk value there. Had that value been `0`, `s = 1`
-   would be a zero of the formal `ζ` off the critical line and the formal
-   Riemann Hypothesis would be trivially *false* while looking exactly like RH.
-   That it is not zero is a small theorem somebody had to prove.
-5. **`#print axioms`**, which tells you what a proof depends on — and says
-   nothing whatever about whether `riemannZeta` is the Riemann zeta function.
+Both halves get airtime. The machine is extraordinary at the first half and
+silent about the second, and the second is what the semester is about.
 
-**Tactics introduced:** `#eval`, `#check`, `simp`, `positivity`,
-`exact_mod_cast`, `plausible`, `#print axioms`.
+## The arc
+
+1. **It tells you that you are wrong.** `plausible` hunts counterexamples
+   rather than proofs, and finds one for `n < 2n` at `n = 0`. We open here
+   deliberately: a tool that only ever agrees with you is not worth trusting.
+   Then the same fact as a three-line proof — `intro`, `have`, `simp at` —
+   with the Infoview read after each line.
+2. **The interface.** `#eval`, `#check`, and the Infoview — hypotheses above
+   the bar, goal below, exactly the blackboard convention. Unicode input.
+   `linarith` and `exact?`.
+3. **Every function is total, so some values are junk.** `1/0 = 0` and
+   `3 - 5 = 0` in `ℕ`. Not a bug — the price of a logic with no "undefined".
+4. **Vacuously true statements**, which are worse than false ones. A false
+   statement will not compile; a vacuous one compiles, goes green, and is not
+   your theorem. The Archimedean property as anyone would write it on a board
+   is provable by taking `N = 0`.
+5. **Quantifier order.** `Metric.continuous_iff` and
+   `Metric.uniformContinuous_iff` side by side. Nearly the same symbols,
+   different mathematics, and only reading the quantifiers tells you which.
+6. **What the kernel promises.** `#print axioms`: the ordinary three, then
+   `sorryAx` from an unfinished proof, then `native_decide` — which makes Lean
+   mint a brand-new axiom named after your own theorem. Mathlib's linter
+   discourages it, and the source says why. Then the sting: a `plausible` that
+   *passes* also reports `sorryAx`, because on 100 successful tests it "acts
+   like `admit`". The tactic that opened the hour closes it, demonstrating
+   both halves of the sentence the semester hangs on.
+7. **And it proves real theorems.** √2 irrational in one line, because someone
+   formalised it already; Gauss's sum by induction, proved rather than looked
+   up. Nobody should leave thinking the tool is only a critic.
+
+## Notes for whoever runs it
+
+- **The `plausible` opener is live.** It is commented out in `Demo.lean` with
+  its exact output; uncomment it in the room, watch it fail, comment it back.
+- **`Demo.lean` contains two deliberate holes**, both in §6: an explicit
+  `sorry`, and a `plausible` that passes. Both are the point. Check this file
+  with `--allow-sorry`.
+- **Warn the room about `plausible` explicitly.** Someone will try it on a true
+  statement during the exercises, see it apparently succeed, and believe they
+  proved something. `#print axioms` is the check.
+- The `native_decide` axiom name is worth reading aloud slowly:
+  `big_sum._native.native_decide.ax_1_1`. Lean names the new axiom after the
+  theorem it was invented for.
+- Gauss is stated as `2 * ∑ = n(n+1)`, not `∑ = n(n+1)/2`, because `/` on `ℕ`
+  is the junk-valued division from §3. Say so — it closes the loop.
+
+**Tactics introduced:** `#eval`, `#check`, `#print axioms`, `linarith`,
+`exact?`, `simp`, `plausible`, `native_decide`, `induction`, `ring`.
 
 **Assumes:** nothing. This is the first session.
+
+**Homework:** the [Natural Number Game](https://adam.math.hhu.de/).
