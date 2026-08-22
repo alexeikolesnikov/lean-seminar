@@ -1,4 +1,4 @@
-# Your work goes here
+# Your work goes in this folder
 
 This folder is ignored by git. Nothing you put in it will ever be committed,
 pushed, or overwritten when you pull the next week's material.
@@ -10,7 +10,7 @@ git knowledge at all.
 **The cost: this folder is not backed up.** If something in it matters to you,
 copy it somewhere that is.
 
-To start an exercise set, copy it here first:
+To start an exercise set, copy it here first. On a Mac or Linux machine:
 
 ```
 cp Seminar/Session01_JunkValues/Exercises.lean MyWork/

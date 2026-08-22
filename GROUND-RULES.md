@@ -1,7 +1,7 @@
 # Ground rules
 
 Two sets of rules apply here: the Lean community's, and ours. The community's
-came first and matter more — when you post to the Lean Zulip you are a guest in
+came first and matter more: when you post to the Lean Zulip you are a guest in
 a room built by people who have maintained it for years, and the seminar's
 reputation travels with you.
 
@@ -22,9 +22,9 @@ Four of the listed grounds for suspension or banning are worth spelling out,
 because three of them are not what a newcomer expects.
 
 **Do not use the community to complete coursework or work tasks.**
-This is the one that catches seminar participants. Posting a seminar exercise
-to Zulip and asking how to finish it is a breach — not rudeness, a breach. Ask
-in the seminar, ask a colleague, ask the instructor, or ask about the *concept*
+This means, in particular, that posting a seminar exercise
+to Zulip and asking how to finish it is a breach. Ask
+in the seminar, ask AI, or ask about the *concept*
 in general terms without the exercise attached.
 
 **Do not use an LLM to write your Zulip or GitHub comments.**
@@ -68,7 +68,7 @@ the README.
 finished. A tactic block you cannot read is a black box you will not be able to
 modify next week.
 
-**Disclose it.** In the seminar this is informal — "I got this from Claude and
+**Disclose it.** In the seminar this is informal: "I got this from Claude and
 then fixed the third line" is a perfectly good thing to say, and usually an
 interesting one. Outside the seminar, on Zulip or in a PR, disclosure is
 mandatory and enforced.
@@ -91,8 +91,7 @@ mechanical, and mechanical problems are contagious in a good way: everyone who
 watches you fix one has learned it too.
 
 **Say when you are stuck and how long you have been stuck.** Twenty minutes of
-silent frustration is the mechanism by which voluntary seminars lose people. It
-is not a sign of anything except that Lean is unfamiliar.
+silent frustration is how seminars lose people. It is not a sign of weakness or anything else, except that Lean is unfamiliar.
 
 ---
 
