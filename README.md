@@ -2,17 +2,19 @@
 
 A semester-long working seminar on the [Lean 4](https://lean-lang.org) theorem
 prover and its mathematical library, [Mathlib](https://leanprover-community.github.io).
-Led by Alexei Kolesnikov.
+If you want to low-key explore what Lean looks like, check out Kevin Buzzard's [Natural Number Game](https://adam.math.hhu.de/#/g/leanprover-community/nng4).
+
 
 Everything the seminar uses is in this repository, and all of it is public. You
-do not need a GitHub account to read any of it.
+do not need a GitHub account to read any of it. If you want to use the codespace
+configured for this repository (with all the relevant Lean tools), you would need a
+GitHub account.
 
 ## Who this is for
 
-Mathematicians — faculty, graduate students, strong undergraduates — with no
-prior experience of proof assistants. We assume you can prove things and have
-never installed a compiler. Nothing here explains what induction is; a fair
-amount explains why Lean's `Finset.range n` is `{0, …, n−1}`.
+Mathematically-inclined faculty, graduate students, and undergraduates. No
+prior experience with proof assistants is expected. We assume you can prove 
+things but may have never installed a compiler.
 
 This is a *working* seminar. The measure of success is that you prove things
 yourself, not that you follow a talk.
@@ -22,7 +24,7 @@ yourself, not that you follow a talk.
 | | What it costs | What you get |
 |---|---|---|
 | **Just read** | nothing | Browse the files here. Every session folder has a README explaining what it does. |
-| **Codespaces** *(default)* | a free GitHub account | Real VS Code in a browser tab, Lean and Mathlib preinstalled, work persists between sessions. Runs on the locked-down lab machines. |
+| **Codespaces** *(default)* | a free GitHub account | Real VS Code in a browser tab, Lean and Mathlib preinstalled, work persists between sessions. Can run on the locked-down lab machines. |
 | **Install locally** | 30–45 min, ~11 GB | Faster, offline, no quota. Encouraged if you intend to formalize seriously. |
 | **Web editor** | nothing | [live.lean-lang.org](https://live.lean-lang.org) runs Lean with Mathlib in a browser tab. No account, nothing saved — one file at a time. |
 

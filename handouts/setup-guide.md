@@ -21,15 +21,17 @@ You need a free GitHub account. That is the only requirement.
    master**.
 3. **Choose the 4-core machine** if offered a choice. Lean with a full
    `import Mathlib` wants the memory, and the 2-core option is slow enough to
-   give a bad first impression.
-4. Wait. The first launch takes about five minutes while Mathlib is fetched.
+   give a bad first impression. The default configuration will request 4 cores.
+4. Wait. The first launch takes about ten minutes while Mathlib is fetched.
    Later launches take seconds.
-5. Open any file under `Seminar/` and wait for the orange progress bar at the
-   top of the editor to finish.
+5. Open any Lean file under `Seminar/` and wait for the orange progress bar at the
+   top of the editor (or side of the editor) to finish. That process involves a
+   fairly large download (one time), so it might take some time. Be prepared to walk
+   away for some time.
 
 **Two habits that keep this free.** GitHub gives each personal account 120
 core-hours and 15 GB of storage per month; on a 4-core machine that is 30 hours
-of actual use, which is comfortable for a seminar plus homework.
+of actual use per month, which is comfortable for a seminar plus homework.
 
 - **Stop your codespace when you finish** — the Codespaces menu, *Stop current
   codespace*. It also idles out after 30 minutes, so a forgotten one is bounded
