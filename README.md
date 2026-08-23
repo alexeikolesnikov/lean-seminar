@@ -6,9 +6,8 @@ If you want to low-key explore what Lean looks like, check out Kevin Buzzard's [
 
 
 Everything the seminar uses is in this repository, and all of it is public. You
-do not need a GitHub account to read any of it. If you want to use the codespace
-configured for this repository (with all the relevant Lean tools), you would need a
-GitHub account.
+do not need a GitHub account to read any of it, and you do not need one to take
+part — an account is only required for the Codespaces fallback described below.
 
 ## Who this is for
 
@@ -19,18 +18,25 @@ things but may have never installed a compiler.
 This is a *working* seminar. The measure of success is that you prove things
 yourself, not that you follow a talk.
 
-## Three ways in
+## Ways in
 
 | | What it costs | What you get |
 |---|---|---|
 | **Just read** | nothing | Browse the files here. Every session folder has a README explaining what it does. |
-| **Codespaces** *(default)* | a free GitHub account | Real VS Code in a browser tab, Lean and Mathlib preinstalled, work persists between sessions. Can run on the locked-down lab machines. |
-| **Install locally** | 30–45 min, ~11 GB | Faster, offline, no quota. Encouraged if you intend to formalize seriously. |
-| **Web editor** | nothing | [live.lean-lang.org](https://live.lean-lang.org) runs Lean with Mathlib in a browser tab. No account, nothing saved — one file at a time. |
+| **Web editor** *(initially)* | nothing | [live.lean-lang.org](https://live.lean-lang.org) runs Lean with Mathlib in a browser tab. No account, nothing saved, and you work one file at a time. |
+| **Install locally** *(eventually)* | 30–45 min once, ~11 GB | Fast, offline, no quota, your files on your own disk. Nothing to wait for at the start of your work. |
+| **Codespaces** *(backup)* | a free GitHub account | Real VS Code in a browser tab. The first launch takes about twenty minutes. For locked-down lab machines, and for anyone whose local install does not work. |
 
-Codespaces is the documented route because it is identical for everyone and
-works everywhere. The web editor exists so that nobody is stuck at the door in
-week 1. Full instructions for all three: [`handouts/setup-guide.md`](handouts/setup-guide.md).
+**The first three sessions need no setup.** They are about reading a formal
+statement and judging whether it says what it claims to say, and a browser tab
+does that. Week 1's homework is the Natural Number Game, which is also a browser
+tab.
+
+**Eventually we start proving things ourselves**, so aim to have a local
+install working by then. It is the only route with no waiting at startup. Lean reads about
+2 GB of compiled library every time it starts cold, which is fast on a local disk and slow on anything in a data center. Install it on whatever machine you will actually use.
+
+Full instructions for every route: [`handouts/setup-guide.md`](handouts/setup-guide.md).
 
 ## What is in here
 

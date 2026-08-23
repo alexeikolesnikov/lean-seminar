@@ -5,7 +5,7 @@
     "dockerfile": "Dockerfile"
   },
 
-  "onCreateCommand": "echo 'Downloading Mathlib (about 7 GB, a few minutes -- this happens once).' && lake exe cache get! && lake build && echo 'Setup finished. Open Seminar/ in the Explorer on the left.'",
+  "onCreateCommand": "bash -lc 'echo \"Fetching the compiled Mathlib (about 7 GB, once).\"; lake exe cache get || echo \"WARNING: the Mathlib cache did not download. Open a terminal and run: lake exe cache get\"; echo \"Setup finished. Open a file under Seminar/ in the Explorer on the left.\"'",
 
   "hostRequirements": {
     "cpus": 4,

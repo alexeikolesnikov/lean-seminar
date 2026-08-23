@@ -1,51 +1,24 @@
 # Getting Lean running
 
-Three routes, in the order we recommend trying them. Pick one; you can change
-your mind later, and nothing you do in one blocks another.
+Three options, not mutually exclusive. You can change your
+mind at any point.
+
+**You do not need any of this for the first 2-3 sessions.** We start by 
+reading a formal statement and judging whether it says what it claims;
+Option B, a browser tab, is enough. **When we start proving
+things ourselves**, need to have Option A working by then.
+
+Option A is worth the half hour because of what Lean does every time it starts:
+it reads about 2 GB of compiled library into memory. Locally, this is quick; otherwise, you spend spend time watching a progress bar instead of doing mathematics.
 
 Repository: <https://github.com/alexeikolesnikov/lean-seminar>
 
 ---
 
-## Route A — Codespaces (the default)
+## Option A — Local install (the plan)
 
-A full VS Code running on GitHub's machines, in your browser, with Lean and
-Mathlib already installed. Nothing to install locally, works on the lab
-machines, and it is the *real* VS Code interface — so anything you learn
-transfers if you later install locally.
-
-You need a free GitHub account. That is the only requirement.
-
-1. Go to the repository page.
-2. Click the green **Code** button → **Codespaces** tab → **Create codespace on
-   master**.
-3. **Choose the 4-core machine** if offered a choice. Lean with a full
-   `import Mathlib` wants the memory, and the 2-core option is slow enough to
-   give a bad first impression. The default configuration will request 4 cores.
-4. Wait. The first launch takes about ten minutes while Mathlib is fetched.
-   Later launches take seconds.
-5. Open any Lean file under `Seminar/` and wait for the orange progress bar at the
-   top of the editor (or side of the editor) to finish. That process involves a
-   fairly large download (one time), so it might take some time. Be prepared to walk
-   away for some time.
-
-**Two habits that keep this free.** GitHub gives each personal account 120
-core-hours and 15 GB of storage per month; on a 4-core machine that is 30 hours
-of actual use per month, which is comfortable for a seminar plus homework.
-
-- **Stop your codespace when you finish** — the Codespaces menu, *Stop current
-  codespace*. It also idles out after 30 minutes, so a forgotten one is bounded
-  rather than catastrophic.
-- **Keep one codespace, not three.** Storage is the tighter limit and a Mathlib
-  codespace is several GB. Delete old ones.
-
----
-
-## Route B — Local install
-
-Better once it works: faster, offline, no quota, and your files are on your own
-disk. It is not the default only because supporting five operating
-systems is not something I can promise.
+Faster than anything in a browser, offline, no quota, and your files are on your
+own disk. Install it on whichever machine you will actually use. Set aside half an hour (ish) for this. 
 
 ### Before you start: check disk space
 
@@ -171,18 +144,71 @@ h : a ≤ b
 
 ---
 
-## Route C — the web editor
+## Option B — the web editor (weeks 1–3)
 
 <https://live.lean-lang.org> runs Lean with Mathlib in a browser tab. No
-account, no install, nothing to go wrong. Paste a file in and it works.
+account, no install, nothing to go wrong. Paste a file in and it works, or open
+the link emailed for that week, which loads the session's file directly.
 
-Nothing is saved, and it handles one file at a time, so it is a poor home for a
-semester. It is the right tool for week 1 if your laptop is fighting you, and
-for looking at a single example someone sends you.
+This is how sessions 1 to 3 run. Nothing is saved and it handles one file at a
+time, which is fine while the exercises are about reading statements rather than
+building up work you want to keep. It stays useful afterwards for looking at a
+single example someone sends you.
+
+One caveat, and it is the reason to say when something looks wrong: the web
+editor runs the *latest* Mathlib, not the version 4.33.0 this seminar pins. That
+is almost always the same thing, but if a file behaves differently here than in
+the room, that is the likely reason — and worth mentioning rather than
+assuming you did something wrong.
+
+---
+
+## Option C — Codespaces (backup)
+
+A full VS Code running on GitHub's machines, in your browser, with Lean and
+Mathlib already installed. Nothing to install locally, works on the locked-down
+lab machines, and it is the *real* VS Code interface — so anything you learn
+transfers if you later install locally.
+
+**This is the fallback, not the recommended way.** Use it if you are on a lab
+machine with no admin rights, or if Option A has fought you and you need
+something working now. Everything is slower here than on your own disk, and the
+slowness returns every time you resume a stopped codespace.
+
+You need a free GitHub account. That is the only requirement.
+
+1. Go to the repository page.
+2. Click the green **Code** button → **Codespaces** tab → **Create codespace on
+   master**.
+3. **Choose the 4-core machine** if offered a choice. Lean with a full
+   `import Mathlib` wants the memory, and the 2-core option is slow enough to
+   give a bad first impression. The default configuration will request 4 cores.
+4. Wait — **about twenty minutes** for the first launch, while the container is
+   built, Lean is installed, and Mathlib is fetched. Do this the evening before
+   you need it, not ten minutes before a meeting.
+5. Open any Lean file under `Seminar/` and wait for the orange progress bar at
+   the top of the editor (or the side of it) to finish. Expect several more
+   minutes: Lean is reading about 2 GB of compiled library off a network disk.
+   Walk away and come back.
+6. Every time you resume a stopped codespace, step 5 happens again. That is the
+   cost of this option, and it is why it is not the recommended one.
+
+**Two habits that keep this free.** GitHub gives each personal account 120
+core-hours and 15 GB of storage per month; on a 4-core machine that is 30 hours
+of actual use per month, which is comfortable for a seminar plus homework.
+
+- **Stop your codespace when you finish** — the Codespaces menu, *Stop current
+  codespace*. It also idles out after 30 minutes, so a forgotten one is bounded
+  rather than catastrophic.
+- **Keep one codespace, not three.** Storage is the tighter limit and a Mathlib
+  codespace is several GB. Delete old ones.
 
 ---
 
 ## Each week
+
+*(Once you have a clone — Option A or C. On the web editor there is nothing to
+pull: each week's link always serves the current file.)*
 
 One click: **Source Control** panel → **⋯** → **Pull**. That is the only git
 operation the seminar asks of you all semester.

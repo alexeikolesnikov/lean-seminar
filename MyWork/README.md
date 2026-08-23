@@ -13,7 +13,7 @@ copy it somewhere that is.
 To start an exercise set, copy it here first. On a Mac or Linux machine:
 
 ```
-cp Seminar/Session01_JunkValues/Exercises.lean MyWork/
+cp Seminar/Session01_Demo/Exercises.lean MyWork/
 ```
 
 (On Windows, drag it in File Explorer, or use `Copy-Item`.)
