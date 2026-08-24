@@ -80,7 +80,14 @@ then installs whichever Lean version a project asks for — you never choose a
 version by hand, the project's `lean-toolchain` file decides. That mechanism is
 what keeps the whole room on identical Lean.
 
-If the `∀` menu does not offer it: Ctrl+Shift+P → `Lean 4: Setup`.
+If the `∀` menu does not offer it: Ctrl+Shift+P → 
+`Lean 4: Setup: Install Elan`
+`Lean 4: Setup: Install Lean`
+`Lean 4: Setup: Install Dependencies`
+`Lean 4: Setup: Update Elan`
+
+If that feels like too much, in the file navigation panel on the left, click on
+`lake-manifest.json`, it should start a dialog window offering to install Lean.
 
 ### 4. Clone this repository — do not create a project
 
