@@ -7,9 +7,9 @@
   Drafted with AI assistance, then compiled against the pinned toolchain
   before release. See "How these files were made" in the README.
 
-  Tactics introduced: #eval, #check, #print axioms, intro, have, simp,
-                      linarith, exact?, plausible, native_decide, induction,
-                      ring
+  Tactics introduced: #eval, #check, #print axioms, trace_state, intro, have,
+                      simp, linarith, exact?, plausible, native_decide,
+                      induction, ring
   Assumed from earlier: nothing — this is the first session.
 
 CI: allow-sorry (2)
@@ -25,73 +25,178 @@ open Real Finset
 
 /-! ## 1. It will tell you if you are wrong
 
-We start with counterexamples. The tactic
-`plausible` looks for **counterexamples** rather than proofs. Live, type the
-line below without the comment marks. The statement is false at `n = 0`, and
-`plausible` reports:
+Most tools of this kind are introduced by proving something. We start with a
+counterexample.
 
-    Found a counter-example!
-    n := 0
-    issue: 0 < 0 does not hold
+`plausible` does not look for a proof. It tries the statement on random inputs
+and reports the first one that breaks it. -/
 
-    -- example (n : ℕ) : n < 2 * n := by plausible
+/-  NOW TRY THIS. The line below is commented out. Remove the two dashes,
+    watch the file stop compiling, and read what Lean says:
 
-Uncommenting it makes this file fail to compile — which is the demonstration.
+        Found a counter-example!
+        n := 0
+        issue: 0 < 0 does not hold
 
-Why `n = 0` breaks it: nothing subtle, and Lean will simply compute it. -/
+    Then put the dashes back. Breaking a file on purpose and reading the
+    complaint is worth doing often. -/
+
+-- example (n : ℕ) : n < 2 * n := by plausible
+
+/-! `n = 0` is the whole story. `#eval` runs an expression and prints the
+answer, so you can check it directly. -/
 
 #eval (0 : ℕ) < 2 * 0      -- false
 
-/-- So the claim is not true of *every* natural number. Here is that written
-as a proof, one step per line. Read the Infoview after each line.
+/-! So "every natural number is less than twice itself" is not a theorem. Here
+is that written out as a proof. Do not worry yet about the shape of these
+lines — §2 takes one apart piece by piece. For now, put the cursor at the start
+of each line in turn and watch the panel on the right change.
 
-`¬ P` is, by definition, `P → False`, so the first move is to assume `P`. -/
+`¬ P` means `P → False`: to refute something, assume it and derive nonsense. -/
+
 example : ¬ ∀ n : ℕ, n < 2 * n := by
-  intro h            -- h : ∀ n, n < 2 * n     — suppose the claim did hold
-  have h0 := h 0     -- h0 : 0 < 2 * 0         — then in particular at n = 0
-  simp at h0         -- 2 * 0 = 0, so h0 says 0 < 0, which is false
+  intro h            -- suppose the claim did hold; call it `h`
+                     --   h : ∀ (n : ℕ), n < 2 * n
+                     --   ⊢ False
+  have h0 := h 0     -- then it holds in particular at n = 0
+                     --   h0 : 0 < 2 * 0
+  simp at h0         -- and `simp` computes 2 * 0 = 0, so h0 says 0 < 0
 
-
-/-- This can be accomplished with a one-liner: -/
+/-- The same proof, compressed. Both are equally valid; the long one is for
+reading and the short one is what you write once you know what it says. -/
 example : ¬ ∀ n : ℕ, n < 2 * n := fun h => by simpa using h 0
 
-/-! ## 2. The interface
+/-! ## 2. The interface, and one example taken apart
 
-Three commands, and one panel. `#eval` computes, `#check` reports a type, and
-the **Infoview** on the right shows the goal wherever your cursor is. That
-panel is the whole interface; there is nothing else to learn about the editor.
+Three commands: `#eval` computes, `#check` reports a type, and the **Infoview**
+on the right shows the goal wherever your cursor is. That panel is the whole
+interface; there is nothing else to learn about the editor.
 
-Unicode is typed with backslash abbreviations: `∀` is `\forall`, `ℝ` is `\R`,
-`≤` is `\le`, `↦` is `\mapsto`, `∑` is `\sum`. Hover over any symbol to be
-told how to type it. -/
+Everything written in Lean has a **type** — "what kind of thing this is".
+`#check` reports it without evaluating anything. -/
+
+#check (2 : ℕ)              -- 2 : ℕ
+#check (2 ^ 10)             -- 2 ^ 10 : ℕ   — inferred; you never said so
+#check fun x : ℝ ↦ x ^ 2    -- a function, of type ℝ → ℝ
+#check @Nat.add_comm        -- a theorem is a thing with a type too
+#check (2 + 2 = 4)          -- 2 + 2 = 4 : Prop
+
+/-! The last line is worth a pause. A *statement* has a type too, and it is
+called `Prop`. Both `2 + 2 = 4` and `2 + 2 = 5` are things of type `Prop`.
+Being a statement and being true are separate questions; the second is what a
+proof is for.
+
+`#eval`, by contrast, computes: -/
 
 #eval 2 ^ 10
-#check fun x : ℝ ↦ x ^ 2
-#check @Nat.add_comm
 
-/-- Click at the end of this line and read the Infoview. It shows the
-hypotheses above the bar and the goal below it — exactly the blackboard
-convention. `linarith` closes goals that follow from linear arithmetic. -/
+/-! Unicode is typed with backslash abbreviations — `∀` is `\forall`, `ℝ` is
+`\R`, `≤` is `\le`, `↦` is `\mapsto`, `∑` is `\sum`. Hover over any symbol to
+be told how to type it. -/
+
+/-  Now the anatomy of a proof. Here is the whole thing, with its parts named:
+
+    example (a b : ℝ) (h : a ≤ b) : a + 1 ≤ b + 2 := by linarith
+    └─────┘ └───────┘ └─────────┘   └───────────┘ └───┘ └──────┘
+    command  objects  assumption      the goal    proof  tactic
+
+    · `example`       — "here is a claim". A theorem you do not bother to name.
+    · `(a b : ℝ)`     — the objects the claim is about, and what they are.
+    · `(h : a ≤ b)`   — an assumption, given the name `h` so the proof can
+                        refer to it. On a blackboard: "suppose a ≤ b".
+    · `a + 1 ≤ b + 2` — the statement to be proved. Lean calls it the *goal*.
+    · `:= by`         — "and here is the proof, as a list of instructions".
+    · `linarith`      — one such instruction: "this follows by linear
+                        arithmetic from what we have". -/
+
 example (a b : ℝ) (h : a ≤ b) : a + 1 ≤ b + 2 := by linarith
 
-/-- `exact?` searches Mathlib and reports the name of a lemma that closes the
-goal. Use it to *learn the name*, then write the name — the search is slow and
-the name is the transferable knowledge. Here it finds `Nat.add_comm`.
+/-  NOW TRY THIS — four things, in order. Each takes ten seconds.
 
-example (a b : ℕ) : a + b = b + a := by exact?
+    1. Put the cursor immediately BEFORE `linarith` (click just left of the
+       `l`). The Infoview shows the state at that moment:
+
+           a b : ℝ
+           h : a ≤ b
+           ⊢ a + 1 ≤ b + 2
+
+       Everything above `⊢` is what you have. Below it is what you owe.
+
+    2. Now put the cursor at the END of the line, after `linarith`. The state
+       is gone and the Infoview says `No goals`. That is what "finished"
+       means: nothing is owed. Do not go looking for a success message —
+       `No goals` is the success message.
+
+       (In VS Code you also get a small mark in the margin. In the browser
+       editor you do not. Same proof either way.)
+
+    3. Break it. Change `b + 2` to `b - 2` and read the error:
+
+           linarith failed to find a contradiction
+           a b : ℝ
+           h : a ≤ b
+           a✝ : b - 2 < a + 1
+           ⊢ False
+
+       Two things worth noticing. Lean does not say the claim is false — it
+       says this tactic could not settle it. And the state shows how the
+       tactic works: it assumed the opposite of the goal (the line with the
+       dagger) and went looking for a contradiction. Change it back.
+
+    4. Some proofs are longer than one instruction. Move the cursor down the
+       tactic lines below and watch the state change with it. -/
+
+example (a b : ℝ) (h : a ≤ b) : a + 1 ≤ b + 2 := by
+  have step : a + 1 ≤ b + 1 := by linarith
+  linarith
+
+/-! If clicking around is fiddly — on a projector, or in the browser editor —
+`trace_state` prints the state as a message instead, wherever you put it. No
+cursor required, and it shows the same thing in both editors. -/
+
+example (a b : ℝ) (h : a ≤ b) : a + 1 ≤ b + 2 := by
+  trace_state          -- a b : ℝ ⏎ h : a ≤ b ⏎ ⊢ a + 1 ≤ b + 2
+  have step : a + 1 ≤ b + 1 := by linarith
+  trace_state          -- the same, now with `step` added above the ⊢
+  linarith
+  -- A `trace_state` here would print nothing at all: no goals are left.
+
+/-- One more command. `exact?` searches Mathlib and reports the name of a lemma
+that closes the goal. Use it to find the name, then write the name: the search
+is slow, and the name is what you keep. Here it finds `Nat.add_comm`.
+
+    example (a b : ℕ) : a + b = b + a := by exact?
 -/
 example (a b : ℕ) : a + b = b + a := Nat.add_comm a b
 
 /-! ## 3. Every function is total, so some values are junk
 
-Lean's logic has no "undefined". A function of type `ℕ → ℕ` must return a
-natural number on every input, so Mathlib picks one. -/
+Now a consequence of types that will bite us all semester. Ask Lean what
+subtraction on `ℕ` is: -/
+
+#check @Nat.sub            -- Nat.sub : ℕ → ℕ → ℕ
+
+/-! That type says: given any two naturals, return a natural. Not "when the
+answer makes sense" — there is no "undefined" anywhere in `ℕ → ℕ → ℕ`, and
+Lean's logic has no such value. So something must come back, and Mathlib
+picks it. -/
 
 #eval (7 : ℕ) / 2        -- 3: division on ℕ rounds down
 #eval (1 : ℕ) / 0        -- 0
 #eval (3 : ℕ) - 5        -- 0: subtraction on ℕ is truncated
 
 example : (1 : ℝ) / 0 = 0 := div_zero 1
+
+/-  NOW TRY THIS. Add the type annotation `(3 : ℤ) - 5` and evaluate it:
+
+        #eval (3 : ℤ) - 5        -- -2
+
+    Same symbols, different answer, because the type changed. Nothing was
+    overloaded and nothing went wrong — you asked a different question. When
+    you read a formal statement, the types are part of the statement. -/
+
+#eval (3 : ℤ) - 5          -- -2
 
 /-- Cancellation for `ℕ` subtraction — **with** the hypothesis every
 mathematician silently assumes. Without `b ≤ a` it is false at `a = 0, b = 1`,
@@ -100,50 +205,92 @@ example (a b : ℕ) (hba : b ≤ a) : a - b + b = a := Nat.sub_add_cancel hba
 
 /-! ## 4. The failure that matters: statements that are *vacuously* true
 
-A false statement is harmless — it will not compile and you learn at once. The
-dangerous one compiles but is not the theorem you meant. -/
+A false statement is harmless — it will not compile, and you find out at once.
+The dangerous one compiles, but is not the theorem you meant. -/
 
 /-- Vacuous truth in its purest form. There are no reals in the empty set, so
 anything at all is true of all of them. -/
 example : ∀ x ∈ (∅ : Set ℝ), x = 37 := by simp
 
-/-- The Archimedean property, written the way one would write it on a board.
-It is **provable**, and the proof is worthless: take `N = 0`, so that
-`1/N = 0 < ε` by the junk value. Nothing about non-standard reals is involved. -/
+/-  NOW TRY THIS, before reading on. Predict, out loud, whether the next
+    statement is provable. It is the Archimedean property, written the way one
+    would write it on a board.
+
+    Then put the cursor before `refine` and read the goal, and after
+    `simpa` and read what is left. -/
+
 example : ∀ ε : ℝ, 0 < ε → ∃ N : ℕ, 1 / (N : ℝ) < ε := by
   intro ε hε
-  refine ⟨0, ?_⟩
-  simpa using hε          -- goal was `1 / (0 : ℝ) < ε`, i.e. `0 < ε`
+  refine ⟨0, ?_⟩          -- offer N = 0 as the witness
+  simpa using hε          -- goal was `1 / (0 : ℝ) < ε` — which is `0 < ε`
 
-/-- The statement one meant: `N` must be positive, and now the proof does
-work. Note how Mathlib states its own version — `exists_nat_one_div_lt` gives
-`1 / (n + 1) < ε` — with the `+ 1` there precisely to dodge this trap. -/
+/-! It is provable, and the proof is worthless. Take `N = 0`; then `1/N` is the
+junk value `0` from §3, and `0 < ε` was given. Nothing about non-standard
+analysis is involved. The kernel checked the proof. The kernel has nothing to
+say about whether the statement was the one you meant. -/
+
+/-- The statement one meant: `N` must be positive, and now the proof does real
+work. Mathlib's own version, `exists_nat_one_div_lt`, gives `1 / (n + 1) < ε`,
+with the `+ 1` there to avoid exactly this. -/
 example (ε : ℝ) (hε : 0 < ε) : ∃ N : ℕ, 0 < N ∧ 1 / (N : ℝ) < ε := by
   obtain ⟨n, hn⟩ := exists_nat_one_div_lt hε
   exact ⟨n + 1, Nat.succ_pos n, by exact_mod_cast hn⟩
 
-/-! ## 5. The same failure, one step subtler: quantifier order
+/-! ## 5. The name is not the definition
 
-Compare these two. The symbols are nearly identical; the mathematics is not.
-Read the Infoview output of both `#check`s side by side and find the
-difference before saying it out loud. -/
+`Continuous f` is not the ε–δ definition. In Mathlib it is the topological one,
+and `Metric.continuous_iff` is a **theorem** relating the two. Ask Lean what the
+definition actually is: -/
+
+#print Continuous
+--  fields:
+--    Continuous.isOpen_preimage : ∀ (s : Set Y), IsOpen s → IsOpen (f ⁻¹' s)
+--  (the rest of the output is universe and instance bookkeeping)
+
+/-! One field: preimages of open sets are open. The ε–δ form is proved from it,
+and is what these report: -/
 
 #check @Metric.continuous_iff
---  Continuous f ↔ ∀ b, ∀ ε > 0, ∃ δ > 0, ∀ a, dist a b < δ → dist (f a) (f b) < ε
-
 #check @Metric.uniformContinuous_iff
---  UniformContinuous f ↔ ∀ ε > 0, ∃ δ > 0, ∀ a b, dist a b < δ → dist (f a) (f b) < ε
 
-/-- One implication is a one-liner, and it is the true one. -/
-example {f : ℝ → ℝ} (hf : UniformContinuous f) : Continuous f := hf.continuous
+/-! (`∀ ε > 0, P ε` is notation for `∀ ε, ε > 0 → P ε`: a binder with a side
+condition, not a new quantifier.)
 
-/-! The converse is false — `fun x ↦ x^2` is continuous on `ℝ` and not
-uniformly so — but nothing in the *shape* of the two statements tells you
-which way round it goes. Only reading the quantifiers does.
+To find out what a Mathlib name says, `#print` the definition rather than
+reading a lemma about it. The next example is why. -/
 
-Write the wrong one on a worksheet and it will compile, be proved, and be a
-different theorem. This is the single most common way a formalization drifts
-from its intent, and it costs nothing to check. -/
+/-! ### A name that misleads
+
+`ContinuousOn f s` reads like "f is continuous on s". Its definition asks for
+continuity *within* `s`: at each point of `s`, only the nearby points of `s`
+count. On a one-point set there are no other points of `s`, so there is nothing
+for the condition to test.
+
+Read this signature and predict the hypotheses on `f` before running it. -/
+
+#check @continuousOn_singleton
+
+/-- There are none. *Every* function `ℝ → ℝ` is `ContinuousOn` a singleton. -/
+example (f : ℝ → ℝ) : ContinuousOn f {(0 : ℝ)} :=
+  continuousOn_singleton f 0
+
+/-- The same for any finite set. -/
+example (f : ℝ → ℝ) (s : Set ℝ) (hs : s.Finite) : ContinuousOn f s :=
+  hs.continuousOn f
+
+/-! This is not a defect. `ContinuousOn` is the definition that behaves well on
+an interval, which is what it is for. It is simply not "continuous at each point
+of `s`". Going from one to the other needs `s` to be a neighbourhood of the
+point, not merely to contain it: -/
+
+#check @ContinuousOn.continuousAt
+
+/-- The other direction needs no extra hypothesis. -/
+example (f : ℝ → ℝ) (s : Set ℝ) (h : ∀ x ∈ s, ContinuousAt f x) : ContinuousOn f s :=
+  continuousOn_of_forall_continuousAt h
+
+/-! The quantifiers here are the ones you expect, in the order you expect. What
+differs is the definition underneath, and `#print` is how you check it. -/
 
 /-! ## 6. What the kernel actually promises
 

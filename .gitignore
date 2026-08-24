@@ -5,3 +5,7 @@
 # The README is kept so the folder exists in a fresh clone.
 /MyWork/*
 !/MyWork/README.md
+
+# Instructor scratch: drafts of session material that are not ready to ship.
+# Ignored entirely, so nothing half-written is ever public.
+/snippets/
