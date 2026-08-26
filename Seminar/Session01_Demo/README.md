@@ -1,49 +1,15 @@
 # Session 01 — what does a machine-checked proof actually certify?
 
-The first meeting, and a tour of the whole tool, organised around this:
+This demo walks through some examples of Lean code. Lean's kernel certifies 
+that a **proof** establishes a **statement**. But we will see that work
+is needed to check that the statement is the theorem you meant.
 
-> Lean's kernel certifies that a **proof** establishes a **statement**.
-> Nothing checks that the statement is the theorem you meant.
-
-The session shows both: several things Lean does well, and several places
+We will see several things Lean does well, and several places
 where a statement compiles and does not mean what it appears to.
 
-## The arc
-
-1. **An example of a tactic.** `plausible` hunts counterexamples rather than
-   proofs, and finds one for `n < 2n` at `n = 0`. Then the same fact as a
-   three-line proof — `intro`, `have`, `simp at` — with the state after each
-   line written in the margin.
-2. **One example, taken apart.** `#check` and types, including the one worth
-   pausing on: `#check (2 + 2 = 4)` reports `Prop`, so a *statement* is a kind
-   of thing, and being true is a separate question. Then a single `linarith`
-   proof with its parts labelled — command, objects, assumption, goal, proof,
-   tactic — and the Infoview read before and after it. Unicode input,
-   `trace_state`, `exact?`.
-3. **Every function is total, so some values are junk.** Framed by the type:
-   `#check @Nat.sub` reports `ℕ → ℕ → ℕ`, which promises a natural back for
-   *every* pair of inputs. So `1/0 = 0` and `3 - 5 = 0` in `ℕ`. Not a bug — the
-   price of a logic with no "undefined". `(3 : ℤ) - 5 = -2` makes the point that
-   the type is part of the question.
-4. **Vacuously true statements**, which are worse than false ones. A false
-   statement will not compile; a vacuous one compiles and is not your theorem.
-   The Archimedean property as anyone would write it on a board is provable by
-   taking `N = 0`.
-5. **The name is not the definition.** `#print Continuous` shows a single
-   field — preimages of open sets are open — so `Metric.continuous_iff` is a
-   theorem *about* continuity rather than its definition. Then `ContinuousOn`:
-   every function is `ContinuousOn` a singleton, and on any finite set, because
-   the definition asks for continuity *within* the set. The rule to take away
-   is `#print` the definition rather than read a lemma about it.
-6. **What the kernel promises.** `#print axioms`: the ordinary three, then
-   `sorryAx` from an unfinished proof, then `native_decide` — which makes Lean
-   mint a brand-new axiom named after your own theorem. Mathlib's linter
-   discourages it, and the source says why. Then: a `plausible` that *passes*
-   also reports `sorryAx`, because on 100 successful tests it "acts like
-   `admit`".
-7. **And it proves real theorems.** √2 irrational in one line, because someone
-   formalised it already; Gauss's sum by induction, proved rather than looked
-   up. So nobody leaves thinking the tool is only a critic.
+Here's the session if you want to start it on the Lean server (a little
+slow, but requires no installation work): here is [the link](https://h1.nu/1CvrS
+).
 
 ## Notes
 

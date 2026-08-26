@@ -221,13 +221,28 @@ example : ∀ x ∈ (∅ : Set ℝ), x = 37 := by simp
 
 example : ∀ ε : ℝ, 0 < ε → ∃ N : ℕ, 1 / (N : ℝ) < ε := by
   intro ε hε
+  refine ⟨0, ?_⟩
+  simpa using hε
+/-!
+So the proof succeeds, but we will see that it is for a wrong reason.
+
+Notice that the following proof succeeds:
+-/
+example : ∃ N : ℕ, ∀ ε : ℝ, 0 < ε → 1 / (N : ℝ) < ε := by
+  refine ⟨0, ?_⟩
+  simp
+
+/-!
+Here's why:
+-/
+example : ∀ ε : ℝ, 0 < ε → ∃ N : ℕ, 1 / (N : ℝ) < ε := by
+  intro ε hε
   refine ⟨0, ?_⟩          -- offer N = 0 as the witness
   simpa using hε          -- goal was `1 / (0 : ℝ) < ε` — which is `0 < ε`
-
-/-! It is provable, and the proof is worthless. Take `N = 0`; then `1/N` is the
-junk value `0` from §3, and `0 < ε` was given. Nothing about non-standard
-analysis is involved. The kernel checked the proof. The kernel has nothing to
-say about whether the statement was the one you meant. -/
+/-!
+Which means that the proof we had above is worthless. Take `N = 0`; then `1/N` is the
+junk value `0` from §3, and `0 < ε` was given. The kernel checked the proof, but could not
+check whether the statement was the one you meant. -/
 
 /-- The statement one meant: `N` must be positive, and now the proof does real
 work. Mathlib's own version, `exists_nat_one_div_lt`, gives `1 / (n + 1) < ε`,
