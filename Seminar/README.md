@@ -14,6 +14,7 @@ what keeps `git pull` from ever conflicting with what you have written.
 |---|---|---|
 | 00 | [Install check](Session00_Install/) | One file that proves your installation works. Not a session. |
 | 01 | [A brief demo](Session01_Demo/) | A tour: counterexamples, the interface, junk values, vacuous truth, quantifier order, `#print axioms`, and some real theorems. |
+| 02 | [One colon, four tactics](Session02_Colons/) | The colon as the typing relation; propositions as types; `exact`, `apply`, `intro` and `rfl` as operations on it. Appendix on dependent type theory. |
 
 *Sessions are added as they are written; this index is the place to look for
 what exists.*
