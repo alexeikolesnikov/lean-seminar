@@ -217,38 +217,42 @@ example : ∀ x ∈ (∅ : Set ℝ), x = 37 := by simp
     would write it on a board.
 
     Then put the cursor before `refine` and read the goal, and after
-    `simpa` and read what is left. -/
+    `simpa` and read what is left.
 
-example : ∀ ε : ℝ, 0 < ε → ∃ N : ℕ, 1 / (N : ℝ) < ε := by
-  intro ε hε
-  refine ⟨0, ?_⟩
-  simpa using hε
-/-!
-So the proof succeeds, but we will see that it is for a wrong reason.
+    Two pieces of notation appear below, both new:
 
-Notice that the following proof succeeds:
--/
-example : ∃ N : ℕ, ∀ ε : ℝ, 0 < ε → 1 / (N : ℝ) < ε := by
-  refine ⟨0, ?_⟩
-  simp
+      `⟨a, b⟩`    supplies the parts of a statement that has parts. To prove
+                  `∃ N, P N` you owe two things — a witness `N`, and a proof
+                  that `P` holds of it — and `⟨_, _⟩` hands over both at once.
+                  Hover over the brackets to see how to type them.
 
-/-!
-Here's why:
--/
+      `refine e`  is `exact e` with holes left in it. Each `?_` becomes a goal
+                  to discharge afterwards. So `refine ⟨0, ?_⟩` says: the
+                  witness is 0, and the second part is still owed. -/
+
 example : ∀ ε : ℝ, 0 < ε → ∃ N : ℕ, 1 / (N : ℝ) < ε := by
   intro ε hε
   refine ⟨0, ?_⟩          -- offer N = 0 as the witness
   simpa using hε          -- goal was `1 / (0 : ℝ) < ε` — which is `0 < ε`
-/-!
-Which means that the proof we had above is worthless. Take `N = 0`; then `1/N` is the
-junk value `0` from §3, and `0 < ε` was given. The kernel checked the proof, but could not
-check whether the statement was the one you meant. -/
+
+/-! It compiles, and it is worthless. Take `N = 0`; then `1 / N` is the junk
+value `0` from §3, and `0 < ε` was given. The kernel checked the proof; what it
+cannot check is whether the statement was the one you meant.
+
+Reordering the quantifiers does not rescue it. The statement below is the
+stronger-looking one — a single `N` claimed to work for every `ε` at once — and
+the same junk value settles it just as cheaply: -/
+
+example : ∃ N : ℕ, ∀ ε : ℝ, 0 < ε → 1 / (N : ℝ) < ε := by
+  refine ⟨0, ?_⟩
+  simp
 
 /-- The statement one meant: `N` must be positive, and now the proof does real
 work. Mathlib's own version, `exists_nat_one_div_lt`, gives `1 / (n + 1) < ε`,
 with the `+ 1` there to avoid exactly this. -/
 example (ε : ℝ) (hε : 0 < ε) : ∃ N : ℕ, 0 < N ∧ 1 / (N : ℝ) < ε := by
   obtain ⟨n, hn⟩ := exists_nat_one_div_lt hε
+  -- `exact_mod_cast` is `exact`, allowed to move between `ℕ` and `ℝ` on the way.
   exact ⟨n + 1, Nat.succ_pos n, by exact_mod_cast hn⟩
 
 /-! ## 5. The name is not the definition
