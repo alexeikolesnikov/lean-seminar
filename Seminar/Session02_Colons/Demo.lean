@@ -67,7 +67,7 @@ left has the type on the right. -/
 theorem two_add_two : 2 + 2 = 4 := rfl
 
 /-! The declaration above has only one colon. The other one is part of the punctuation
-    symbol `:=` (which should be treated as a single monolithic thing).
+    token `:=` (which should be treated as a single monolithic thing).
     Here's what's going on:
 
     The command `theorem` declares the name `two_add_two` and states its type, `2 + 2 = 4`.
@@ -92,13 +92,16 @@ theorem t2 : 2 + 2 = 4 := by rfl
 example : two_add_two = t1 := rfl
 
 /-!
-While we are talking about ligatures that invlude colons, `::` is the other one, used
+While we are talking about tokens that include colons, `::` is the other one, used
 to add an element to the head of a list. -/
 
 #check (1 :: [2, 3])          -- [1, 2, 3] : List ℕ
 
-
-
+/-! To sum up this section: every expression has a type; a statement is itself a
+type, whose terms are its proofs; and therefore *proving something is
+constructing a term of the right type*. The tactics in section 4 are four ways
+of building such a term, types allow the compiler to check that you have built
+the right one. -/
 
 /-! ## 2. Propositions are types
 
@@ -110,6 +113,16 @@ Two lines from section 1, side by side:
 These are the same relation. `ℕ` is a type and `2` is a term of it. `2 + 2 = 4`
 is also a type whose terms are proofs of it. `two_add_two` is a name for a term
 of that type.
+
+The same shape turns up in the Infoview while you are proving. There,
+
+    n : ℕ
+    h : n + 0 = n
+
+are entries of the same kind: a name, and the type it belongs to. You would read
+the first as "let `n` be a natural number" and the second as "suppose
+`n + 0 = n`", and Lean does not distinguish between them. What differs is the
+type — the terms of `ℕ` are numbers, and the terms of `n + 0 = n` are proofs.
 
 ("Binder" is the general word for a place where a name is introduced along with
 its type: `(n : ℕ)` in a statement, `∀ n : ℕ`, `fun n : ℕ ↦ …`. All three
@@ -123,8 +136,86 @@ introduce `n` and say what it is.) -/
     seeing once so that neither shape is unfamiliar later. -/
 
 
+/-! ## 3. Parentheses, commas, and how things get applied
 
-/-! ## 3. The four tactics as operations on colons
+Lean writes `f 2 3` where most of mathematics writes `f(2, 3)`. This is not a
+stylistic quirk, and it is worth a few minutes because it affects how Lean thinks about
+proofs as well.
+
+**Application is juxtaposition.** Writing two things next to each other *is*
+applying the first to the second. There is no call syntax and no argument
+list. -/
+
+def scale (n : ℕ) : ℕ := n * 10
+def addPair (a b : ℕ) : ℕ := a + b
+
+/-! The above defines two functions, one for scaling a natural number by 10
+and the other for adding two natural numbers. Let's see the types of objects
+they produce.
+-/
+
+#check scale 2                -- scale 2 : ℕ
+#check addPair 2              -- addPair 2 : ℕ → ℕ
+#check addPair 2 3            -- addPair 2 3 : ℕ
+
+/-! The first line is not surprising: the result of applying `scale` to 2
+is a natural number. But the middle line is a bit surprising. A function of
+"two arguments" is really a function of one argument that returns a function,
+so supplying one argument, say 2, is legal and hands you back the function that
+inputs a natural number `b` and returns the natural number `2 + b`.
+`addPair 2 3` means `(addPair 2) 3`. There is no notion of arity to get wrong.
+
+Theorems are applied the same way, because they are functions too: -/
+#check Nat.add_comm 2 3       -- Nat.add_comm 2 3 : 2 + 3 = 3 + 2
+#check Nat.add_comm 2         -- Nat.add_comm 2 : ∀ (m : ℕ), 2 + m = m + 2
+
+/-! **Parentheses group; they never apply.** Mind the order of operations: -/
+
+#eval scale 2 + 3             -- 23 — parsed as (scale 2) + 3
+#eval scale (2 + 3)           -- 50
+
+/-! Application binds more tightly than every operator, so `f x + g y` is
+`(f x) + (g y)`. Parentheses appear only where you would need them on paper to
+force a different grouping. -/
+
+def double (n : ℤ) : ℤ := n * 2
+
+/-  NOW TRY THIS. Add the line
+
+        #check double -1
+
+    and read the output carefully. There is no error:
+
+        double - 1 : ℤ → ℤ
+
+    Lean parsed it as `double - 1`: the function `double`, minus the constant
+    function `1`, subtracted pointwise. That is a perfectly good function of
+    type `ℤ → ℤ`. It is simply not what you meant. What you meant was
+
+        #eval double (-1)     -- -2
+
+    The mistakes worth fearing are the ones that compile. -/
+
+/-! **Commas are never argument separators.** They appear in three unrelated
+roles, and none of them is "next argument": -/
+
+#check (⟨1, 2⟩ : ℕ × ℕ)       -- assembling a pair
+#check ∀ n : ℕ, n + 0 = n     -- separating a binder from its body
+#check [1, 2, 3]              -- list elements
+
+/-! **Dot notation.** For `x : T`, writing `x.foo` means `T.foo x`. It is
+shorthand and nothing more, and it is why proofs sometimes carry a suffix: -/
+
+example (a b : ℕ) (h : a = b) : b = a := h.symm
+example (a b : ℕ) (h : a = b) : b = a := Eq.symm h    -- the same term
+
+/-! The point is: there are fewer moving parts than the syntax initially
+suggests. One relation, "has type"; two ways to build terms, application and
+binding. Everything else: `+`, `∑`, `⟨_, _⟩`, is notation that unfolds into
+those.
+ -/
+
+/-! ## 4. The four tactics as operations on colons
 
 Each of today's tactics is a statement about types. -/
 
@@ -207,7 +298,7 @@ end
     The `↑` marks a *coercion* — Lean moving a value from one type to another
     where the surrounding expression requires it. Note where the arrow sits in
     each case: outside the subtraction on the left, on each argument separately
-    on the right. That is the whole difference.
+    on the right.
 
     Both, computed: -/
 
@@ -235,10 +326,13 @@ theorem cast_sub_of_le (n m : ℕ) (h : m ≤ n) :
 
 /-! ## 6. Summary
 
-1. One colon, meaning "has type".
-2. A proposition is a type; a proof is a term of it.
-3. `exact`, `apply`, `intro` and `rfl` are four operations on that relation.
-4. Where the colon sits is mathematical content, not punctuation.
+1. The colon has one meaning: "has type".
+2. A proposition is a type; a proof is a term of it, so proving something is
+   constructing a term of the right type.
+3. Application is juxtaposition; parentheses group but never apply.
+4. `exact`, `apply`, `intro` and `rfl` are four operations on the typing
+   relation.
+5. Where the colon sits is mathematical content, not punctuation.
 
 Exercises: `Exercises.lean`. Parts A–C are the session; D is optional.
 
