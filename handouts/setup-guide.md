@@ -120,19 +120,26 @@ stop it and ask: the cache did not arrive and it will take hours.
 **Never run `lake update`.** It re-resolves everything against the newest
 versions and undoes the pin.
 
-### 6. Windows only: exclude the Lean folders from Defender
+### 6. If Lean turns out to be slow every time
 
-Optional but potentially a big improvement in speed. Defender's real-time scanner inspects each of the
-thousands of `.olean` files Lean reads on every build. In an administrator
-PowerShell:
+Some computers run security software that inspects every file as it is opened.
+Lean opens around 8,700 library files each time it starts, so on those machines
+it can be slow *every* time rather than only the first time after opening
+VS Code.
 
-```powershell
-Add-MpPreference -ExclusionPath "$HOME\.elan"
-Add-MpPreference -ExclusionPath "<your clone>\.lake"
-```
+There is a way to fix this, but on a University-issued computer it is set by
+policy rather than by you, and the same thing has already come up on a
+University Mac. **Please come and talk to me** instead of trying things — it is
+better sorted out once for everyone than machine by machine.
 
-If your machine's policy blocks this, skip it — Lean still works, just slower.
-It is not worth an OTS ticket.
+How to tell it apart from Lean simply doing its work: while you are waiting,
+open Task Manager (Windows) or Activity Monitor (Mac) and see what is using the
+processor.
+
+- `lean` or `lake` at the top — Lean is working, and this is not the problem.
+  If that goes on for hours, see the table at the end of this guide.
+- Your antivirus at the top instead — names like `MsMpEng.exe` on Windows or
+  `wdavdaemon` on a Mac — that is this problem. Come and find me.
 
 ### 7. Check it worked
 
@@ -237,8 +244,8 @@ broken. Send that output to Alexei; it is usually diagnosable in one exchange.
 |---|---|
 | `git` not recognised after installing it | VS Code or the terminal was not restarted |
 | Elan download fails with a permission or TLS error | Managed-laptop policy or a corporate proxy — an IT conversation |
-| A build that takes hours with the CPU pinned | Mathlib is compiling from source; the cache did not download |
-| Everything works but is slow | Defender scanning `.lake` — see step 6 |
+| A build that takes hours, with `lean` or `lake` using the processor | Mathlib is compiling from source; the cache did not download |
+| Slow every time you open a file, with your antivirus rather than `lean` using the processor | Security software scanning the library files — see step 6, and come and talk to me |
 | Files reverting or duplicating themselves | The project is inside a OneDrive-synced folder; move it |
 | `expected a Name` from `lake` | Something edited `lake-manifest.json` by hand |
 

@@ -6,7 +6,9 @@ Lean, Mathlib, and the VS Code Infoview are all working.
 Open it, wait for the orange progress bar at the top of the editor to finish. Different OS
 might have a different appearance for Visual Studio (so you might not see the orange bar), 
 but it should be clear that something is "running". 
-The run might take a couple of minutes the first time, while Mathlib loads into memory. Click at
+The run might take a couple of minutes the first time, while Mathlib loads into memory.
+If it takes minutes *every* time rather than only the first, that is worth
+mentioning to me — see step 6 and the table in the setup guide. Click at
 the b + 2 term near the end of the `linarith` line (around line 31) in the first example. 
 The **Lean Infoview** panel should appear on the right showing
 

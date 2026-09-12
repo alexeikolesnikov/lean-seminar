@@ -17,7 +17,13 @@
 
   Section 7 is an appendix for afterwards, on your own machine.
 -/
-import Mathlib
+import Mathlib.Data.Real.Basic
+import Mathlib.Algebra.Ring.Int.Defs
+import Mathlib.Algebra.Field.Rat
+import Mathlib.Data.Nat.Cast.Field
+import Mathlib.Tactic.NormNum.Core
+import Mathlib.Tactic.Ring.RingNF
+import Plausible.Tactic
 
 /-! ## 0. Where we were
 
@@ -139,8 +145,8 @@ introduce `n` and say what it is.) -/
 /-! ## 3. Parentheses, commas, and how things get applied
 
 Lean writes `f 2 3` where most of mathematics writes `f(2, 3)`. This is not a
-stylistic quirk, and it is worth a few minutes because it affects how Lean thinks about
-proofs as well.
+stylistic quirk, and it is worth a few minutes because it affects how Lean
+thinks about proofs as well.
 
 **Application is juxtaposition.** Writing two things next to each other *is*
 applying the first to the second. There is no call syntax and no argument
@@ -232,7 +238,7 @@ example (P Q : Prop) (hPQ : P → Q) (hP : P) : Q := by
 /-- `intro h` — take a binder off the front of the goal and put it in the
 context as a new colon line. -/
 example (P Q : Prop) : P → Q → P := by
-  intro hP _hQ
+  intro hP hQ
   -- Two new lines above the turnstile; the goal has shrunk to `⊢ P`.
   exact hP
 
@@ -344,7 +350,7 @@ next question.
 Run it in VS Code on your own machine, where you can hover over things.
 ────────────────────────────────────────────────────────────────────────────-/
 
-/-! ## 7. Appendix — what the colon rests on
+/-! ## 7. Appendix; more about the ':'
 
 ### 7.1 If propositions are types, what is `Prop`?
 
