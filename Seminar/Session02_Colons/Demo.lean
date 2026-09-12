@@ -130,6 +130,48 @@ the first as "let `n` be a natural number" and the second as "suppose
 `n + 0 = n`", and Lean does not distinguish between them. What differs is the
 type — the terms of `ℕ` are numbers, and the terms of `n + 0 = n` are proofs.
 
+  ### Functions, on data and on proofs
+
+`ℕ → ℕ` is a type, and its terms are functions. Nothing so far is new. In Lean,
+the same construct is used for proofs. -/
+
+#check Nat.succ               -- Nat.succ (n : ℕ) : ℕ
+
+section
+variable (P Q : Prop) (hPQ : P → Q) (hP : P)
+
+#check hPQ                    -- hPQ : P → Q
+#check hP                     -- hP : P
+
+/- Read `hPQ` as a function: give it a proof of `P`, get a proof of `Q`.
+   Applying it is ordinary function application, written the same way. -/
+
+end
+
+/-! Lean has one function type, and it binds a name:
+
+    ∀ (x : A), B
+
+`B` may mention `x`. When it does, the name is doing work and there is no
+shorter way to write it: -/
+
+#check ∀ n : ℕ, n + 0 = n
+
+/-! When `B` does not mention `x`, the name is never referred to again, and
+`A → B` is how that is written without inventing one. The two are the same
+type, not merely equivalent ones — `rfl` suffices: -/
+
+example : (∀ _ : ℕ, ℕ) = (ℕ → ℕ) := rfl
+
+/-! So the arrow is not a second kind of function type; it is the notation
+available when the bound variable is unused. `hPQ : P → Q` above is
+`hPQ : ∀ _ : P, Q`: the proof of `P` goes in, and `Q` is the same proposition
+whichever proof it was.
+
+Two consequences for §3. `intro` strips a binder, so an implication goal and a
+`∀` goal are one problem. `apply` is function application run backwards, so
+modus ponens and instantiating a universal statement are one operation.
+
 ("Binder" is the general word for a place where a name is introduced along with
 its type: `(n : ℕ)` in a statement, `∀ n : ℕ`, `fun n : ℕ ↦ …`. All three
 introduce `n` and say what it is.) -/
@@ -140,7 +182,6 @@ introduce `n` and say what it is.) -/
 /-  Those are the same theorem displayed two ways. The `@` turns off the
     convention that pulls leading binders to the left of the colon. Worth
     seeing once so that neither shape is unfamiliar later. -/
-
 
 /-! ## 3. Parentheses, commas, and how things get applied
 
@@ -342,99 +383,123 @@ theorem cast_sub_of_le (n m : ℕ) (h : m ≤ n) :
 
 Exercises: `Exercises.lean`. Parts A–C are the session; D is optional.
 
-──────────────────────────────────────────────────────────────────────────────
-Everything below is an appendix. It is not part of the session and nothing
-later depends on it. It is here because "what is a type, then?" is a reasonable
-next question.
+## 7. Appendix: the same construct twice
 
-Run it in VS Code on your own machine, where you can hover over things.
-────────────────────────────────────────────────────────────────────────────-/
+Lean has one mechanism for building types. Data and propositions are both
+built with it, which is why `2 : ℕ` and `two_add_two : 2 + 2 = 4` read the
+same way (the thing on the left of `:` has the type on the right).
+Laid out as a correspondence:
 
-/-! ## 7. Appendix; more about the ':'
+    data                          proposition
+    ----------------------------  ----------------------------
+    α → β                         p → q
+    α × β        (Prod)           p ∧ q        (And)
+    α ⊕ β        (Sum)            p ∨ q        (Or)
+    (x : α) → β x                 ∀ x : α, p x
+    Σ x : α, β x (Sigma)          ∃ x : α, p x (Exists)
+    Unit,  ()                     True,  True.intro
+    Empty                         False
 
-### 7.1 If propositions are types, what is `Prop`?
+The left column is `Type`; the right is `Prop`. The shapes match because they
+are the same constructions. They are not interchangeable, and §7.4 is where
+that shows. -/
 
-Types have types, and the tower does not stop. -/
+/-! ### 7.1 The pairs, side by side
+Hover over the expression to see its type. If you want, you can record it in
+the place of the `?` below.
+-/
 
-#check (2 = 2)                -- 2 = 2 : Prop
-#check Prop                   -- Prop : Type
-#check Type                   -- Type : Type 1
-#check Type 1                 -- Type 1 : Type 2
+#check @Prod                  -- Prod : Type u_1 → Type u_2 → Type (max u_1 u_2)
+#check @And                   -- ?
+#check @Sum                   -- ?
+#check @Or                    -- ?
+#check @Sigma                 -- ?
+#check @Exists                -- ?
+#check @Unit                  -- ?
+#check @True                  -- ?
+#check @Empty                 -- ?
+#check @False                 -- ?
 
-/-  `Prop` is a type whose terms are propositions, whose terms are proofs. The
-    hierarchy `Type 0, Type 1, Type 2, …` exists to avoid `Type : Type`, which
-    would make the system inconsistent (Girard's paradox).
+/-- A dependent function type: the codomain depends on the argument. -/
+example : Type := (n : ℕ) → Fin n
 
-    `Prop` and `Type u` are both `Sort`s; Lean displays the bottom two
-    specially: -/
+/-- Negation is not a separate primitive. -/
+example (p : Prop) : (¬p) = (p → False) := rfl
 
-#check Sort 0                 -- Prop : Type
-#check Sort 1                 -- Type : Type 1
+/-! ### 7.2 Prop is a type, and so is Type
 
-/-  `Prop` is `Sort 0`. What distinguishes it from `Type` is not its position
-    in the tower but proof irrelevance: any two proofs of the same proposition
-    are definitionally equal. -/
+`Sort 0` prints as `Prop` and `Sort 1` as `Type`; the hierarchy continues
+upward without end. -/
+
+#check Prop                   -- Type
+#check Type                   -- Type 1
+#check Type 1                 -- Type 2
+#check Sort 0                 -- ?
+#check Sort 1                 -- ?
+
+/-! One asymmetry, visible here. Quantifying over all propositions stays a
+proposition; quantifying over all types does not stay in `Type`. -/
+
+#check ∀ p : Prop, p → p      -- ?  expect Prop
+#check (α : Type) → α → α     -- ?  expect Type 1
+
+/-! ### 7.3 Proof irrelevance
+
+Any two proofs of the same proposition are definitionally equal, so `rfl`
+suffices. The data analogue is false: two terms of `ℕ` are not equal by
+virtue of both being naturals. -/
 
 example (h₁ h₂ : 2 + 2 = 4) : h₁ = h₂ := rfl
 
-/-  Hence a proof cannot be `#eval`'d, and it never matters which proof you
-    have, only that you have one. -/
+/-! ### 7.4 Where the correspondence stops
 
-/-! ### 7.2 `∀` and `→`
+`Sigma` and `Exists` have matching constructors. Their eliminators differ,
+and this is deliberate: a `Prop` may not be eliminated into a `Type`. If it
+could, proof irrelevance would let you derive equalities between pieces of
+data that are not equal.
 
-`A → B` is notation for a `∀` whose bound variable does not occur on the
-right. -/
+The witness of a `Sigma` is available as data: -/
 
-example : (∀ _ : ℕ, ℕ) = (ℕ → ℕ) := rfl
+#check fun (s : Σ n : ℕ, Fin n) => s.1          -- ?  expect ℕ
 
-/-  When the bound variable does occur on the right, the result is a dependent
-    function type: a function whose return type varies with its argument. That
-    cannot be written with `→`, which is why `∀` is the primitive and `→` the
-    abbreviation. -/
+/-! The witness of an `∃` is not. Uncomment each line and record what Lean
+says:
 
-#check @id                    -- {α : Sort u_1} → α → α
+    example (h : ∃ n : ℕ, n > 3) : ℕ := h.choose'
+    -- error:
 
-/-  Read: for any sort `α`, a function from `α` to `α`. The type of the result
-    depends on the value of the first argument. This is what "dependent type
-    theory" refers to.
+    example (h : ∃ n : ℕ, n > 3) : ℕ := by obtain ⟨n, _⟩ := h; exact n
+    -- error:
 
-    The induction principle for `ℕ` has the same shape: -/
+The same restriction applies to `∨` against `⊕`: a disjunction does not tell
+you which side holds in a way you can compute with.
+
+    example (p q : Prop) (h : p ∨ q) : Bool := by cases h with
+      | inl _ => exact true
+      | inr _ => exact false
+    -- error:
+
+There is a way across, and it is an axiom rather than a construction. -/
+
+#check @Exists.choose         -- ?
+#check @Classical.choice      -- ?
+
+noncomputable def someWitness (h : ∃ n : ℕ, n > 3) : ℕ := h.choose
+
+#print axioms someWitness     -- ?  expect Classical.choice
+
+/-! Dropping `noncomputable` above is the demonstration:
+
+    def someWitness' (h : ∃ n : ℕ, n > 3) : ℕ := h.choose
+    -- error:
+
+So "there exists an n" and "here is an n" are different statements in Lean,
+and the distance between them is exactly the axiom of choice. -/
+
+/-! ### 7.5 What induction is
+
+`Nat.rec` is the eliminator for `ℕ`. The `induction` tactic applies it. Its
+motive may land in `Prop` or in `Type` — the same recursor does proof by
+induction and definition by recursion. -/
 
 #check @Nat.rec
-
-/-  {motive : ℕ → Sort u} → motive 0 →
-      ((n : ℕ) → motive n → motive (n+1)) → (t : ℕ) → motive t
-
-    Base case, inductive step, conclusion for all `t`. Because `motive` may
-    land in `Prop` or in `Type`, the same principle gives both proof by
-    induction and definition by recursion. -/
-
-/-! ### 7.3 Definitional and propositional equality
-
-Section 4's asymmetry, stated properly. Two terms are definitionally equal if
-Lean can reduce both to the same thing on its own, by unfolding definitions and
-computing — no theorem, no induction, no appeal to anything proved earlier.
-`rfl` proves exactly the definitional equalities; everything else requires a
-theorem.
-
-`Nat.add` is defined by recursion on its second argument. These are its two
-defining equations, and both hold by `rfl`: -/
-
-example (n : ℕ)   : n + 0 = n                 := rfl
-example (n m : ℕ) : n + (m + 1) = (n + m) + 1 := rfl
-
-/-  The mirror images are theorems rather than reductions, each proved by
-    induction on `n`: -/
-
-#check @Nat.zero_add          -- ∀ (n : ℕ), 0 + n = n
-#check @Nat.succ_add          -- ∀ (n m : ℕ), n.succ + m = (n + m).succ
-
-/-  So `n + 0` reduces to `n` by one step of the definition, while `0 + n` is
-    stuck on an unknown `n`. The two statements are equally true and are not
-    equally definitional, and only the second distinction concerns `rfl`.
-
-    A closing check in the style of session 1: what do today's theorems rest
-    on? -/
-
-#print axioms two_add_two     -- 'two_add_two' does not depend on any axioms
-#print axioms Nat.zero_add
