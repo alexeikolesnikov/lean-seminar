@@ -7,15 +7,21 @@
   Drafted with AI assistance, then compiled against the pinned toolchain
   before release. See "How these files were made" in the README.
 
-  Tactics introduced: exact, apply, intro, rfl, have, show
-  Assumed from earlier: #check, #eval, #print axioms, plausible  (Session 01)
+  Tactics introduced: exact, apply, intro, rfl, have, show, trace_state
+  Assumed from earlier: #check, #eval, #print axioms, sorry, plausible  (Session 01)
 
   The claim this session is organised around:
 
       The colon has only one meaning; you can read it as "has type".
       Everything else that looks like a colon is a different token.
 
-  Section 7 is an appendix for afterwards, on your own machine.
+  Section 7 is an appendix for afterwards, on your own machine. It continues in
+  `Extras.lean`, which is additional material belonging to no session.
+
+CI: allow-sorry (1)
+
+  §4 ends with one deliberate `sorry`, in `unfinished`, whose whole point is
+  that it compiles. Check this file with --allow-sorry.
 -/
 import Mathlib.Data.Real.Basic
 import Mathlib.Algebra.Ring.Int.Defs
@@ -82,26 +88,9 @@ theorem two_add_two : 2 + 2 = 4 := rfl
     That term must have the type `2 + 2 = 4`. If it doesn't, the compiler will produce
     a "type mismatch" error.
 
-    The next block briefly shows that for propositions (and only for propositions), any
-    two terms of the same type are equal by definition. With the print commands, you
-    can see that the proofs, one supplied by the term `rfl` and the other two
-    produced by the `ring` and `rfl` tactic, look different, but they are declared
-    the same by the kernel. When you are reading elsewhere about *proof irrelevance*, this
-    is an example.
+    The one thing that *is* published is the statement. Which proof you supplied
+    stops mattering the moment Lean has accepted it — §7.3 shows that directly.
 -/
-
-theorem t1 : 2 + 2 = 4 := by ring
-theorem t2 : 2 + 2 = 4 := by rfl
-#print two_add_two
-#print t1
-#print t2
-example : two_add_two = t1 := rfl
-
-/-!
-While we are talking about tokens that include colons, `::` is the other one, used
-to add an element to the head of a list. -/
-
-#check (1 :: [2, 3])          -- [1, 2, 3] : List ℕ
 
 /-! To sum up this section: every expression has a type; a statement is itself a
 type, whose terms are its proofs; and therefore *proving something is
@@ -179,9 +168,25 @@ introduce `n` and say what it is.) -/
 #check Nat.add_comm           -- Nat.add_comm (n m : ℕ) : n + m = m + n
 #check @Nat.add_comm          -- ∀ (n m : ℕ), n + m = m + n
 
-/-  Those are the same theorem displayed two ways. The `@` turns off the
-    convention that pulls leading binders to the left of the colon. Worth
-    seeing once so that neither shape is unfamiliar later. -/
+/-  Those are the same theorem displayed two ways. The first is the shape a
+    declaration is written in: name, binders, colon, type. The `@` turns that
+    convention off and shows the type on its own.
+
+    `@` does one more thing, and it will matter every time you read a Mathlib
+    lemma. Binders come in two kinds:
+
+      `(n : ℕ)`   explicit — you supply it
+      `{n : ℕ}`   implicit — Lean works it out from the other arguments
+
+    Most Mathlib lemmas take their variables implicitly, because they can be
+    read off the hypotheses. Session 1 used one: `Nat.sub_add_cancel`, whose
+    signature is `{n m : ℕ} (h : m ≤ n) : n - m + m = n`. You write
+    `Nat.sub_add_cancel h` and `n` and `m` arrive from the type of `h`.
+
+    `@` makes the implicit ones explicit again, which is how you supply one by
+    hand when Lean cannot guess it. -/
+
+#check @Nat.sub_add_cancel    -- ∀ {n m : ℕ}, m ≤ n → n - m + m = n
 
 /-! ## 3. Parentheses, commas, and how things get applied
 
@@ -264,7 +269,37 @@ those.
 
 /-! ## 4. The four tactics as operations on colons
 
-Each of today's tactics is a statement about types. -/
+### The proof state, and where to look at it
+
+A proof in progress is two things: a **context** — the named things you have,
+each with its type — and a **goal**, the type you still owe a term of. The
+Infoview shows both, separated by `⊢`:
+
+    P Q : Prop        ← context: names and their types
+    hP : P
+    ⊢ Q               ← goal: what you owe
+
+Everything above the turnstile is a colon line. The goal is a type with no name
+yet; producing that name is what finishing the proof means.
+
+Every tactic is a transformation of that pair. That is the whole of this
+section: `intro` moves a binder from the goal into the context, `exact`
+discharges the goal, `apply` replaces the goal with whatever is left over, and
+`rfl` discharges it when the two sides are already the same term.
+
+**Where to look.** The Infoview shows the state at the cursor, so move the
+cursor down a tactic block line by line and watch the context grow and the goal
+shrink. On a projector, or in the browser editor, clicking is fiddly;
+`trace_state` prints the state as a message wherever you put it, and needs no
+cursor. -/
+
+example (P Q : Prop) (hPQ : P → Q) (hP : P) : Q := by
+  trace_state          -- P Q : Prop ⏎ hPQ : P → Q ⏎ hP : P ⏎ ⊢ Q
+  apply hPQ
+  trace_state          -- the same context, but now ⊢ P
+  exact hP
+
+/-! Each of today's tactics is a statement about types. -/
 
 /-- `exact e` — the goal is `⊢ T`; supply an `e : T`. -/
 example (P : Prop) (hP : P) : P := by
@@ -294,6 +329,21 @@ example (P Q R : Prop) (hPQ : P → Q) (hQR : Q → R) : P → R := by
 example (f : ℕ → ℕ) (hf : ∀ n, f n = n) : f 3 = 3 := by
   exact hf 3
 
+/-! ### Two more, and they are the same two operations
+
+`have h : T := e` adds a line to the context. It is the tactic form of naming an
+intermediate result, and what follows its colon is — again — a type.
+
+`show T` replaces the goal with `T`, provided `T` is *definitionally* equal to
+the goal. It changes nothing that Lean checks; it states the goal you believe
+you are working on, so that a mismatch is caught where you wrote it rather than
+several lines later. -/
+
+example (a b : ℕ) (h : a = b) : b = a := by
+  have h' : a = b := h        -- a new context line, named
+  show b = a                  -- the goal, restated; Lean accepts it
+  exact h'.symm
+
 /-! ### `rfl`
 
 `rfl : a = a`, so `rfl` closes a goal `a = b` when Lean can already see `a` and
@@ -313,6 +363,19 @@ example (n : ℕ) : n + 0 = n := rfl      -- works
 
     Lean needed the type of `rfl` to be the goal, and it is not.
 
+    That error is worth reading structurally, because almost every type error
+    you will meet has these three parts:
+
+        the term            `rfl`
+        the type it has     `?m.9 = ?m.9`
+        the type expected   `0 + n = n`
+
+    Find those three and you have found the problem. A type error is a colon
+    mismatch, and it tells you which colon.
+
+    (The `?m.9` is a placeholder Lean has not yet resolved — it was waiting to
+    learn what `a` in `rfl : a = a` should be, and never found out.)
+
     The asymmetry has a cause: addition on `ℕ` recurses on its second
     argument, so `n + 0` reduces to `n` immediately, while `0 + n` cannot
     reduce until something is known about `n`. This is behind the corresponding
@@ -323,6 +386,22 @@ example (n : ℕ) : n + 0 = n := rfl      -- works
 -- example (n : ℕ) : 0 + n = n := rfl
 
 example (n : ℕ) : 0 + n = n := Nat.zero_add n   -- a theorem, proved by induction
+
+/-! ### `sorry`, and why "it compiled" is not "it is proved"
+
+One more term belongs here, because the exercise file is built out of it.
+`sorry` has whatever type is expected of it — any type at all. So it satisfies
+the colon everywhere, and a file full of `sorry` compiles.
+
+What it leaves behind is visible in one place only, which is why session 1 spent
+time on `#print axioms`: -/
+
+theorem unfinished : 2 + 2 = 5 := sorry
+
+#print axioms unfinished      -- 'unfinished' depends on axioms: [sorryAx]
+
+/-! Note the statement. `sorry` proved something false without complaint, and
+nothing but `#print axioms` will tell you. -/
 
 /-! ## 5. Does this say what it claims?
 
@@ -377,11 +456,15 @@ theorem cast_sub_of_le (n m : ℕ) (h : m ≤ n) :
 2. A proposition is a type; a proof is a term of it, so proving something is
    constructing a term of the right type.
 3. Application is juxtaposition; parentheses group but never apply.
-4. `exact`, `apply`, `intro` and `rfl` are four operations on the typing
-   relation.
+4. A proof in progress is a context and a goal; every tactic transforms that
+   pair. `exact`, `apply`, `intro` and `rfl` are four such transformations.
 5. Where the colon sits is mathematical content, not punctuation.
+6. A type error names three things: the term, the type it has, and the type
+   expected.
 
-Exercises: `Exercises.lean`. Parts A–C are the session; D is optional.
+Exercises: `Exercises.lean`. Parts A–E are the session, F needs no proof, and G
+is optional. Each part of `Solutions.lean` ends with a note headed "What this
+was for" — do the part first.
 
 ## 7. Appendix: the same construct twice
 
@@ -401,8 +484,8 @@ Laid out as a correspondence:
     Empty                         False
 
 The left column is `Type`; the right is `Prop`. The shapes match because they
-are the same constructions. They are not interchangeable, and §7.4 is where
-that shows. -/
+are the same constructions. They are not interchangeable, and `Extras.lean` is
+where that shows. -/
 
 /-! ### 7.1 The pairs, side by side
 Hover over the expression to see its type. If you want, you can record it in
@@ -420,7 +503,9 @@ the place of the `?` below.
 #check @Empty                 -- ?
 #check @False                 -- ?
 
-/-- A dependent function type: the codomain depends on the argument. -/
+/-- A dependent function type: the codomain depends on the argument. `Fin n` is
+the type of natural numbers less than `n`, so this is the type of functions
+sending each `n` to something smaller than `n`. -/
 example : Type := (n : ℕ) → Fin n
 
 /-- Negation is not a separate primitive. -/
@@ -451,55 +536,23 @@ virtue of both being naturals. -/
 
 example (h₁ h₂ : 2 + 2 = 4) : h₁ = h₂ := rfl
 
-/-! ### 7.4 Where the correspondence stops
+/-! This is what §1 was pointing at. Three proofs of `2 + 2 = 4`, written three
+ways, and `#print` shows three different terms: -/
 
-`Sigma` and `Exists` have matching constructors. Their eliminators differ,
-and this is deliberate: a `Prop` may not be eliminated into a `Type`. If it
-could, proof irrelevance would let you derive equalities between pieces of
-data that are not equal.
+theorem t1 : 2 + 2 = 4 := rfl
+theorem t2 : 2 + 2 = 4 := by ring
+theorem t3 : 2 + 2 = 4 := by decide
 
-The witness of a `Sigma` is available as data: -/
+#print t1
+#print t2
+#print t3
 
-#check fun (s : Σ n : ℕ, Fin n) => s.1          -- ?  expect ℕ
+/-! `t2`’s term is a page of `Mathlib.Tactic.Ring` machinery and `t3`’s invokes a
+decision procedure, yet all three are interchangeable: -/
 
-/-! The witness of an `∃` is not. Uncomment each line and record what Lean
-says:
+example : t1 = t2 := rfl
+example : t2 = t3 := rfl
 
-    example (h : ∃ n : ℕ, n > 3) : ℕ := h.choose'
-    -- error:
-
-    example (h : ∃ n : ℕ, n > 3) : ℕ := by obtain ⟨n, _⟩ := h; exact n
-    -- error:
-
-The same restriction applies to `∨` against `⊕`: a disjunction does not tell
-you which side holds in a way you can compute with.
-
-    example (p q : Prop) (h : p ∨ q) : Bool := by cases h with
-      | inl _ => exact true
-      | inr _ => exact false
-    -- error:
-
-There is a way across, and it is an axiom rather than a construction. -/
-
-#check @Exists.choose         -- ?
-#check @Classical.choice      -- ?
-
-noncomputable def someWitness (h : ∃ n : ℕ, n > 3) : ℕ := h.choose
-
-#print axioms someWitness     -- ?  expect Classical.choice
-
-/-! Dropping `noncomputable` above is the demonstration:
-
-    def someWitness' (h : ∃ n : ℕ, n > 3) : ℕ := h.choose
-    -- error:
-
-So "there exists an n" and "here is an n" are different statements in Lean,
-and the distance between them is exactly the axiom of choice. -/
-
-/-! ### 7.5 What induction is
-
-`Nat.rec` is the eliminator for `ℕ`. The `induction` tactic applies it. Its
-motive may land in `Prop` or in `Type` — the same recursor does proof by
-induction and definition by recursion. -/
-
-#check @Nat.rec
+/-! So the proof you supply is not part of what a theorem exports. Only the
+statement is. That is why `have` can forget its body, and why a proof can be
+erased from compiled code entirely. -/
