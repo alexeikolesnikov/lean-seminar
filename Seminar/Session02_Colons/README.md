@@ -1,4 +1,4 @@
-# Session 02 — one colon, four tactics
+# Session 02 — one colon
 
 Several people asked, in different words, what the colons in a Lean file mean.
 This session is the answer.
@@ -9,8 +9,8 @@ The claim it is organised around:
 > Everything else that looks like a colon is a different token.
 
 A proposition is a type, a proof is a term of that type, and therefore proving
-something is constructing a term of the right type. The four tactics of the day
-— `exact`, `apply`, `intro`, `rfl` — are four operations on that relation.
+something is constructing a term of the right type. §4 is what the tactics do
+to that relation.
 
 Here's the session if you want to start it on the Lean server (a little slow,
 but requires no installation work): https://live.lean-lang.org/#url=https%3A%2F%2Fraw.githubusercontent.com%2Falexeikolesnikov%2Flean-seminar%2Fmaster%2FSeminar%2FSession02_Colons%2FDemo.lean

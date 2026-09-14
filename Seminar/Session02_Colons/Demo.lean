@@ -1,5 +1,5 @@
 /-
-  Session 02 — One colon, four tactics
+  Session 02 — Reading Lean
   Math Dept Lean seminar · https://github.com/alexeikolesnikov/lean-seminar
 
   Checked against: Lean 4.33.0 / Mathlib v4.33.0
@@ -137,18 +137,44 @@ variable (P Q : Prop) (hPQ : P → Q) (hP : P)
 
 end
 
-/-! Lean has one function type, and it binds a name:
+/-! ### One construct, and two things you already write
 
-    ∀ (x : A), B
+You write
 
-`B` may mention `x`. When it does, the name is doing work and there is no
-shorter way to write it: -/
+    ∀ n ∈ ℕ, B(n)
 
-#check ∀ n : ℕ, n + 0 = n
+and Lean writes
 
-/-! When `B` does not mention `x`, the name is never referred to again, and
-`A → B` is how that is written without inventing one. The two are the same
-type, not merely equivalent ones — `rfl` suffices: -/
+    ∀ (n : ℕ), B n
+
+Two changes, neither cosmetic. The `∈` became a colon because `ℕ` is a type,
+not a set you are a member of — §1's point. (Lean does have `∀ n ∈ S, …` for an
+actual set `S`, and it means something else: `∀ n, n ∈ S → …`, a binder with a
+side condition. Session 1 made the same remark about `∀ ε > 0`.) And `B(n)` lost
+its parentheses, for the reason in §3.
+
+What is left is one construct, which you already read in two ways depending on
+what `B(n)` is:
+
+    B(n) is a statement      ∀ n : ℕ, B n     the universally quantified sentence
+    B(n) is an object        ∀ n : ℕ, B n     the family (Bₙ) indexed by ℕ
+
+Lean does not distinguish them. The bound name exists so that `B` may mention
+it — which is exactly why you write `B(n)` and not `B`. -/
+
+#check ∀ n : ℕ, n + 0 = n     -- ∀ (n : ℕ), n + 0 = n : Prop
+#check ∀ n : ℕ, Fin n         -- (n : ℕ) → Fin n : Type
+
+/-! Both were typed with `∀`, and Lean printed the second with an arrow. That is
+a display convention — `∀` when the members are proofs, `→` when they are
+objects — not a difference of construct, and either form may be typed in either
+case. (`Fin n` is the type of naturals below `n`, so the second line is the
+family whose `n`th member is something smaller than `n`.) -/
+
+example : ((n : ℕ) → Fin n) = (∀ n : ℕ, Fin n) := rfl
+
+/-! When `B` does not mention `n`, every member has the same type, the name is
+never referred to again, and `A → B` is the notation for that case: -/
 
 example : (∀ _ : ℕ, ℕ) = (ℕ → ℕ) := rfl
 
@@ -172,7 +198,7 @@ introduce `n` and say what it is.) -/
     declaration is written in: name, binders, colon, type. The `@` turns that
     convention off and shows the type on its own.
 
-    `@` does one more thing, and it will matter every time you read a Mathlib
+    `@` does one more thing, and it will matter when you read a Mathlib
     lemma. Binders come in two kinds:
 
       `(n : ℕ)`   explicit — you supply it
