@@ -1,4 +1,4 @@
-# Session 02 — one colon
+# Session 02 — Reading Lean
 
 Several people asked, in different words, what the colons in a Lean file mean.
 This session is the answer.

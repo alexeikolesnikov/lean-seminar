@@ -239,9 +239,9 @@ three lines offers a fix.
 
 /-! ## 3. Parentheses, commas, and how things get applied
 
-Lean writes `f 2 3` where most of mathematics writes `f(2, 3)`. This is not a
-stylistic quirk, and it is worth a few minutes because it affects how Lean
-thinks about proofs as well.
+Lean writes `f 2 3` where most of mathematicians write `f(2, 3)`. This is
+not a stylistic quirk, and it is worth a few minutes because it affects
+how Lean thinks about proofs as well.
 
 **Application is juxtaposition.** Writing two things next to each other *is*
 applying the first to the second. There is no call syntax and no argument
@@ -326,6 +326,7 @@ Infoview shows both, separated by `⊢`:
 
     P Q : Prop        ← context: names and their types
     hP : P
+    hPQ : P → Q
     ⊢ Q               ← goal: what you owe
 
 Everything above the turnstile is a colon line. The goal is a type with no name
