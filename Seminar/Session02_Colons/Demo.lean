@@ -88,37 +88,48 @@ theorem two_add_two : 2 + 2 = 4 := rfl
     That term must have the type `2 + 2 = 4`. If it doesn't, the compiler will produce
     a "type mismatch" error.
 
-    The one thing that *is* published is the statement. Which proof you supplied
-    stops mattering the moment Lean has accepted it — §7.3 shows that directly.
 -/
 
 /-! To sum up this section: every expression has a type; a statement is itself a
 type, whose terms are its proofs; and therefore *proving something is
-constructing a term of the right type*. The tactics in section 4 are four ways
+constructing a term of the right type*. The tactics in section 4 offer ways
 of building such a term, types allow the compiler to check that you have built
-the right one. -/
+the right one. More on this is in the next section. -/
 
-/-! ## 2. Propositions are types
+/-! ## 2. Statements are types
 
 Two lines from section 1, side by side:
 
     2           : ℕ
     two_add_two : 2 + 2 = 4
 
-These are the same relation. `ℕ` is a type and `2` is a term of it. `2 + 2 = 4`
-is also a type whose terms are proofs of it. `two_add_two` is a name for a term
-of that type.
+These are examples of the same relation. `ℕ` is a type and `2` is a term of it.
+`2 + 2 = 4` is also a type whose terms are proofs of it.
+`two_add_two` is a name for a term of that type.
 
-The same shape turns up in the Infoview while you are proving. There,
+The same shape appears in the Infoview while you are proving. There,
 
     n : ℕ
     h : n + 0 = n
 
-are entries of the same kind: a name, and the type it belongs to. You would read
-the first as "let `n` be a natural number" and the second as "suppose
-`n + 0 = n`", and Lean does not distinguish between them. What differs is the
-type — the terms of `ℕ` are numbers, and the terms of `n + 0 = n` are proofs.
+are entries of the local *context*. The context entry is a name, and the type
+it belongs to. In the example above, "`n` is a natural number" and "`h` is a proof
+that `n + 0 = n`.
 
+Lean does distinguish the two *types*, and `#check` shows where: -/
+
+#check ℕ                        -- ℕ : Type
+#check ∀ n : ℕ, n + 0 = n       -- ∀ (n : ℕ), n + 0 = n : Prop
+
+/-! `ℕ` is data; `n + 0 = n` is a proposition, and §7 is about what follows from
+that. What does not differ is the context itself. Lean keeps no separate list
+for variables and hypotheses, and a single tactic introduces both: -/
+
+example : ∀ n : ℕ, n + 0 = n → n + 0 = n := by
+  intro n h                     -- n : ℕ and h : n + 0 = n, from one tactic
+  exact h
+
+/-!
   ### Functions, on data and on proofs
 
 `ℕ → ℕ` is a type, and its terms are functions. Nothing so far is new. In Lean,
@@ -131,13 +142,14 @@ variable (P Q : Prop) (hPQ : P → Q) (hP : P)
 
 #check hPQ                    -- hPQ : P → Q
 #check hP                     -- hP : P
+#check hPQ hP                 -- hPQ hP : Q
 
 /- Read `hPQ` as a function: give it a proof of `P`, get a proof of `Q`.
    Applying it is ordinary function application, written the same way. -/
 
 end
 
-/-! ### One construct, and two things you already write
+/-! ### Universal quantifier and product of an indexed family
 
 You write
 
@@ -148,16 +160,17 @@ and Lean writes
     ∀ (n : ℕ), B n
 
 Two changes, neither cosmetic. The `∈` became a colon because `ℕ` is a type,
-not a set you are a member of — §1's point. (Lean does have `∀ n ∈ S, …` for an
-actual set `S`, and it means something else: `∀ n, n ∈ S → …`, a binder with a
-side condition. Session 1 made the same remark about `∀ ε > 0`.) And `B(n)` lost
-its parentheses, for the reason in §3.
+not a set. (Lean does have `∀ n ∈ S, …` for an actual set `S`, and it means
+something else: `∀ n, n ∈ S → …`, a binder with a side condition. Session 1
+made the same remark about `∀ ε > 0`.)
+
+The second change is: `B(n)` lost its parentheses, for the reason in §3.
 
 What is left is one construct, which you already read in two ways depending on
 what `B(n)` is:
 
     B(n) is a statement      ∀ n : ℕ, B n     the universally quantified sentence
-    B(n) is an object        ∀ n : ℕ, B n     the family (Bₙ) indexed by ℕ
+    B(n) is an object        ∀ n : ℕ, B n     the (product of) family (Bₙ) indexed by ℕ
 
 Lean does not distinguish them. The bound name exists so that `B` may mention
 it — which is exactly why you write `B(n)` and not `B`. -/
@@ -180,8 +193,8 @@ example : (∀ _ : ℕ, ℕ) = (ℕ → ℕ) := rfl
 
 /-! So the arrow is not a second kind of function type; it is the notation
 available when the bound variable is unused. `hPQ : P → Q` above is
-`hPQ : ∀ _ : P, Q`: the proof of `P` goes in, and `Q` is the same proposition
-whichever proof it was.
+`hPQ : ∀ _ : P, Q`: the proof of `P` goes in, and the proof of `Q` is
+produced.
 
 Two consequences for §3. `intro` strips a binder, so an implication goal and a
 `∀` goal are one problem. `apply` is function application run backwards, so
@@ -213,6 +226,16 @@ introduce `n` and say what it is.) -/
     hand when Lean cannot guess it. -/
 
 #check @Nat.sub_add_cancel    -- ∀ {n m : ℕ}, m ≤ n → n - m + m = n
+
+/-!
+Sanity check. The first line below fails (if you delete the --). Each of the other
+three lines offers a fix.
+-/
+-- example : (n : ℕ) → n + 0 = n := rfl
+-- example : (n : ℕ) → n + 0 = n := by intro n; rfl
+-- example : (n : ℕ) → n + 0 = n := fun _ => rfl
+-- example (n : ℕ) : n + 0 = n := rfl
+
 
 /-! ## 3. Parentheses, commas, and how things get applied
 
