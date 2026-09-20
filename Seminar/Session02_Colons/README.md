@@ -30,6 +30,14 @@ but requires no installation work): https://live.lean-lang.org/#url=https%3A%2F%
 `Extras.lean` in this folder carries the appendix further — where the
 data/proposition correspondence breaks down — and belongs to no session.
 
+## Where the meeting ended
+
+The meeting of 16 September reached the end of "Functions, on data and on
+proofs" in §2. Not covered in the room: the remainder of §2 — `∀` as a single
+construct read two ways, `→` as the unused-binder case, and explicit versus
+implicit binders — and §3 through §6. The next meeting resumes there and opens
+with questions on the material read in between.
+
 ## Notes
 
 - **§3–§5 carry `NOW TRY THIS` blocks**, as in session 1: at your own keyboard,
@@ -93,6 +101,7 @@ data/proposition correspondence breaks down — and belongs to no session.
 **Assumes:** `#check`, `#eval`, `plausible` from session 1, and enough of the
 Natural Number Game that `0 + n = n` is familiar.
 
-**Homework:** *Mathematics in Lean* §2, and parts A–E of the exercises. Session
-3 is logic and assumes today's editor loop is fluent, so part C matters more
-than its length suggests.
+**Homework:** go over the rest of the demo file and bring your questions to the
+next meeting. Also *Mathematics in Lean* §2, and parts A–E of the exercises.
+Session 3 is logic and assumes today's editor loop is fluent, so part C matters
+more than its length suggests.
