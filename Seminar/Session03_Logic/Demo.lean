@@ -325,6 +325,8 @@ theorem cast_sub_of_le (n m : ℕ) (h : m ≤ n) :
     ((n - m : ℕ) : ℤ) = (n : ℤ) - (m : ℤ) :=
   Nat.cast_sub h
 
+
+
 /-! ## 5. The connectives
 
 Each connective comes with two questions: how do you prove one, and what do you
@@ -358,7 +360,7 @@ notation of §2 — `h.left` is `And.left h`. -/
 
 example (P Q : Prop) (h : P ∧ Q) : P := h.left
 
-/-! ### Implication and bi-implication
+/-! ### Implication and logical equivalence
 
 `↔` behaves like a conjunction of two implications, and `constructor` splits it
 the same way. -/
