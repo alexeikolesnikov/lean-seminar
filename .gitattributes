@@ -1,0 +1,10 @@
+# Line endings.
+#
+# Text files are stored in the repository with LF and checked out with LF on
+# every platform, so that a file edited on Windows does not appear as a
+# whole-file change to someone on macOS or Linux. Without this, git reports
+# every line of a CRLF-saved file as modified.
+#
+# VS Code, Notepad and the Lean tooling all handle LF on Windows.
+
+* text=auto eol=lf
