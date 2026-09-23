@@ -92,8 +92,7 @@ Answer: **(ii)**.
 (i) says every even number exceeds 100, which is false.
 (iii) is true but vacuous: take `n = 1`, which is not even, so the implication
 holds without saying anything about any even number. An existential with an
-implication inside is almost never what is meant, and is worth recognising on
-sight.
+implication inside is almost never what is meant, and is worth recognising.
 
 **A3.** "If n² is even then n is even."
 
@@ -160,8 +159,8 @@ theorem swap_parity (n m : ℕ) (h : IsEven n ∧ IsOdd m) : IsOdd m ∧ IsEven 
   · exact hn
 
 /-- **C3.** If `n` is even or `n` is even, then `n` is even. Both cases of the
-`rcases` are the same, and that is the point: a disjunction is used by
-handling every case, whether or not they differ. -/
+`rcases` are the same; a disjunction is used by handling every case, whether
+or not they differ. -/
 theorem isEven_of_or (n : ℕ) (h : IsEven n ∨ IsEven n) : IsEven n := by
   rcases h with h | h
   · exact h
@@ -222,11 +221,10 @@ new witness, quote the arithmetic. The mathematics is in choosing the witness
 — `2k² ` in one case, `2k² + 2k` in the other — and that choice is exactly
 what `use` asks for. -/
 
-/-! ## Part F — The rung that matters
+/-! ## Part F — The rung the argument uses
 
-This is the statement the irrationality argument needs, and the one whose
-proof is not a computation: it goes through the other direction and a
-contradiction. -/
+The statement the irrationality argument needs, and the one whose proof is not
+a computation: it goes through the other direction and a contradiction. -/
 
 /-- **F.** If `n²` is even then `n` is even. -/
 theorem isEven_of_isEven_sq (n : ℕ) (h : IsEven (n ^ 2)) : IsEven n := by

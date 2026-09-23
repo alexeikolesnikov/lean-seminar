@@ -16,8 +16,8 @@
 
 CI: allow-sorry (1)
 
-  §3 ends with one deliberate `sorry`, in `unfinished`, whose whole point is
-  that it compiles. Check this file with --allow-sorry.
+  §3 ends with one deliberate `sorry`, in `unfinished`, which compiles although
+  the proof is missing. Check this file with --allow-sorry.
 -/
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Nat.Notation
@@ -111,7 +111,7 @@ Two consequences for §3, and they are the reason this section comes first:
 /-! The same theorem displayed two ways. The first is the shape a declaration is
 written in: name, binders, colon, type. `@` turns that convention off.
 
-`@` does one more thing, and it matters when reading Mathlib. Binders come in
+`@` does one more thing, and it is needed when reading Mathlib. Binders come in
 two kinds:
 
     (n : ℕ)   explicit — you supply it
@@ -137,7 +137,8 @@ def addPair (a b : ℕ) : ℕ := a + b
 #check addPair 2              -- addPair 2 : ℕ → ℕ
 #check addPair 2 3            -- addPair 2 3 : ℕ
 
-/-! The middle line is the surprising one. A function of "two arguments" is a
+/-! The middle line is the one that differs from the usual notation. A function
+of "two arguments" is a
 function of one argument returning a function, so supplying one argument is
 legal and hands back the function `b ↦ 2 + b`. `addPair 2 3` means
 `(addPair 2) 3`, and there is no arity to get wrong.
@@ -169,7 +170,7 @@ def double (n : ℤ) : ℤ := n * 2
     subtracted pointwise — a perfectly good function, and not what you meant.
     What you meant was `#eval double (-1)`, which is `-2`.
 
-    The mistakes worth fearing are the ones that compile. -/
+    A mistake that compiles is harder to find than one that does not. -/
 
 /-! Commas are never argument separators. They appear in unrelated roles —
 assembling a pair, separating a binder from its body, listing elements — and
@@ -343,7 +344,7 @@ example (P Q : Prop) (hP : P) (hQ : Q) : P ∧ Q := by
 
 /-! The bullets `·` are not decoration: after `constructor` there are two goals,
 and a bullet focuses on one of them. Without them the proof still works, and
-nobody reading it can tell which tactic addresses which goal.
+a reader cannot tell which tactic addresses which goal.
 
 `⟨_, _⟩` is the term form of the same thing, and is often shorter: -/
 
@@ -463,7 +464,8 @@ example (n : ℕ) (h : n < 0) : n = 42 := by
 
 /-! Nothing is wrong with that proof, and nothing is wrong with Lean accepting
 it. It is a true statement about an empty set of cases. The failure mode is a
-theorem whose hypotheses are contradictory for a reason nobody noticed, which
+theorem whose hypotheses are contradictory for a reason that went unnoticed,
+which
 then proves whatever its author wanted. Only reading the statement catches it. -/
 
 /-! ## 7. Summary

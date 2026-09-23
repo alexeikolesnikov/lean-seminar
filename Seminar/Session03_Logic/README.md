@@ -1,8 +1,9 @@
-# Session 03 — The rest of the colon, and logic
+# Session 03 — The rest of the syntax, and logic
 
-Two halves. The first finishes session 2: `∀` and `→` as one construct,
-application, the proof state and the four tactics, and the coercion example.
-The second introduces the connectives and the tactics that prove and use them.
+Two halves. The first finishes session 2: `∀` and `→` as essentially the same
+construct, application, the proof state and the four tactics, and the coercion
+example. The second introduces the connectives and the tactics that prove and
+use them.
 
 Here's the demo if you want to start it on the Lean server (a little slow, but
 requires no installation work):
@@ -13,7 +14,7 @@ https://live.lean-lang.org/#url=https%3A%2F%2Fraw.githubusercontent.com%2Falexei
 | | |
 |---|---|
 | §0 | Where we were, and what `#print axioms` answers about trusting Lean |
-| §1 | `∀` and `→` as one construct; explicit and implicit binders; `@` |
+| §1 | `∀` and `→` as essentially the same construct; explicit and implicit binders; `@` |
 | §2 | Application is juxtaposition; parentheses; commas; dot notation |
 | §3 | The proof state; `exact`, `apply`, `intro`, `rfl`, `have`, `show`; `sorry` |
 | §4 | Does this say what it claims? — coercion placement and `ℕ` subtraction |
@@ -24,6 +25,42 @@ https://live.lean-lang.org/#url=https%3A%2F%2Fraw.githubusercontent.com%2Falexei
 §1 to §4 are the part of session 2 we did not reach, in shorter form. Session
 2's `Demo.lean` remains the longer treatment of the same material, and
 `Extras.lean` there is still worth reading afterwards.
+
+## What a machine-checked proof rests on
+
+A question from session 2, which §0 of the demo answers in part: if Lean says a
+proof is correct, what is being trusted?
+
+Not the tactics, and not Mathlib. A tactic produces a *term*, and a separate
+program — the kernel, much smaller than the rest of the system — checks that
+the term has the type claimed. A bug in `simp` can make a proof fail; it cannot
+make a false proof pass. Trust reduces to the kernel and to the axioms.
+
+The axioms are visible. `#print axioms` on a theorem lists them, and in
+ordinary use there are three: `propext` (equivalent propositions are equal),
+`Quot.sound` (quotients; function extensionality is derived from it), and
+`Classical.choice` (excluded middle follows). They are what makes Lean's
+mathematics classical. The logic with them is consistent relative to ZFC with
+some inaccessible cardinals — an assumption of about the same size as the one
+under ordinary set-theoretic practice. Anything else in that list is a finding:
+`sorryAx` means the proof is unfinished, and `Lean.trustCompiler` means the
+compiler has been trusted as well.
+
+The kernel is a program and can have bugs. In August 2026 a systematic hunt
+found four soundness bugs in it, each exploited to produce a proof of `False`.
+They required deliberately constructed terms, no Mathlib proof was affected,
+and an independently written checker rejected all of them. The fixes are in
+Lean v4.33.1. That episode is also the answer to "why more than one checker":
+`lean4checker` re-runs the compiled proofs through the kernel, and `nanoda` and
+Lean4Lean are kernels written separately from the official one, so that
+accepting a false theorem would take the same bug in several implementations.
+
+Mathlib's reviewers are not part of this. They do not certify proofs — the
+kernel does that — and no amount of review would add to it. What their
+judgement bears on is whether a *definition* is the intended one and whether a
+theorem's statement says what its name suggests, which no checker settles. That
+is the same line §6 of the demo draws, and the reason the exercises begin with
+Part A.
 
 ## The exercises
 
@@ -55,7 +92,7 @@ session 4, and the induction behind "every number is even or odd" in session 5.
 | G | Optional: not even implies odd; `IsEven (n ^ 2) ↔ IsEven n` |
 | H | Nothing to do — what remains for sessions 4 and 5, and why |
 
-Part F is the rung the irrationality argument turns on, and it is provable this
+Part F is the rung the irrationality argument uses, and it is provable this
 week because the parity argument carries it: a case split, one case immediate,
 the other impossible. No arithmetic and no induction appear in it.
 
@@ -73,15 +110,15 @@ the other impossible. No arithmetic and no induction appear in it.
   `IsEven 10` leaves `10 = 2 * 5`, which Lean settles by computation. `use
   (k + 1)` leaves `2 * k + 2 = 2 * (k + 1)`, which contains a variable and
   needs a theorem. The difference is the one §3 of the demo makes about `rfl`.
-- **Part A is not a warm-up.** Three of its nine statements are false and all
-  nine compile. `∃ n, IsEven n → 100 < n` in A2 is the shape worth remembering:
-  true, and true for a reason that has nothing to do with even numbers.
+- **Part A is reading rather than warm-up.** Three of its nine statements are
+  false and all nine compile. `∃ n, IsEven n → 100 < n` in A2 is worth
+  recognising: true, and true for a reason that has nothing to do with even
+  numbers.
 - **We define parity instead of using Mathlib's `Even` and `Odd`.** Mathlib's
   `Odd` is the same statement as ours and its `Even n` is `∃ r, n = r + r`
-  rather than `∃ k, n = 2 * k`. Session 6 is where
-  finding and reading the library version becomes the point. Here the
-  definition is in front of you, which is what makes `obtain` and `use` the
-  natural moves.
+  rather than `∃ k, n = 2 * k`. Session 6 is where finding and reading the
+  library version becomes the subject. Here the definition is in front of you,
+  which is what makes `obtain` and `use` the natural moves.
 - **The demo's §0 answers a question from last time** — what a machine-checked
   proof rests on — with `#print axioms` on two theorems. Session 12 returns to
   it.

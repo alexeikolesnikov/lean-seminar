@@ -156,7 +156,7 @@ theorem isEven_sq_of_isEven (n : ℕ) (h : IsEven n) : IsEven (n ^ 2) := by
 theorem isOdd_sq_of_isOdd (n : ℕ) (h : IsOdd n) : IsOdd (n ^ 2) := by
   sorry
 
-/-! ## Part F — The rung that matters
+/-! ## Part F — The rung the argument uses
 
 The statement the irrationality argument needs. Its proof is not a
 computation: it goes through the other direction and a contradiction. -/
