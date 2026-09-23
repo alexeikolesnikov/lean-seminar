@@ -9,3 +9,8 @@
 # Instructor scratch: drafts of session material that are not ready to ship.
 # Ignored entirely, so nothing half-written is ever public.
 /snippets/
+
+# Files the Claude desktop app drops in the working folder. Nothing in here
+# belongs in the repository; finished material is written to its session
+# folder directly.
+/Claude outputs/
