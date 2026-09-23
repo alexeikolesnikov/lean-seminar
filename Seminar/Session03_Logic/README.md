@@ -26,7 +26,7 @@ https://live.lean-lang.org/#url=https%3A%2F%2Fraw.githubusercontent.com%2Falexei
 2's `Demo.lean` remains the longer treatment of the same material, and
 `Extras.lean` there is still worth reading afterwards.
 
-## What a machine-checked proof rests on
+## What a machine-checked proof relies on
 
 A question from session 2, which §0 of the demo answers in part: if Lean says a
 proof is correct, what is being trusted?
