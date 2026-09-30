@@ -30,10 +30,9 @@ import Plausible.Tactic
 
 /-! ## Q. Three questions from session 3
 
-Answered here rather than in the room, with the outputs the pinned toolchain
-gives. -/
 
-/-! ### Why does `(-1 : ℕ)` fail?
+
+ ### Why does `(-1 : ℕ)` fail?
 
 Unary minus is a "typeclass operation", `Neg α`, and `ℕ` has no instance of it.
 The failure has nothing to do with the value `1`; the symbol has no meaning on
@@ -60,20 +59,21 @@ and that is the one with the conventional value at the edge (§5 below). -/
                               -- type of "negation structures on ℕ" — and the
                               -- error says no term of it has been registered.
 
-/-! **What "instance" means.** A *typeclass* such as `Neg` or `CommRing` is,
-in model-theoretic terms, a signature together with a theory: `Neg` is the
-signature `{-}` with no axioms, `CommRing` is `{+, *, -, 0, 1}` with the ring
-axioms. An *instance* is a structure for that signature that satisfies the
+/-! **What  are "typeclass" and "instance"?** A *typeclass* such as
+`Neg` or `CommRing` is (in model-theoretic terms) a signature together
+with a theory: `Neg` is the signature `{-}` with no axioms,
+`CommRing` is `{+, *, -, 0, 1}` with the ring axioms.
+An *instance* is a structure for that signature that satisfies the
 axioms — a model — attached to a particular type. `ℤ` has an instance of
 `Neg`; `ℕ` has none. When a symbol like `-` or `+` or `≤` appears, Lean looks
 up the instance for the type at hand, and "failed to synthesize" is what it
 says when there is nothing to find.
 
-Two ways the analogy is imperfect. First, a set can carry many structures
-for one signature, and model theory takes that for granted; Lean expects
-essentially one instance per class and type, and this is the *canonical*
-structure on that type. Second, the axioms are carried inside the instance
-as proof fields, so an instance of `CommRing ℝ` is the operations and the
+A wonky note: the model-theoretic analogy is imperfect. A set can carry
+many structures for one signature but Lean expects essentially one instance
+per class and type, and this is the *canonical* structure on that type.
+Second, the axioms are carried inside the instance as proof fields,
+so an instance of `CommRing ℝ` is the operations and the
 verification together. -/
 
 /-! ### What is `Fin 7`?
