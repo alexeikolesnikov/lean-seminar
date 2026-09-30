@@ -8,6 +8,8 @@
   before release. See "How these files were made" in the README.
 
   Tactics introduced: rw, calc, ring, norm_num, linarith, simp, simp?, omega
+  Opens with three questions from session 3 (§Q): -1 on ℕ, what an instance
+  is, Fin n, use vs exact.
   Assumed from earlier: #check, #eval, plausible          (Session 01)
                         the colon, propositions as types  (Session 02)
                         intro, exact, obtain, use, rcases, exfalso, subst
@@ -26,16 +28,174 @@ import Mathlib.Tactic.Ring.RingNF
 import Mathlib.Tactic.NormNum.Basic
 import Plausible.Tactic
 
+/-! ## Q. Three questions from session 3
+
+Answered here rather than in the room, with the outputs the pinned toolchain
+gives. -/
+
+/-! ### Why does `(-1 : ℕ)` fail?
+
+Unary minus is a "typeclass operation", `Neg α`, and `ℕ` has no instance of it.
+The failure has nothing to do with the value `1`; the symbol has no meaning on
+that type. Binary subtraction is a different class, `Sub`, which `ℕ` does have,
+and that is the one with the conventional value at the edge (§5 below). -/
+
+/-  NOW TRY THIS.
+
+        #check (-1 : ℕ)
+
+    gives
+
+        failed to synthesize instance of type class
+          Neg ℕ                                                              -/
+
+#check (-1 : ℤ)               -- -1 : ℤ
+#check -1                     -- -1 : ℤ   (a numeral alone would be ℕ; the
+                              --           minus forces a type with `Neg`)
+#eval (1 - 2 : ℕ)             -- 0       (binary `-`, truncated)
+
+/-! If you want to explore further: -/
+
+#check Neg ℕ                  -- Neg ℕ : Type.  `Neg ℕ` is itself a type — the
+                              -- type of "negation structures on ℕ" — and the
+                              -- error says no term of it has been registered.
+
+/-! **What "instance" means.** A *typeclass* such as `Neg` or `CommRing` is,
+in model-theoretic terms, a signature together with a theory: `Neg` is the
+signature `{-}` with no axioms, `CommRing` is `{+, *, -, 0, 1}` with the ring
+axioms. An *instance* is a structure for that signature that satisfies the
+axioms — a model — attached to a particular type. `ℤ` has an instance of
+`Neg`; `ℕ` has none. When a symbol like `-` or `+` or `≤` appears, Lean looks
+up the instance for the type at hand, and "failed to synthesize" is what it
+says when there is nothing to find.
+
+Two ways the analogy is imperfect. First, a set can carry many structures
+for one signature, and model theory takes that for granted; Lean expects
+essentially one instance per class and type, and this is the *canonical*
+structure on that type. Second, the axioms are carried inside the instance
+as proof fields, so an instance of `CommRing ℝ` is the operations and the
+verification together. -/
+
+/-! ### What is `Fin 7`?
+
+A structure: a natural number together with a proof that it is less than 7. -/
+
+#print Fin
+-- structure Fin (n : ℕ) : Type
+-- fields:
+--   Fin.val  : ℕ
+--   Fin.isLt : ↑self < n
+
+#check (3 : Fin 7)            -- 3 : Fin 7
+#check (⟨3, by norm_num⟩ : Fin 7)   -- the same element, written out
+#eval (3 : Fin 7).val         -- 3
+
+/-! Its main role in Mathlib is the standard type with `n` elements, used
+wherever something is indexed by `{0, …, n − 1}`: vectors, matrices, finite
+sums. Arithmetic on it wraps modulo `n`: -/
+
+#eval (5 : Fin 7) + 4         -- 2
+#eval (3 : Fin 7) - 5         -- 5
+#eval (10 : Fin 7)            -- 3
+example : (5 : Fin 7) + 4 = 2 := rfl
+
+/-! So it is connected to modular arithmetic, but it is not Mathlib's ring
+`ℤ/nℤ`. That is `ZMod n`, which for `n > 0` is *defined* to be `Fin n` and
+carries the ring (and, for prime `n`, field) instances.
+
+This is the point above about one canonical instance per type. `Fin n` can
+be ordered by value, and it can be made a ring, but not both at once in a
+way that agrees: `6 + 1 = 0` in `Fin 7`, while `6 ≤ 6 + 1` is false. Mathlib
+gives `Fin n` the order by default and keeps the ring instance switched off
+(`open scoped Fin.CommRing` turns it on). `ZMod n` is the same carrier with
+the other choice made. Short version: `Fin n` is the finite index set;
+`ZMod n` is the ring built on it. -/
+
+/-! ### Is `use` more general than `exact`?
+
+No; they ask different things of their argument. `exact e` asserts that `e`
+is a proof of the goal as it stands. `use e` looks at the goal's structure
+first: if the goal is a single-constructor type (`∃`, `∧`, `↔`, `Fin`, …), it
+applies the constructor and asserts that `e` fills the *first slot* — for
+`∃`, the witness. What remains is left as a goal, after an attempt to close it
+with `rfl` or an assumption. On an `∃`, the two overlap: -/
+
+example : ∃ n : ℕ, n + 2 = 5 := by
+  exact ⟨3, rfl⟩
+
+example : ∃ n : ℕ, n + 2 = 5 := by
+  use 3                       -- `rfl` closes `3 + 2 = 5` for it
+
+/-! They part when the property needs work after the witness. `use` leaves it
+as a goal; `exact` demands the whole thing at once: -/
+
+example : ∃ x : ℝ, x ^ 2 = 2 := by
+  use Real.sqrt 2
+  -- ⊢ √2 ^ 2 = 2
+  exact Real.sq_sqrt (by norm_num)
+
+example : ∃ x : ℝ, x ^ 2 = 2 := by
+  exact ⟨Real.sqrt 2, Real.sq_sqrt (by norm_num)⟩
+
+/-! The automation in `use` is shallow. On `∃ n, 2 < n ∧ n < 4`, `use 3` leaves
+`2 < 3 ∧ 3 < 4` open, and `norm_num` finishes it. -/
+
+example : ∃ n : ℕ, 2 < n ∧ n < 4 := by
+  use 3
+  norm_num
+
+/-! And here is a case where `exact` works and `use` does not, with the same
+argument. The hypothesis is already a proof of the goal: -/
+
+example (h : ∃ n : ℕ, n + 2 = 5) : ∃ n : ℕ, n + 2 = 5 := by
+  exact h
+
+/-  NOW TRY THIS.
+
+        example (h : ∃ n : ℕ, n + 2 = 5) : ∃ n : ℕ, n + 2 = 5 := by
+          use h
+
+    fails with
+
+        Type mismatch
+          h
+        has type
+          ∃ n, n + 2 = 5
+        of sort `Prop` but is expected to have type
+          ℕ
+        of sort `Type`
+
+    `use` saw an `∃`, applied the constructor, and tried to make `h` the
+    witness. It never considered that `h` might prove the goal outright. -/
+
+/-! When the goal has no such structure — an implication, a `∀`, an equation —
+`use e` falls back to behaving like `exact e`, so the two coincide there. The
+difference is only what each one claims about `e`. -/
+
 /-! ## 0. Where we were
 
-Session 3 ended with: if `n²` is even then `n` is even. That is the rung the
-irrationality argument turns on, and it was provable with the connectives
-alone.
+How far are we from proving that √2 is irrational?
 
-What is still missing from the argument is arithmetic — cancelling a factor of
-two — and that is this session. The tactics involved are the ones that make
+The target, stated in Part H of session 3's exercises, is
+
+    theorem sqrt_two_irrational (p q : ℕ) (hq : q ≠ 0) : p ^ 2 ≠ 2 * q ^ 2
+
+The classical argument: suppose `p² = 2q²`. Then `p²` is even, so `p` is
+even, say `p = 2k`. Then `4k² = 2q²`, so `q² = 2k²`, so `q` is even. The same
+applies to `p/2` and `q/2`, and so on without end.
+
+Session 3 supplied the logic. Its exercises defined even and odd as
+existential statements and, in Part F, proved that if `n²` is even then `n`
+is even, using the connectives and nothing else.
+
+Two things are still missing, and neither is logic:
+
+* the cancellation `4k² = 2q² → q² = 2k²`, which is arithmetic;
+* the "without end", which is a minimal counterexample or strong induction.
+
+The first is this session. The tactics involved are the ones that make
 ordinary algebra usable in Lean, so the session begins with them on familiar
-ground. -/
+ground and reaches the cancellation in §6. The second is session 5. -/
 
 /-! ## 1. `rw`
 
@@ -103,6 +263,8 @@ example (x y : ℝ) (hx : 0 ≤ x) (h : x ≤ y) : x ^ 2 ≤ y ^ 2 := by
 /-! The middle step is a named lemma rather than a tactic. `mul_le_mul` is the
 statement that products respect `≤` given the right non-negativity, and naming
 it keeps the step readable. -/
+
+#check mul_le_mul
 
 /-! ## 3. `linarith`
 

@@ -209,7 +209,7 @@ theorem no_minimal_counterexample (p q : ℕ) (hq : q ≠ 0) (h : p ^ 2 = 2 * q 
 
 /-! ### What this was for
 
-The proof is session 3's parity rung, this session's cancellation, and the
+The proof is session 3's parity lemma, this session's cancellation, and the
 descent step, in that order. `hmin b (by omega) (by omega) a hab` supplies four
 arguments to the minimality hypothesis: the smaller witness, a proof that it is
 smaller, a proof that it is not zero, and the other half — the two `by omega`

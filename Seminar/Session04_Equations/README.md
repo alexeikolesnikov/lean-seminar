@@ -12,7 +12,8 @@ https://live.lean-lang.org/#url=https%3A%2F%2Fraw.githubusercontent.com%2Falexei
 
 | | |
 |---|---|
-| §0 | Where the √2 argument stands after session 3 |
+| §Q | Three questions from session 3: `-1` on `ℕ` (and what an instance is), `Fin 7`, `use` versus `exact` |
+| §0 | Where we were: how far the √2 argument is from finished after session 3 |
 | §1 | `rw`: `rw [h]`, `rw [← h]`, `rw [h] at h'` |
 | §2 | `ring` and `norm_num`; `calc` as a chain with a justification per line |
 | §3 | `linarith`, and what it says when the goal is not linear |
@@ -20,6 +21,46 @@ https://live.lean-lang.org/#url=https%3A%2F%2Fraw.githubusercontent.com%2Falexei
 | §5 | The totality tax: `5 - 7 = 0`, `3 / 0 = 0`, `√(-1) = 0`, and two false statements `plausible` refutes |
 | §6 | `omega`, the cancellation `4k² = 2q² → q² = 2k²`, and why not to divide |
 | §7 | Summary |
+
+## Questions from session 3
+
+Answered in §Q of the demo; the short forms are here.
+
+**Why does `(-1 : ℕ)` fail?** Unary minus is the typeclass operation `Neg`,
+and `ℕ` has no instance, so the error is `failed to synthesize Neg ℕ` before
+any arithmetic is attempted. Binary subtraction is a different class, `Sub`,
+which `ℕ` does have — with the truncation that §5 is about. Without a type
+ascription, `#check -1` gives `-1 : ℤ`: numerals default to `ℕ`, but the minus
+sign forces a type that has `Neg`.
+
+*What an instance is.* A typeclass is a signature together with a theory
+(`Neg`: one symbol, no axioms; `CommRing`: the ring signature and the ring
+axioms), and an instance is a model of it attached to a type, with the proofs
+of the axioms carried as fields. Lean looks the instance up by type whenever
+the symbol appears. Unlike a set in model theory, a type is expected to have
+one canonical instance per class, which is what the `Fin n` case below is
+about.
+
+**What does `Fin 7` do, and is it modular arithmetic?** `Fin n` is a structure
+holding a natural number and a proof that it is below `n`. Mathlib's main use
+for it is as the standard `n`-element type, for indexing vectors, matrices and
+finite sums. Its arithmetic does wrap (`(5 : Fin 7) + 4 = 2` by `rfl`), but the
+ring `ℤ/nℤ` in Mathlib is `ZMod n`, which for `n > 0` is defined to be `Fin n`
+and is where the ring and field instances live. `Fin n` carries the order by
+value, which is incompatible with the ring structure (`6 + 1 = 0` but
+`6 ≤ 6 + 1` is false), so its ring instance is off by default at this version
+(`open scoped Fin.CommRing` turns it on).
+
+**Is `use` more general than `exact`?** No; they claim different things about
+their argument. `exact e` says `e` proves the goal as it stands. `use e` looks
+at the goal's structure first — on `∃`, `∧`, `↔` it applies the constructor and
+says `e` fills the first slot, leaving the rest as a goal with a shallow
+attempt (`rfl`, an assumption) at closing it. On `∃ n, n + 2 = 5` both work;
+on `∃ x : ℝ, x ^ 2 = 2`, `use √2` leaves `√2 ^ 2 = 2` as a goal, while `exact`
+has to give the whole term. The case that separates them: with a hypothesis
+`h : ∃ n, n + 2 = 5` and the same goal, `exact h` closes it and `use h` fails,
+because `use` tries to make `h` the witness. On goals with no such structure
+(`→`, `∀`, `=`) `use` falls back to behaving like `exact`.
 
 ## The exercises
 
@@ -32,12 +73,14 @@ goes without induction.
 | B | `ring` and `norm_num` |
 | C | `calc` and `linarith`, with one step that is deliberately not linear |
 | D | `rw` in the goal and in a hypothesis |
-| E | `omega`: the cancellation, and last week's parity lemma |
+| E | `omega`: the cancellation, and the parity fact `2a ≠ 2b + 1` from session 3 |
 | F | The descent step: if `p = 2a` and `q = 2b` solve `p² = 2q²`, so do `a` and `b` |
 | G | No minimal counterexample exists |
 | H | Nothing to do — what session 5 adds |
 
-Part G assembles session 3's parity rung, this session's cancellation, and the
+The file opens by restating session 3's Part F — if `n²` is even then `n` is
+even — as `even_of_even_sq`, proved, so that it can be used without importing
+that file. Part G assembles that lemma, this session's cancellation, and the
 descent step, in that order. What it does not contain is the right to assume
 the counterexample is minimal. That is the well-ordering of `ℕ`, which in Lean
 is strong induction, and it is session 5.
