@@ -278,7 +278,7 @@ different numerator). `ih` then says: for every `q' < q`, every `p'`, and
 `q' ≠ 0`, `p'² ≠ 2q'²`. That is Part G's hypothesis `hmin` with the arguments
 in a different order, and the `fun` on the last line reorders them.
 
-The judgement question for this session: does `Nat.strong_induction_on` say
+The judgment question for this session: does `Nat.strong_induction_on` say
 "take the smallest counterexample"? Not literally — it says "to prove `p n`,
 assume `p m` for all `m < n`" — and E2 is the literal version, with `Nat.find`
 producing the least element and `Nat.find_min` saying it is least. The two are

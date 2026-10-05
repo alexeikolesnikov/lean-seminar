@@ -242,7 +242,7 @@ broken. Send that output to Alexei; it is usually diagnosable in one exchange.
 
 | Symptom | Cause |
 |---|---|
-| `git` not recognised after installing it | VS Code or the terminal was not restarted |
+| `git` not recognized after installing it | VS Code or the terminal was not restarted |
 | Elan download fails with a permission or TLS error | Managed-laptop policy or a corporate proxy — an IT conversation |
 | A build that takes hours, with `lean` or `lake` using the processor | Mathlib is compiling from source; the cache did not download |
 | Slow every time you open a file, with your antivirus rather than `lean` using the processor | Security software scanning the library files — see step 6, and come and talk to me |

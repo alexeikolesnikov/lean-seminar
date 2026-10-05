@@ -10,7 +10,7 @@
   Tactics introduced: exact, apply, intro, rfl, have, show, trace_state
   Assumed from earlier: #check, #eval, #print axioms, sorry, plausible  (Session 01)
 
-  The claim this session is organised around:
+  The claim this session is organized around:
 
       The colon has only one meaning; you can read it as "has type".
       Everything else that looks like a colon is a different token.

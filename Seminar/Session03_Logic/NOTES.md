@@ -44,7 +44,7 @@ no questions come, move on rather than filling the time.
 | 1:05 | §6 quantifier order and vacuous hypotheses | 7 |
 | 1:12 | Close; set the homework | 3 |
 
-§6 sits after the exercises deliberately: it is the judgement beat, it is
+§6 sits after the exercises deliberately: it is the judgment beat, it is
 self-contained, and if the pairs run long it can be cut to the two statements
 without losing the session.
 

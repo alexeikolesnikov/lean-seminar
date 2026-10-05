@@ -87,7 +87,7 @@ theorem numeral_fact : (2 : ℝ) ^ 10 = 1024 := by
 
 /-! ### What this was for
 
-`ring` proves identities that hold in every commutative ring, by normalising
+`ring` proves identities that hold in every commutative ring, by normalizing
 both sides; it does not use hypotheses. `norm_num` evaluates numerals. Neither
 is doing anything you could not do by hand, and both fail loudly when the
 statement is not of their kind — B1 with `norm_num` or B3 with `ring` both
@@ -143,7 +143,7 @@ separate step for the `+ 0`. -/
 
 /-- **E1.** Cancelling a factor of two. Note what is *not* done: nothing is
 divided. On `ℕ`, dividing both sides by 2 produces a term containing `/`, which
-`ring` cannot touch and whose behaviour at `0` has to be argued separately. -/
+`ring` cannot touch and whose behavior at `0` has to be argued separately. -/
 theorem cancel_two (k q : ℕ) (h : 4 * k ^ 2 = 2 * q ^ 2) : q ^ 2 = 2 * k ^ 2 := by
   omega
 

@@ -364,7 +364,7 @@ promises you are relying on, and it takes one line. -/
 
 Nobody should leave thinking the tool is only a critic. -/
 
-/-- √2 is irrational. One line, because somebody formalised it already — this
+/-- √2 is irrational. One line, because somebody formalized it already — this
 is what a library of two million lines buys you. -/
 theorem sqrt_two_irrational : Irrational (√2) := irrational_sqrt_two
 

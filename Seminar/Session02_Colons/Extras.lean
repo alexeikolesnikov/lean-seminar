@@ -102,4 +102,4 @@ first can be turned into the second, but only noncomputably, and
 
 This is the machinery behind a distinction mathematicians make informally and
 then forget they made. It returns in session 12, where the question is what a
-formalisation actually asserts. -/
+formalization actually asserts. -/

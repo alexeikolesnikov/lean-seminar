@@ -23,7 +23,7 @@ room can follow:
 | 0:20 | §2 propositions are types; functions on data and on proofs | 15 |
 | 0:35 | §3 parentheses, commas, application, dot notation | 10 |
 | 0:45 | §4 proof state, the four tactics, `have`/`show`, `rfl`, `sorry` | 20 |
-| 1:05 | §5 the judgement beat | 5 |
+| 1:05 | §5 the judgment beat | 5 |
 | 1:10 | Close | 5 |
 
 That is 75 minutes with **no exercise time at all**, against a session pattern
@@ -46,7 +46,7 @@ semester arc, so it is yours.
 
 ---
 
-## The organising claim
+## The organizing claim
 
 > The colon has only one meaning; you can read it as "has type".
 > Everything else that looks like a colon is a different token.
@@ -101,7 +101,7 @@ Read it structurally — term, type it has, type expected — and say that almos
 every type error has those three parts. Then ask why `n + 0 = n` worked before
 explaining; participants who did the Natural Number Game have met this.
 
-### 5. The judgement beat (§5)
+### 5. The judgment beat (§5)
 
 ```
 #check ((n - m : ℕ) : ℤ)      -- ↑(n - m) : ℤ

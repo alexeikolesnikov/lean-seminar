@@ -67,7 +67,7 @@ states the coefficients, and it is the counterpart of `simp only [...]`: -/
 example (a b c : ℝ) (h1 : a ≤ b) (h2 : b + 1 ≤ c) : a ≤ c := by
   linear_combination h1 + h2
 
-/-! The line says: add the two hypotheses. `ring` normalisation then checks
+/-! The line says: add the two hypotheses. `ring` normalization then checks
 that the result is the goal. `linarith` finds the coefficients;
 `linear_combination` records them. -/
 
@@ -114,7 +114,7 @@ trusted.) -/
         example (a b c : ℝ) (h1 : a ≤ b) (h2 : b + 1 ≤ c) : a ≤ c := by
           show_term linarith                                                  -/
 
-/-! `ring` has no certificate to show; it normalises both sides and compares.
+/-! `ring` has no certificate to show; it normalizes both sides and compares.
 `ring_nf` leaves the normal form in the goal, which is the way to see what it
 compared. The same `set_option trace.…` pattern applies to `positivity`,
 `norm_num`, `aesop` (session 11), and to instance search
@@ -128,7 +128,7 @@ one. What is missing is the passage from "no minimal counterexample" to "no
 counterexample": the fact that a non-empty set of natural numbers has a least
 element. In Lean that is an induction principle, and it is §5 of this file.
 
-Before that, ordinary induction, on the objects it is usually first met with:
+Before that, let's discuss ordinary induction, on the usual objects:
 finite sums. -/
 
 /-! ## 1. `Finset.range` and `∑`
@@ -161,7 +161,7 @@ example : 5 ∉ range 5 := by
         Expected type must not contain free variables
           n < 2 ^ n
 
-    A statement with an `n` in it is what induction is for.                  -/
+    For a statement with an `n`, we use induction.                  -/
 
 /-! The off-by-one. On a board, "the sum of the first `n` numbers" runs
 `1 + ⋯ + n`. In Lean, `∑ i ∈ range n, i` runs `0 + ⋯ + (n − 1)`. The formula

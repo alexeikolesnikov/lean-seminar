@@ -55,7 +55,7 @@ Everything here is pinned to **Lean 4.33.0** and **Mathlib v4.33.0**, and every
 file states the version it was checked against in its header.
 
 Version drift is a common source of trouble. Mathlib renames lemmas and changes
-behaviour every few weeks; a file that worked in August fails in November
+behavior every few weeks; a file that worked in August fails in November
 against a different library. The two files that enforce the pin are
 `lean-toolchain` and `lake-manifest.json`, both committed here. Cloning this
 repository reproduces the exact environment the material was written in.
@@ -87,7 +87,7 @@ Read [`GROUND-RULES.md`](GROUND-RULES.md) before posting anything to the Lean
 Zulip. One rule in particular surprises people: asking the community to do your
 seminar exercises is grounds for suspension there.
 
-## Licence
+## License
 
-Apache 2.0, the same licence as Mathlib and *Mathematics in Lean*, so material
+Apache 2.0, the same license as Mathlib and *Mathematics in Lean*, so material
 can move between them without friction. See [`LICENSE`](LICENSE).

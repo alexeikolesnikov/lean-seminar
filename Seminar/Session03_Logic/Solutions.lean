@@ -92,7 +92,7 @@ Answer: **(ii)**.
 (i) says every even number exceeds 100, which is false.
 (iii) is true but vacuous: take `n = 1`, which is not even, so the implication
 holds without saying anything about any even number. An existential with an
-implication inside is almost never what is meant, and is worth recognising.
+implication inside is almost never what is meant, and is worth recognizing.
 
 **A3.** "If n² is even then n is even."
 

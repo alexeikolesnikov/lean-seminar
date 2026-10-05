@@ -57,7 +57,7 @@ accepting a false theorem would take the same bug in several implementations.
 
 Mathlib's reviewers are not part of this. They do not certify proofs — the
 kernel does that — and no amount of review would add to it. What their
-judgement bears on is whether a *definition* is the intended one and whether a
+judgment bears on is whether a *definition* is the intended one and whether a
 theorem's statement says what its name suggests, which no checker settles. That
 is the same line §6 of the demo draws, and the reason the exercises begin with
 Part A.
@@ -112,7 +112,7 @@ the other impossible. No arithmetic and no induction appear in it.
   needs a theorem. The difference is the one §3 of the demo makes about `rfl`.
 - **Part A is reading rather than warm-up.** Three of its nine statements are
   false and all nine compile. `∃ n, IsEven n → 100 < n` in A2 is worth
-  recognising: true, and true for a reason that has nothing to do with even
+  recognizing: true, and true for a reason that has nothing to do with even
   numbers.
 - **We define parity instead of using Mathlib's `Even` and `Odd`.** Mathlib's
   `Odd` is the same statement as ours and its `Even n` is `∃ r, n = r + r`

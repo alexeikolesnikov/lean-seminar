@@ -3,7 +3,7 @@
 Several people asked, in different words, what the colons in a Lean file mean.
 This session is the answer.
 
-The claim it is organised around:
+The claim it is organized around:
 
 > The colon has only one meaning; you can read it as "has type".
 > Everything else that looks like a colon is a different token.
@@ -74,7 +74,7 @@ with questions on the material read in between.
   almost every type error names the term, the type it has, and the type
   expected. The asymmetry it exposes — `n + 0 = n` closes by `rfl` and
   `0 + n = n` does not — is the one from the Natural Number Game.
-- **§5 is the judgement beat.** `↑(n - m)` and `↑n - ↑m` differ only in where
+- **§5 is the judgment beat.** `↑(n - m)` and `↑n - ↑m` differ only in where
   the colon sits, and the first truncates at zero. `plausible` finds the
   counterexample; nobody has to spot it.
 - **`No goals` is the success message**, in the browser and in VS Code alike.

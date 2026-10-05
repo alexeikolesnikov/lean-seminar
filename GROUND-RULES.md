@@ -114,9 +114,9 @@ is on their [citing page](https://leanprover-community.github.io/cite.html).
 
 ## Sources
 
-- [Lean community guidelines](https://leanprover-community.github.io/community_guidelines.html) — the code of conduct and the list of bannable behaviour
+- [Lean community guidelines](https://leanprover-community.github.io/community_guidelines.html) — the code of conduct and the list of bannable behavior
 - [Contributing to Mathlib](https://leanprover-community.github.io/contribute/index.html) — the AI disclosure requirement
-- [Citing Mathlib and licence](https://leanprover-community.github.io/cite.html)
+- [Citing Mathlib and license](https://leanprover-community.github.io/cite.html)
 - [The Lean Zulip](https://leanprover.zulipchat.com/) — where the community actually is
 
 *Quotations retrieved 2026-08-16. If they have drifted, the linked documents
