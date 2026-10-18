@@ -119,3 +119,11 @@ attempted after D; its hint is written as three moves. E2 is optional.
 **Homework:** *Mathematics in Lean* §5.2 (induction and recursion), and parts
 A–D of the exercises. E1 after that. The next unit is sequences and the ε-N
 limit, with no new tactics.
+
+## Where the meeting ended
+
+The meeting reached the end of §3 of `Demo.lean` (induction on an
+inequality). Not covered in the room: §4, the bound on the partial sums of
+`∑ 1/(k+1)²`, and §5, strong induction and the end of the √2 argument. Both
+are in the file with full narration; the √2 finish is also exercises E1–E2,
+with solutions. Session 6 assumes them as reading, not as material seen.

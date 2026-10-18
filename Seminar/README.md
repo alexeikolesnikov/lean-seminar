@@ -18,6 +18,7 @@ what keeps `git pull` from ever conflicting with what you have written.
 | 03 | [Logic](Session03_Logic/) | The rest of session 2 in shorter form — `∀` and `→` as one construct, application, the proof state, the four tactics — then the connectives `∧ ∨ ¬ ↔ ∃` and the tactics that prove and use them. Exercises start the parity ladder that ends at the irrationality of √2 in session 5. |
 | 04 | [Equations](Session04_Equations/) | `rw`, `calc`, `ring`, `norm_num`, `linarith`, `simp` and `omega`; what totality costs — truncated subtraction, division by zero, `√(-1) = 0`; and the cancellation step the √2 argument needs. |
 | 05 | [Induction](Session05_Induction/) | `Finset.range` and `∑`; `induction … with` on sums and inequalities; a bound from analysis (`∑ 1/k² < 2`) by the same induction over `ℝ`; strong induction, and the end of the √2 thread. `Extras.lean` on how Landau notation and `(1 + 1/n)ⁿ → e` are stated in Mathlib. |
+| 06 | [Limits](Session06_Limits/) | Sequences as functions `ℕ → ℝ`; the ε–N definition of convergence; constant sequences, `1/(n+1) → 0`, the limit of a sum, uniqueness; which orders of the quantifiers say what; and the equivalence with Mathlib's `Filter.Tendsto`. No new tactics. `NOTES.md` is a leader's script. |
 
 *Sessions are added as they are written; this index is the place to look for
 what exists.*
