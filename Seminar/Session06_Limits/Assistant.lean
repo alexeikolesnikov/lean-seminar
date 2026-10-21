@@ -44,13 +44,7 @@ test is whether each line corresponds to a step one could explain. -/
 
 theorem convergesTo_neg {s : ℕ → ℝ} {a : ℝ}
     (hs : ConvergesTo s a) : ConvergesTo (fun n => -s n) (-a) := by
-  unfold ConvergesTo at *
-  intro ε hε
-  obtain ⟨N, hN⟩ := hs ε hε
-  use N
-  intro n hn
-  simp only [neg_sub_neg_eq]
-  exact hN n hn
+  sorry
 
 #print axioms convergesTo_neg
 
