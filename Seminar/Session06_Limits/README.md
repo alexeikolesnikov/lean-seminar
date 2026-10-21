@@ -21,7 +21,7 @@ of that shape), and the estimates are `calc` blocks from session 4 with
 | `Exercises.lean` | Parts A–G: a reading exercise on quantifier order, then the algebra of limits, the squeeze theorem, two variants of the definition, and the statement with the quantifiers swapped. |
 | `Solutions.lean` | Every exercise proved, and the three tasks below. The Part A answers are in the comments. |
 | `Assistant.lean` | Three tasks for an AI assistant — ask for a proof, ask for a statement, ask for a proof of something false — each with a `#print axioms` line under it. |
-| `NOTES.md` | For whoever leads the meeting. |
+| `GitHub_Copilot_Notes.md` | For whoever leads the meeting. |
 
 ## In the browser
 
