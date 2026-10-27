@@ -1,7 +1,7 @@
 # AI and professional mathematics: a two-page briefing
 
 *For the Math Department conversation on AI in research, Wednesday 28 October 2026.*
-*Snapshot as of October 26, 2026, condensed from a longer inventory of 65 documents. The reason I put in a timeline is that a June document is not responding to what happened in October. I noticed that opinions shift in response to events.*
+*Snapshot as of October 26, 2026, condensed from a longer inventory of 65 documents. I included a timeline because a June document could not respond to what happened in October, and positions have shifted with events.*
 
 ---
 
@@ -13,8 +13,8 @@
 |---|---|
 | Jan–Feb | AI systems resolve several open Erdős problems, with Lean formalization; Tao starts a public wiki tracking AI contributions. Some claimed solutions turn out to be rediscoveries. |
 | 2 Jun | Leiden Declaration on AI and Mathematics published; endorsed by the IMU the same day. |
+| Jul–Aug | Security researchers using AI models find several soundness bugs in the Lean 4 kernel, each a way to prove False. All are fixed and Mathlib is re-checked (see §7). |
 | 1 Aug | OpenAI publishes ten results on long-open problems, each with a machine-checked proof. |
-| Jul–Aug | A bug hunt finds several soundness bugs in the Lean 4 kernel — ways to prove False, including an illicit disproof of the Collatz conjecture. All are fixed and Mathlib is re-checked; de Moura's postmortem is dated 24 Aug. (See §7.) |
 | 5 Aug | The European Mathematical Society declines to formally endorse Leiden, citing the range of views among its members. |
 | Aug | Hexagon Mathematics Foundation registered; its repository accepts AI-generated results, including ones no human claims to understand. |
 | 8 Sep | OpenAI says its model has resolved more than 100 open problems and announces a Navier–Stokes claim. |
@@ -48,17 +48,17 @@ Most policies have converged on disclosure. The differences are in what counts a
 
 Several people hold more than one of these at once. Tao formalizes, endorses Leiden, signed the Fields letter, and uses the tools daily. The positions differ less on whether to use AI than on two separate questions: what norms govern your own use, and how to deal with the companies.
 
-The last column is imagining what each position would look like at our department.
+The last column imagines what each position would look like in our department.
 
 | Position | Representative documents | What it says | What it would mean here |
 |---|---|---|---|
-| **Refuse** | Weinreich, *The crisis of AI-generated mathematics* (Aug 2026); Lazić, *Where I Stand on AI*; AHM pledges | Total opposition. AI-free work should count for more in hiring and tenure; no collaboration with AI companies. | Keep the manual tradition on purpose; accept slower output and a widening gap with the AI-assisted literature. |
-| **Contain** | Leiden Declaration; Fields Medalists' letter; AGMAI recommendations | Use is permitted, but needs norms: disclosure, attribution, responsible release. The objection is to the companies racing to solve famous problems as a benchmark, not to mathematicians using the tools. | Adopt disclosure norms; push societies and journals; treat lab releases as material to check rather than results to cite. |
-| **Adapt** | EMS position; Gowers, *Why I didn't sign*; Loh; Harlev | Powerful models will arrive regardless. Update hiring and journal criteria for this cycle instead of waiting for consensus. | Learn the workflow; decide what the department rewards (exposition, verification, collaboration) before a tenure case forces the question. |
-| **Embrace and formalize** | Buzzard and the Xena Project; Hexagon; Tao's 2023–25 formalization projects | A Lean-checked proof is correct whoever wrote it. Understanding can come later, from someone else. | Build on the Lean seminar; formal verification becomes something the department is known for. |
+| **Refuse** | Weinreich, *The crisis of AI-generated mathematics* (Aug 2026); Lazić, *Where I Stand on AI*; AHM pledges | Total opposition. AI-free work should count for more in hiring and tenure; no collaboration with AI companies. | Keep the manual tradition on purpose; accept slower output and a widening gap with the AI-assisted literature. *Mathematical Amish country.* |
+| **Contain** | Leiden Declaration; Fields Medalists' letter; AGMAI recommendations | Use is permitted, but needs norms: disclosure, attribution, responsible release. The objection is to the companies racing to solve famous problems as a benchmark, not to mathematicians using the tools. | Adopt disclosure norms; push societies and journals; treat lab releases as material to check rather than results to cite. *Mathematical situationship.* |
+| **Adapt** | EMS position; Gowers, *Why I didn't sign*; Loh; Harlev | Powerful models will arrive regardless. Update hiring and journal criteria for this cycle instead of waiting for consensus. | Learn the workflow; decide what the department rewards (exposition, verification, collaboration) before a tenure case forces the question. *Mathematical evolution.* |
+| **Embrace and formalize** | Buzzard and the Xena Project; Hexagon; Tao's 2023–25 formalization projects | A Lean-checked proof is correct whoever wrote it. Understanding can come later, from someone else. | Build on the Lean seminar; formal verification becomes something the department is known for. *Mathematical revolution.* |
 
 
-### 5. One working rule
+### 5. A working rule example
 
 Tao's rule for his own practice: an AI output belongs in your workflow only if you could present and defend it yourself, without further AI help. For students he argues for leaving some of the friction in.
 
@@ -74,9 +74,7 @@ No institution has ruled on any of these.
 
 Every position except outright refusal treats a formalized proof as the baseline for trust and argues only about what comes after. Rogers's September draft for mid-sized departments points out that Lean and mathlib infrastructure work doesn't fit evaluation systems built around papers, talks and grants, and asks departments to decide how to credit it. That question is open.
 
-The baseline itself has had a public examination this year. Thomas Hales, who led the formal proof of the Kepler conjecture, writes on Tao's blog (9 Oct) that a Lean proof is only as trustworthy as Lean's kernel, several thousand lines of C++, and that the summer's soundness bugs were found by frontier AI models in the hands of security researchers rather than by the mathematical community. Three responses are in progress: about 25 independent checkers for Lean (the Lean Kernel Arena, which re-checked the Navier–Stokes formalization with more than a dozen of them); Breitner's Con-Leche, a Lean checker with a formal consistency proof relative to set theory, released 10 Sep; and work on the metatheory of Lean's type theory, where Hales notes that no complete, public relative-consistency proof exists and that unique typing is still a conjecture. His practical rule: a Lean proof is not accepted until the kernel has checked it *and* a human has audited the statement — do the definitions say what we think they say. He describes that audit as much easier than checking the proof, and as the part that is not delegated.
-
-Hales's own conclusion is that mathematicians "absolutely cannot put blind trust in systems such as Lean", and that the type-theoretic foundations are getting less attention from the community than they need. For a department deciding what to build on, this is what the "embrace and formalize" position amounts to in practice: formal verification moves the trust question; it does not remove it.
+Tom Hales, who led the formal proof of the Kepler conjecture, describes the limits of that baseline (Tao's blog, 9 Oct). A Lean proof is as reliable as Lean's kernel, a few thousand lines of C++. This summer's soundness bugs in it were found by AI models in the hands of security researchers and have been fixed; independent checkers exist, but there is still no complete published proof that Lean's type theory is consistent relative to set theory. His rule for accepting a Lean proof has two parts: the kernel checks the proof, and a person checks that the statement and the definitions mean what they are claimed to mean. The second part is not delegated to the software. He also argues that the type-theoretic foundations get less attention from mathematicians than their use now calls for.
 
 ### 8. Questions for the session on Wednesday
 
