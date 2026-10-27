@@ -19,6 +19,7 @@ what keeps `git pull` from ever conflicting with what you have written.
 | 04 | [Equations](Session04_Equations/) | `rw`, `calc`, `ring`, `norm_num`, `linarith`, `simp` and `omega`; what totality costs — truncated subtraction, division by zero, `√(-1) = 0`; and the cancellation step the √2 argument needs. |
 | 05 | [Induction](Session05_Induction/) | `Finset.range` and `∑`; `induction … with` on sums and inequalities; a bound from analysis (`∑ 1/k² < 2`) by the same induction over `ℝ`; strong induction, and the end of the √2 thread. `Extras.lean` on how Landau notation and `(1 + 1/n)ⁿ → e` are stated in Mathlib. |
 | 06 | [Limits](Session06_Limits/) | Sequences as functions `ℕ → ℝ`; the ε–N definition of convergence; constant sequences, `1/(n+1) → 0`, the limit of a sum, uniqueness; which orders of the quantifiers say what; and the equivalence with Mathlib's `Filter.Tendsto`. No new tactics. `NOTES.md` is a leader's script. |
+| — | [AI and mathematics](../handouts/ai-and-mathematics.md) | Week of 26 October: the seminar slot was given to a department conversation on AI in research. No Lean. The briefing prepared for it is in `handouts/`. |
 
 *Sessions are added as they are written; this index is the place to look for
 what exists.*
