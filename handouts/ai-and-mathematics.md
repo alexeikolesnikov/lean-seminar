@@ -6,7 +6,7 @@
 
 ---
 
-## Section 1: timeline, reactions, and consensus topics
+## Part 1: timeline, reactions, and consensus topics
 
 ### 1. Brief 2026 timeline
 
@@ -43,7 +43,7 @@ Most policies have converged on disclosure. The differences are in what counts a
 
 ---
 
-## Section 2: where people disagree, and what is open
+## Part 2: where people disagree, and what is open
 
 ### 4. Four positions
 
