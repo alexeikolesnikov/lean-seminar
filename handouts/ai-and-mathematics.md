@@ -1,13 +1,13 @@
 # AI and professional mathematics: a two-page briefing
 
 *For the Math Department conversation on AI in research, Wednesday 28 October 2026.*
-*Snapshot as of 26 October 2026, condensed from a longer inventory of 65 documents. Dates matter: a June document could not respond to what happened in October.*
+*Snapshot as of October 26, 2026, condensed from a longer inventory of 65 documents. The reason I put in a timeline is that a June document is not responding to what happened in October. I noticed that opinions shift in response to events.*
 
 ---
 
-## Page 1: what happened, and what is settled
+## Section 1: timeline, reactions, and consensus topics
 
-### 1. The 2026 timeline
+### 1. Brief 2026 timeline
 
 | Date | Event |
 |---|---|
@@ -29,7 +29,7 @@
 2. **Humans answer for correctness.** Responsibility for a paper's content, citations included, rests with the people who sign it.
 3. **Disclose use; keep refereed work out of the tools.** For authors, the mainstream position is permissive with disclosure. For referees it is close to a prohibition: manuscripts and proposals under review stay out of generative AI.
 
-### 3. Where the journals and funders have landed, for reference
+### 3. Where the journals and funders took a position
 
 Most policies have converged on disclosure. The differences are in what counts as substantive use and how much the author has to say about it.
 
@@ -37,22 +37,25 @@ Most policies have converged on disclosure. The differences are in what counts a
 
 *Refereeing.* SIAM, Elsevier, Springer Nature and the NSF all treat a manuscript or proposal under review as confidential and not to be entered into AI tools. Separately: the volunteer refereeing system was built for a fraction of current volume, and nobody has said how it is meant to absorb the difference.
 
-*Advising.* No society has said anything. The closest thing to a reference point is a first-draft report from a September 2026 Harvard summit on PhD education: responsibility for correctness and understanding sits with the person whose name is on the work; AI use is disclosed; other people's material goes into an AI system only with their agreement.
+*Advising.* No society has said anything, as far as I can see. The closest thing to a reference point is a first-draft report from a September 2026 Harvard summit on PhD education: responsibility for correctness and understanding sits with the person whose name is on the work; AI use is disclosed; other people's material goes into an AI system only with their agreement.
 
 ---
 
-## Page 2: where people disagree, and what is open
+## Section 2: where people disagree, and what is open
 
 ### 4. Four positions
+
+Several people hold more than one of these at once. Tao formalizes, endorses Leiden, signed the Fields letter, and uses the tools daily. The positions differ less on whether to use AI than on two separate questions: what norms govern your own use, and how to deal with the companies.
+
+The last column is imagining what each position would look like at our department.
 
 | Position | Representative documents | What it says | What it would mean here |
 |---|---|---|---|
 | **Refuse** | Weinreich, *The crisis of AI-generated mathematics* (Aug 2026); Lazić, *Where I Stand on AI*; AHM pledges | Total opposition. AI-free work should count for more in hiring and tenure; no collaboration with AI companies. | Keep the manual tradition on purpose; accept slower output and a widening gap with the AI-assisted literature. |
 | **Contain** | Leiden Declaration; Fields Medalists' letter; AGMAI recommendations | Use is permitted, but needs norms: disclosure, attribution, responsible release. The objection is to the companies racing to solve famous problems as a benchmark, not to mathematicians using the tools. | Adopt disclosure norms; push societies and journals; treat lab releases as material to check rather than results to cite. |
-| **Adapt** | EMS position; Gowers, *Why I didn't sign*; Loh; Harlev | Powerful models will arrive regardless. Update hiring and journal criteria for this cycle instead of waiting for consensus. | Learn the workflow; decide what the department rewards (exposition, verification, teaching) before a tenure case forces the question. |
+| **Adapt** | EMS position; Gowers, *Why I didn't sign*; Loh; Harlev | Powerful models will arrive regardless. Update hiring and journal criteria for this cycle instead of waiting for consensus. | Learn the workflow; decide what the department rewards (exposition, verification, collaboration) before a tenure case forces the question. |
 | **Embrace and formalize** | Buzzard and the Xena Project; Hexagon; Tao's 2023–25 formalization projects | A Lean-checked proof is correct whoever wrote it. Understanding can come later, from someone else. | Build on the Lean seminar; formal verification becomes something the department is known for. |
 
-Several people hold more than one of these at once. Tao formalizes, endorses Leiden, signed the Fields letter, and uses the tools daily. The positions differ less on whether to use AI than on two separate questions: what norms govern your own use, and how to deal with the companies.
 
 ### 5. One working rule
 
@@ -62,7 +65,7 @@ Tao's rule for his own practice: an AI output belongs in your workflow only if y
 
 No institution has ruled on any of these.
 
-1. **What counts as a contribution?** Is a correct, checked result the contribution (Buzzard, Hexagon), or is a proof unfinished until a person understands and explains it (Kra, Sanderson, Tao's ICM essay)? Kra's version: deep theorems used to be scarce, so producing one was a reliable sign of deep thought. That signal has broken.
+1. **What counts as a contribution?** Is a correct, checked result the contribution (Buzzard, Hexagon), or is a proof unfinished until a person understands and explains it (Kra, Sanderson, Tao's ICM essay)? Kra's version: deep theorems used to be scarce, so producing one was a reliable sign of deep thought. That signal is broken.
 2. **Who absorbs the volume?** Submissions have doubled in two years and arXiv calls its cap a stopgap. Proposals range from journals that refuse AI-generated papers outright (Craven) to formal-verification certificates as a condition of review (Rogers).
 3. **Hiring, promotion and tenure.** No funder, society or university has issued guidance. Individual proposals run from reserving hire lines for mathematicians who don't use AI (Weinreich) to judging papers on their merits regardless of the tools (Hairer). A department can act on this one before anyone tells it what to do.
 
@@ -70,12 +73,13 @@ No institution has ruled on any of these.
 
 Every position except outright refusal treats a formalized proof as the baseline for trust and argues only about what comes after. Rogers's September draft for mid-sized departments points out that Lean and mathlib infrastructure work doesn't fit evaluation systems built around papers, talks and grants, and asks departments to decide how to credit it. That question is open.
 
-### 8. Questions for Wednesday
+### 8. Questions for the session on Wednesday
 
-- What has already changed in your research or your field in the past year? Have you tried the current tools on a problem of your own?
-- Imagine your research career in ten years. What are you working on?
-- Which parts of that work bring you satisfaction?
-- What does AI change about that picture, for better or worse?
+- What has changed in your work or in your research field in the past year? Have you tried to use any of the new tools in your work, and what happened?
+- Imagine your research career in 10 years. What kinds of things do you envision yourself working on?
+- In that long-term career plan, what particular aspects of your research work bring you joy, meaning, and satisfaction?
+- What opportunities does AI contribute to that vision? What barriers/challenges does it introduce?
+
 
 ---
 
@@ -91,5 +95,21 @@ Every position except outright refusal treats a formalized proof as the baseline
 - SIAM AI policy: <https://epubs.siam.org/artificial-intelligence> · *Annals* submission guidelines: <https://annals.math.princeton.edu/submission-guidelines> · LMS submission page: <https://www.lms.ac.uk/publications/plms/submission>
 - Harvard summit report (first draft): <https://cmsa.fas.harvard.edu/media/2026/09/Summit-on-PhD-Math-Education-in-the-Age-of-AI.pdf>
 - Rogers, *Preparing Mathematics Departments for AI-Assisted Research and Formalization*: <http://hoalg.net/chrisrogers/AI-Formal_Dept_Proposal.pdf>
+
+### Documents named in the text
+
+- Weinreich, *The crisis of AI-generated mathematics* (Aug 2026): <https://arxiv.org/abs/2608.02859>
+- Lazić, *Where I stand on AI*: <https://www.uni-saarland.de/en/lehrstuhl/lazic/prof-dr-vladimir-lazic/vladimir-lazic-where-i-stand-on-ai.html>
+- Association for Human Mathematics: <https://www.ahmath.org/> · statement on the 6 October release: <https://proofsandprompts.com/2026/10/08/ahm-statement-on-openais-october-6-release-of-mathematical-documents/>
+- Open letter about the Caltech Mathathon (10 Sep): <https://proofsandprompts.com/2026/09/10/open-letter-about-the-mathathon/>
+- Gowers, *Why I didn't sign the Fields medallists' letter* (17 Sep): <https://gowers.wordpress.com/2026/09/17/why-i-didnt-sign-the-fields-medallists-letter/>
+- Loh, *Why do we need human mathematicians anymore?* (19 Sep): <https://terrytao.wordpress.com/2026/09/19/why-do-we-need-human-mathematicians-anymore/>
+- Harlev, *Dear conferences, journals, and hiring committees: don't wait for everyone else* (25 Sep): <https://proofsandprompts.com/2026/09/25/dear-conferences-journals-and-hiring-committees-dont-wait-for-everyone-else/>
+- Kra, *Deep theorems were scarce and difficult…* (13 Sep): <https://terrytao.wordpress.com/2026/09/13/deep-theorems-were-scarce-and-difficult-and-so-became-an-effective-mechanism-to-identify-deep-thought-ai-has-broken-this-system/>
+- Sanderson, *If math is more than proof, we need to better celebrate the rest of it* (18 Sep): <https://terrytao.wordpress.com/2026/09/18/if-math-is-more-than-proof-we-need-to-better-celebrate-the-rest-of-it/>
+- Tao, *Mathematics in the age of AI* (ICM 2026 essay): <https://arxiv.org/abs/2608.16753>
+- Craven, *Where will all the papers go?* (19 Sep): <https://proofsandprompts.com/2026/09/19/where-will-all-the-papers-go/>
+- Hairer, *Why I agreed to join AGMAI* (22 Sep): <https://proofsandprompts.com/2026/09/22/why-i-agreed-to-join-agmai/>
+- AGMAI recommendations of 29 September: <https://agmai.org/general-sep29/>
 
 *Nothing after 26 October 2026 is reflected. Corrections and additions: open an issue or PR.*
