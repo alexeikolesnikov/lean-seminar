@@ -2,11 +2,11 @@
 
 *For the Math Department conversation on AI in research, Wednesday 28 October 2026.*
 
-*Snapshot as of October 26, 2026. I included a timeline because a June document does not address what happened in October, and positions have shifted with events.*
+*This is a snapshot of both sources and thinking as of October 26, 2026. I include a timeline because a statement issued in June does not address what happened in October; positions have shifted with events.*
 
 ---
 
-## Part 1: timeline, reactions, and consensus topics
+## Timeline, reactions, and consensus topics
 
 ### 1. Brief 2026 timeline
 
@@ -25,38 +25,35 @@
 | 1 Oct | arXiv caps every submitter at two submissions a month and three active at a time. September volume was 40,363, against 20,569 two years earlier. |
 | 6–7 Oct | OpenAI releases 722 manuscripts in 372 result families from an unreleased model, and withdraws three the next day after an error. The Association for Human Mathematics calls the release "a demonstration of power". |
 
-### 2. What nearly everyone agrees on
+### 2. Areas of near-universal agreement
 
 1. **No AI authors.** An AI system cannot take responsibility, so it cannot be a listed author. COPE, Nature, Science, SIAM, LMS, Elsevier, arXiv and the *Annals* all say this.
 2. **Humans answer for correctness.** Responsibility for a paper's content, citations included, rests with the people who sign it.
 3. **Disclose use; keep refereed work out of the tools.** For authors, the mainstream position is permissive with disclosure. For referees it is close to a prohibition: manuscripts and proposals under review stay out of generative AI.
 
-### 3. Where the journals and funders took a position
-
-Most policies have converged on disclosure. The differences are in what counts as substantive use and how much the author has to say about it.
+Most policies have converged on disclosure. The differences are in what counts as "substantive use" and how much the author has to say about it.
 
 *Journals.* The *Annals* asks that authors be human and that any idea contributed by an AI tool be described and located in the paper. SIAM (policy v2.0, May 2026) asks for disclosure and for authors to be able to defend every part of the work, citations included. LMS journals attach an AI declaration to every submission, including a statement that none was used. A *Notices of the AMS* article (Sep 2025) surveys publisher policies and reports the same split: copy-editing with AI tools is ordinary, substantive use is disclosed, and no AI is a coauthor. arXiv asks that significant generative-AI use be reported.
 
-*Refereeing.* SIAM, Elsevier, Springer Nature and the NSF all treat a manuscript or proposal under review as confidential and not to be entered into AI tools. Separately: the volunteer refereeing system was built for a fraction of current volume, and nobody has said how it is meant to absorb the difference.
+*Refereeing.* SIAM, Elsevier, Springer Nature and the NSF all treat a manuscript or proposal under review as confidential and not to be entered into AI tools. However: the volunteer refereeing system was built for a fraction of current volume, there are no clear ways to deal with the difference.
 
-*Advising.* No society has said anything, as far as I can see. The closest thing to a reference point is a first-draft report from a September 2026 Harvard summit on PhD education: responsibility for correctness and understanding sits with the person whose name is on the work; AI use is disclosed; other people's material goes into an AI system only with their agreement.
+*Advising.* No society has said anything, as far as I can see. The closest thing is a first-draft report from a September 2026 Harvard summit on PhD education: responsibility for correctness and understanding sits with the person whose name is on the work; AI use is disclosed; other people's material goes into an AI system only with their agreement. The report recommends adaptations to the skills the future PhDs will need.
 
 ---
 
-## Part 2: where people disagree, and what is open
+## Disagreements and open questions
 
-### 4. Four positions
+### 1. Four positions
 
-Several people hold more than one of these at once. Tao formalizes, endorses Leiden, signed the Fields letter, and uses the tools daily. The positions differ less on whether to use AI than on two separate questions: what norms govern your own use, and how to deal with the companies.
+The positions are not all mutually exclusive. For example, Tao formalizes, endorses Leiden, signed the Fields letter, and uses the tools daily. 
 
-The last column imagines what each position would look like in our department.
 
 | Position | Representative documents | What it says | What it would mean here |
 |---|---|---|---|
-| **Refuse** | Weinreich, *The crisis of AI-generated mathematics* (Aug 2026); Lazić, *Where I Stand on AI*; AHM pledges | Total opposition. AI-free work should count for more in hiring and tenure; no collaboration with AI companies. | Keep the manual tradition on purpose; accept slower output and a widening gap with the AI-assisted literature. *Mathematical monastery.* |
-| **Contain** | Leiden Declaration; Fields Medalists' letter; AGMAI recommendations | Use is permitted, but needs norms: disclosure, attribution, responsible release. The objection is to the companies racing to solve famous problems as a benchmark, not to mathematicians using the tools. | Adopt disclosure norms; push societies and journals; treat lab releases as material to check rather than results to cite. *Mathematical situationship.* |
-| **Adapt** | EMS position; Gowers, *Why I didn't sign*; Loh; Harlev | Powerful models will arrive regardless. Update hiring and journal criteria for this cycle instead of waiting for consensus. | Learn the workflow; decide what the department rewards (exposition, verification, collaboration) before a tenure case forces the question. *Mathematical evolution.* |
-| **Embrace and formalize** | Buzzard and the Xena Project; Hexagon; Tao's 2023–25 formalization projects | A Lean-checked proof is correct whoever wrote it. Understanding can come later, from someone else. | Build on the Lean seminar; formal verification becomes something the department is known for. *Mathematical revolution.* |
+| **Refuse** | Weinreich, *The crisis of AI-generated mathematics* (Aug 2026); Lazić, *Where I Stand on AI*; AHM pledges | Total opposition. AI-free work should count for more in hiring and tenure; no collaboration with AI companies. |  |
+| **Contain** | Leiden Declaration; Fields Medalists' letter; AGMAI recommendations | Use is permitted, but needs norms: disclosure, attribution, responsible release. The objection is to the companies racing to solve famous problems as a benchmark, not to mathematicians using the tools. |  |
+| **Adapt** | EMS position; Gowers, *Why I didn't sign*; Loh; Harlev | Powerful models will arrive regardless. Update hiring and journal criteria for this cycle instead of waiting for consensus. |  |
+| **Embrace and formalize** | Buzzard and the Xena Project; Hexagon; Tao's 2023–25 formalization projects | A Lean-checked proof is correct whoever wrote it. Understanding can come later, from someone else. |  |
 
 
 ### 5. A working rule example
