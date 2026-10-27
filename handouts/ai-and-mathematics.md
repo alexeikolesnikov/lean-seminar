@@ -48,33 +48,39 @@ Most policies have converged on disclosure. The differences are in what counts a
 The positions are not all mutually exclusive. For example, Tao formalizes, endorses Leiden, signed the Fields letter, and uses the tools daily. 
 
 
-| Position | Representative documents | What it says | What it would mean here |
-|---|---|---|---|
-| **Refuse** | Weinreich, *The crisis of AI-generated mathematics* (Aug 2026); Lazić, *Where I Stand on AI*; AHM pledges | Total opposition. AI-free work should count for more in hiring and tenure; no collaboration with AI companies. |  |
-| **Contain** | Leiden Declaration; Fields Medalists' letter; AGMAI recommendations | Use is permitted, but needs norms: disclosure, attribution, responsible release. The objection is to the companies racing to solve famous problems as a benchmark, not to mathematicians using the tools. |  |
-| **Adapt** | EMS position; Gowers, *Why I didn't sign*; Loh; Harlev | Powerful models will arrive regardless. Update hiring and journal criteria for this cycle instead of waiting for consensus. |  |
-| **Embrace and formalize** | Buzzard and the Xena Project; Hexagon; Tao's 2023–25 formalization projects | A Lean-checked proof is correct whoever wrote it. Understanding can come later, from someone else. |  |
+| Position | Representative documents | What it says | 
+|---|---|---|
+| **Refuse** | Weinreich, *The crisis of AI-generated mathematics* (Aug 2026); Lazić, *Where I Stand on AI*; AHM pledges | Total opposition. AI-free work should count for more in hiring and tenure; no collaboration with AI companies. |
+| **Contain** | Leiden Declaration; Fields Medalists' letter; AGMAI recommendations | Use is permitted, but needs norms: disclosure, attribution, responsible release. The objection is to the companies racing to solve famous problems as a benchmark, not to mathematicians using the tools. |
+| **Adapt** | EMS position; Gowers, *Why I didn't sign*; Loh; Harlev | Powerful models will arrive regardless. Update hiring and journal criteria for this cycle instead of waiting for consensus. |
+| **Embrace and formalize** | Buzzard and the Xena Project; Hexagon; Tao's 2023–25 formalization projects | A Lean-checked proof is correct whoever wrote it. Understanding can come later, from someone else. |
 
 
-### 5. A working rule example
+### 2. Working rule examples
+
+AHM pledges provide one set of examples.
 
 Tao's rule for his own practice: an AI output belongs in your workflow only if you could present and defend it yourself, without further AI help. For students he argues for leaving some of the friction in.
 
-### 6. Three open questions
+### 3. Open questions
 
-No institution has ruled on any of these.
+I could not find a "ruling" on any of these.
 
-1. **What counts as a contribution?** Is a correct, checked result the contribution (Buzzard, Hexagon), or is a proof unfinished until a person understands and explains it (Kra, Sanderson, Tao's ICM essay)? Kra's version: deep theorems used to be scarce, so producing one was a reliable sign of deep thought. That signal is broken.
-2. **Who absorbs the volume?** Submissions have doubled in two years and arXiv calls its cap a stopgap. Proposals range from journals that refuse AI-generated papers outright (Craven) to formal-verification certificates as a condition of review (Rogers).
-3. **Hiring, promotion and tenure.** No funder, society or university has issued guidance. Individual proposals run from reserving hire lines for mathematicians who don't use AI (Weinreich) to demanding precise disclosure together with evaluation that does not penalize it (Harlev). A department can act on this one before anyone tells it what to do.
+1. **What counts as a contribution?** Is a correct, checked result the contribution (Buzzard, Hexagon), or is a proof unfinished until a person understands and explains it (Kra, Sanderson, Tao's ICM essay)? Kra's version: deep theorems used to be scarce, so producing one was a reliable sign of deep thought. Having seen a number of bad talks by good mathematicians explaining their (pre-AI) work, if the ability to explain is a standard, some mathematicians would be at a disadvantage.
+2. **Who absorbs the volume?** Submissions have doubled in two years and arXiv calls its cap a stopgap. Proposals range from journals that refuse AI-generated papers outright (Craven) to formal-verification certificates as a condition of review (Rogers). If AI-gen papers are banned, but the tools are available, would this necessitate a massive "anti-doping" apparatus?
+3. **Hiring, promotion and tenure.** No funder, society or university has issued guidance. Individual proposals run from reserving hire lines for mathematicians who don't use AI (Weinreich) to demanding precise disclosure together with evaluation that does not penalize it (Harlev).
 
-### 7. For the Lean seminar
+### 4. For the Lean seminar
 
 Every position except outright refusal treats a formalized proof as the baseline for trust and argues only about what comes after. Rogers's September draft for mid-sized departments points out that Lean and mathlib infrastructure work doesn't fit evaluation systems built around papers, talks and grants, and asks departments to decide how to credit it. That question is open.
 
-Tom Hales, who led the formal proof of the Kepler conjecture, describes the limits of that baseline (Tao's blog, 9 Oct). A Lean proof is as reliable as Lean's kernel, a few thousand lines of C++. This summer's soundness bugs in it were found by AI models in the hands of security researchers and have been fixed; independent checkers exist, but there is still no complete published proof that Lean's type theory is consistent relative to set theory. His rule for accepting a Lean proof has two parts: the kernel checks the proof, and a person checks that the statement and the definitions mean what they are claimed to mean. The second part is not delegated to the software. He also argues that the type-theoretic foundations get less attention from mathematicians than their use now calls for.
+Tom Hales, who led the formal proof of the Kepler conjecture, describes the limits of that baseline (Tao's blog, Oct 9, 2026). A Lean proof is as reliable as Lean's kernel, a few thousand lines of C++. This summer's soundness bugs in it were found by AI models in the hands of security researchers and have been fixed; independent checkers exist, but there is still no complete published proof that Lean's type theory is consistent relative to set theory. 
 
-### 8. Questions for the session on Wednesday
+His rule for accepting a Lean proof has two parts: the kernel checks the proof, and a person checks that the statement and the definitions mean what they are claimed to mean. The second part is not delegated to the software. He also argues that the type-theoretic foundations get less attention from mathematicians than their use now calls for.
+
+### 5. Questions for the session on Wednesday
+
+I am just copying these from the Chair's email.
 
 - What has changed in your work or in your research field in the past year? Have you tried to use any of the new tools in your work, and what happened?
 - Imagine your research career in 10 years. What kinds of things do you envision yourself working on?
