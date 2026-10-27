@@ -1,7 +1,8 @@
-# AI and professional mathematics: a two-page briefing
+# AI and mathematics
 
 *For the Math Department conversation on AI in research, Wednesday 28 October 2026.*
-*Snapshot as of October 26, 2026, condensed from a longer inventory of 65 documents. I included a timeline because a June document could not respond to what happened in October, and positions have shifted with events.*
+
+*Snapshot as of October 26, 2026. I included a timeline because a June document does not address what happened in October, and positions have shifted with events.*
 
 ---
 
