@@ -68,7 +68,7 @@ No institution has ruled on any of these.
 
 1. **What counts as a contribution?** Is a correct, checked result the contribution (Buzzard, Hexagon), or is a proof unfinished until a person understands and explains it (Kra, Sanderson, Tao's ICM essay)? Kra's version: deep theorems used to be scarce, so producing one was a reliable sign of deep thought. That signal is broken.
 2. **Who absorbs the volume?** Submissions have doubled in two years and arXiv calls its cap a stopgap. Proposals range from journals that refuse AI-generated papers outright (Craven) to formal-verification certificates as a condition of review (Rogers).
-3. **Hiring, promotion and tenure.** No funder, society or university has issued guidance. Individual proposals run from reserving hire lines for mathematicians who don't use AI (Weinreich) to judging papers on their merits regardless of the tools (Hairer). A department can act on this one before anyone tells it what to do.
+3. **Hiring, promotion and tenure.** No funder, society or university has issued guidance. Individual proposals run from reserving hire lines for mathematicians who don't use AI (Weinreich) to demanding precise disclosure together with evaluation that does not penalize it (Harlev). A department can act on this one before anyone tells it what to do.
 
 ### 7. For the Lean seminar
 
@@ -114,7 +114,6 @@ Hales's own conclusion is that mathematicians "absolutely cannot put blind trust
 - Sanderson, *If math is more than proof, we need to better celebrate the rest of it* (18 Sep): <https://terrytao.wordpress.com/2026/09/18/if-math-is-more-than-proof-we-need-to-better-celebrate-the-rest-of-it/>
 - Tao, *Mathematics in the age of AI* (ICM 2026 essay): <https://arxiv.org/abs/2608.16753>
 - Craven, *Where will all the papers go?* (19 Sep): <https://proofsandprompts.com/2026/09/19/where-will-all-the-papers-go/>
-- Hairer, *Why I agreed to join AGMAI* (22 Sep): <https://proofsandprompts.com/2026/09/22/why-i-agreed-to-join-agmai/>
 - AGMAI recommendations of 29 September: <https://agmai.org/general-sep29/>
 - Hales, *What mathematicians should know about the Lean Theorem Prover: questions of reliability and AI* (9 Oct): <https://terrytao.wordpress.com/2026/10/09/what-mathematicians-should-know-about-the-lean-theorem-proverquestions-of-reliability-and-ai/> · de Moura, postmortem for the kernel soundness bug hunt (24 Aug): <https://leodemoura.github.io/blog/2026-8-24-postmortem-for-the-kernel-soundness-bug-hunt/>
 - Buzzard, *Human mathematicians are being outcounterexampled* (Xena Project, 20 Jul): <https://xenaproject.wordpress.com/2026/07/20/human-mathematicians-are-being-outcounterexampled>
