@@ -14,6 +14,7 @@
 | Jan–Feb | AI systems resolve several open Erdős problems, with Lean formalization; Tao starts a public wiki tracking AI contributions. Some claimed solutions turn out to be rediscoveries. |
 | 2 Jun | Leiden Declaration on AI and Mathematics published; endorsed by the IMU the same day. |
 | 1 Aug | OpenAI publishes ten results on long-open problems, each with a machine-checked proof. |
+| Jul–Aug | A bug hunt finds several soundness bugs in the Lean 4 kernel — ways to prove False, including an illicit disproof of the Collatz conjecture. All are fixed and Mathlib is re-checked; de Moura's postmortem is dated 24 Aug. (See §7.) |
 | 5 Aug | The European Mathematical Society declines to formally endorse Leiden, citing the range of views among its members. |
 | Aug | Hexagon Mathematics Foundation registered; its repository accepts AI-generated results, including ones no human claims to understand. |
 | 8 Sep | OpenAI says its model has resolved more than 100 open problems and announces a Navier–Stokes claim. |
@@ -33,7 +34,7 @@
 
 Most policies have converged on disclosure. The differences are in what counts as substantive use and how much the author has to say about it.
 
-*Journals.* The *Annals* asks that authors be human and that any idea contributed by an AI tool be described and located in the paper. SIAM (policy v2.0, May 2026) asks for disclosure and for authors to be able to defend every part of the work, citations included. LMS journals attach an AI declaration to every submission, including a statement that none was used. The *AMS Notices* (Sep 2025) treats copy-editing with AI tools as ordinary and substantive use as something to disclose. arXiv asks that significant generative-AI use be reported.
+*Journals.* The *Annals* asks that authors be human and that any idea contributed by an AI tool be described and located in the paper. SIAM (policy v2.0, May 2026) asks for disclosure and for authors to be able to defend every part of the work, citations included. LMS journals attach an AI declaration to every submission, including a statement that none was used. A *Notices of the AMS* article (Sep 2025) surveys publisher policies and reports the same split: copy-editing with AI tools is ordinary, substantive use is disclosed, and no AI is a coauthor. arXiv asks that significant generative-AI use be reported.
 
 *Refereeing.* SIAM, Elsevier, Springer Nature and the NSF all treat a manuscript or proposal under review as confidential and not to be entered into AI tools. Separately: the volunteer refereeing system was built for a fraction of current volume, and nobody has said how it is meant to absorb the difference.
 
@@ -73,6 +74,10 @@ No institution has ruled on any of these.
 
 Every position except outright refusal treats a formalized proof as the baseline for trust and argues only about what comes after. Rogers's September draft for mid-sized departments points out that Lean and mathlib infrastructure work doesn't fit evaluation systems built around papers, talks and grants, and asks departments to decide how to credit it. That question is open.
 
+The baseline itself has had a public examination this year. Thomas Hales, who led the formal proof of the Kepler conjecture, writes on Tao's blog (9 Oct) that a Lean proof is only as trustworthy as Lean's kernel, several thousand lines of C++, and that the summer's soundness bugs were found by frontier AI models in the hands of security researchers rather than by the mathematical community. Three responses are in progress: about 25 independent checkers for Lean (the Lean Kernel Arena, which re-checked the Navier–Stokes formalization with more than a dozen of them); Breitner's Con-Leche, a Lean checker with a formal consistency proof relative to set theory, released 10 Sep; and work on the metatheory of Lean's type theory, where Hales notes that no complete, public relative-consistency proof exists and that unique typing is still a conjecture. His practical rule: a Lean proof is not accepted until the kernel has checked it *and* a human has audited the statement — do the definitions say what we think they say. He describes that audit as much easier than checking the proof, and as the part that is not delegated.
+
+Hales's own conclusion is that mathematicians "absolutely cannot put blind trust in systems such as Lean", and that the type-theoretic foundations are getting less attention from the community than they need. For a department deciding what to build on, this is what the "embrace and formalize" position amounts to in practice: formal verification moves the trust question; it does not remove it.
+
 ### 8. Questions for the session on Wednesday
 
 - What has changed in your work or in your research field in the past year? Have you tried to use any of the new tools in your work, and what happened?
@@ -111,5 +116,9 @@ Every position except outright refusal treats a formalized proof as the baseline
 - Craven, *Where will all the papers go?* (19 Sep): <https://proofsandprompts.com/2026/09/19/where-will-all-the-papers-go/>
 - Hairer, *Why I agreed to join AGMAI* (22 Sep): <https://proofsandprompts.com/2026/09/22/why-i-agreed-to-join-agmai/>
 - AGMAI recommendations of 29 September: <https://agmai.org/general-sep29/>
+- Hales, *What mathematicians should know about the Lean Theorem Prover: questions of reliability and AI* (9 Oct): <https://terrytao.wordpress.com/2026/10/09/what-mathematicians-should-know-about-the-lean-theorem-proverquestions-of-reliability-and-ai/> · de Moura, postmortem for the kernel soundness bug hunt (24 Aug): <https://leodemoura.github.io/blog/2026-8-24-postmortem-for-the-kernel-soundness-bug-hunt/>
+- Buzzard, *Human mathematicians are being outcounterexampled* (Xena Project, 20 Jul): <https://xenaproject.wordpress.com/2026/07/20/human-mathematicians-are-being-outcounterexampled>
+- *Notices of the AMS*, "Fraudulent Publishing in the Mathematical Sciences" (Sep 2025), closing section on AI: <https://www.ams.org/journals/notices/202509/noti3217/noti3217.html>
+- COPE position on authorship and AI tools: <https://publicationethics.org/guidance/cope-position/authorship-and-ai-tools> · Elsevier generative-AI policies for journals: <https://www.elsevier.com/about/policies-and-standards/generative-ai-policies-for-journals>
 
 *Nothing after 26 October 2026 is reflected. Corrections and additions: open an issue or PR.*
