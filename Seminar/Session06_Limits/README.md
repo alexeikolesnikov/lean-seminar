@@ -45,6 +45,10 @@ and the end of the √2 argument) of its demo were not reached in the meeting.
 Read them; the √2 finish is also exercises E1–E2 of session 5, with
 solutions.
 
+**Where the meeting ended.** The session ran to plan: §§0–3 of the demo,
+exercises B1–B3 in pairs, and the assistant segment. §4 (uniqueness) and §5
+(the comparison with `Filter.Tendsto`) are reading.
+
 **Homework:** *Mathematics in Lean* §3.6 (sequences and convergence), which
 proves the same results with the same definition. Exercises B1–B3, C1–C2, D1
 and E1–E2; the rest optional. If `Assistant.lean` Task 2 was not reached in

@@ -16,9 +16,8 @@ The seminar's rule for AI assistance (`GROUND-RULES.md`): compile it,
 understand it, disclose it. These three tasks are a rehearsal of that rule.
 In each, the assistant — Copilot, Claude, or another — is given the task in
 the prompt quoted in the comment, its answer is pasted into this file, and
-the file is checked. What Lean checks and what it does not check are the
-subject of session 12; the short version is in the last section of this
-file.
+the file is checked. We will discuss later wat Lean checks and what it
+does not check; the short version is in the last section of this file.
 
 The definition is the one from the demo. -/
 
@@ -100,7 +99,7 @@ theorem convergesTo_of_frequently {s : ℕ → ℝ} {a : ℝ}
 
 /-! ## What the check checks
 
-`#print axioms` on a theorem lists what the proof rests on. The expected list
+`#print axioms` on a theorem lists what the proof depends on. The expected list
 is `propext`, `Classical.choice`, `Quot.sound`. Anything else is a flag:
 `sorryAx` means a hole; `Lean.trustCompiler` means `native_decide` or
 `decide +native` was used and the compiler is being trusted (session 1).
