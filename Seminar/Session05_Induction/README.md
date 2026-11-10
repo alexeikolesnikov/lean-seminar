@@ -9,9 +9,6 @@ Here's the demo if you want to start it on the Lean server (a little slow, but
 requires no installation work):
 https://live.lean-lang.org/#url=https%3A%2F%2Fraw.githubusercontent.com%2Falexeikolesnikov%2Flean-seminar%2Fmaster%2FSeminar%2FSession05_Induction%2FDemo.lean
 
-https://live.lean-lang.org/#url=https%3A%2F%2Fraw.githubusercontent.com%2Falexeikolesnikov%2Flean-seminar%2Fmaster%2FSeminar%2FSession05_Induction%2FExercises.lean
-
-
 ## What is in `Demo.lean`
 
 | | |
