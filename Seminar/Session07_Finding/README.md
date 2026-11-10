@@ -27,6 +27,10 @@ Open the demo in the Lean web editor, no account or install needed:
 
 <https://live.lean-lang.org/#url=https%3A%2F%2Fraw.githubusercontent.com%2Falexeikolesnikov%2Flean-seminar%2Fmaster%2FSeminar%2FSession07_Finding%2FDemo.lean>
 
+And here is the link to the Exercises:
+<https://live.lean-lang.org/#url=https%3A%2F%2Fraw.githubusercontent.com%2Falexeikolesnikov%2Flean-seminar%2Fmaster%2FSeminar%2FSession07_Finding%2FExercises.lean>
+
+
 The web editor runs the current Mathlib rather than the seminar's pinned
 version. For this session that matters more than usual: the names `exact?`
 returns there may differ from the ones in the comments, since names are what
