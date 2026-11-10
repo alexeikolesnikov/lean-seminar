@@ -69,12 +69,18 @@ or a `calc` block. -/
 
 /-- **Problem 1.** The determinant of `AᵀA` is nonnegative. -/
 theorem P1 (A : Matrix (Fin 3) (Fin 3) ℝ) : 0 ≤ (Aᵀ * A).det := by
-  sorry
+  rw [det_mul, det_transpose]
+  exact mul_self_nonneg (det A)
+
+example (A : Matrix (Fin 3) (Fin 3) ℝ) : det A = A.det := rfl
 
 /-- **Problem 2.** If `AB = I` then `det A ≠ 0`. Two proofs: one from
 `det A · det B = 1` by hand, and the one-lemma proof `exact?` finds. -/
 theorem P2 (A B : Matrix (Fin 3) (Fin 3) ℝ) (h : A * B = 1) : A.det ≠ 0 := by
+  have hdet : A.det * B.det = 1 := by
+    rw [← det_mul, h, det_one]
   sorry
+
 
 /-- **Problem 3 (a).** Similar matrices have the same trace. -/
 theorem P3a (A P : Matrix (Fin 3) (Fin 3) ℝ) (hP : P.det ≠ 0) :
